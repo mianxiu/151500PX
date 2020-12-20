@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- 1) -->
-<ExtensionManifest ExtensionBundleId="com.my.test" ExtensionBundleVersion="1.0.0" Version="7.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ExtensionManifest ExtensionBundleId="151500PX" ExtensionBundleVersion="1.0.0" Version="7.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ExtensionList>
     <!-- 2) -->
-    <Extension Id="com.mianxiu.1500px.panel" Version="1.0.0" />
+    <Extension Id="151500PX" Version="1.0.0" />
   </ExtensionList>
   <ExecutionEnvironment>
     <HostList>
@@ -20,7 +20,7 @@
   </ExecutionEnvironment>
   <DispatchInfoList>
     <!-- 2) -->
-    <Extension Id="com.mianxiu.1500px.panel">
+    <Extension Id="151500PX.panel">
       <DispatchInfo>
         <Resources>
           <!-- 4) -->
