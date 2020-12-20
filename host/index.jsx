@@ -1,4 +1,9 @@
-// 文件名一致会冲突
+function showAlert(){
+    alert('I AM MIANXIU')
+}
+
+function createDoc(){
+    // 文件名一致会冲突
 
 var FilePath = "/c/Users/mianx/Desktop/PS ExtendScript/"
 /*
@@ -105,3 +110,5 @@ myPathItem.strokePath(ToolType.BRUSH)
 
 //  根据层级自下而上的选择，比如下面的命令就不包含组里的图层
 // app.activeDocument.activeLayer = app.activeDocument.artLayers[1]
+
+}
