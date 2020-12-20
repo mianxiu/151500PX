@@ -1,12 +1,12 @@
 var csInterface = new csInterface();
 
-var openButon = document.querySelector("#open-button")
-openButon.addEventListener("click",openDoc)
+var openButton = document.querySelector("#open-button")
+openButton.addEventListener("click", openDoc)
 
-function openDoc(){
-    csInterface.evalSCript("openDocument()")
+function openDoc() {
+    csInterface.evalScript("openDocument()")
 }
 
-function openDocument(){
- alert('123')
+function openDocument() {
+    alert('123')
 }
