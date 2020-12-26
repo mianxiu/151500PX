@@ -3,5 +3,8 @@
   "version": "0.0.1",
   "description": "a plugin for simple my work",
   "author": "mianxiu",
-  "license": "MIT"
+  "license": "GPL",
+  "devDependencies": {
+    "@types/node": "^14.14.16"
+  }
 }
