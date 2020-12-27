@@ -1,4 +1,4 @@
-const  { deleteAllEmptyLayers } = require('./module/main')
+const { deleteAllEmptyLayers } = require('./module/main')
 
 
 function doSomething() {

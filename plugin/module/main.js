@@ -15,6 +15,6 @@ function deleteAllEmptyLayers() {
 }
 module.exports = {
     // showLayerNames,
-    // fff,
+    // useFolder,
     deleteAllEmptyLayers: deleteAllEmptyLayers
 };

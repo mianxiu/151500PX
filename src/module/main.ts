@@ -1,4 +1,3 @@
-import { privateDecrypt } from "crypto";
 
 const app = require("photoshop").app;
 const fs = require("uxp").storage.localFileSystem;
@@ -15,7 +14,7 @@ const doc = app.activeDocument
 //   return allLayers[0].bounds.right
 // }
 
-// async function fff():Promise<string> {
+// async function useFolder():Promise<string> {
 //   let userFolder = await fs.getFolder()
 //   return userFolder.name
 
@@ -37,7 +36,7 @@ function isEmptyLayer(bounds: IBounds): boolean {
 
 }
 
- function deleteAllEmptyLayers() {
+function deleteAllEmptyLayers() {
 
   // layer lock is can't delete
   // use bounds to find empty layer
@@ -52,6 +51,8 @@ function isEmptyLayer(bounds: IBounds): boolean {
 
 module.exports = {
   // showLayerNames,
-  // fff,
-    deleteAllEmptyLayers
+  // useFolder,
+  deleteAllEmptyLayers
 }
+
+export { }

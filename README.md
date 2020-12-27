@@ -25,12 +25,61 @@ until now,i no all idea to use PhotoShop UXP typing for develop, but we can use 
 
 ``` 
 - Plugin name
-  - /css/index.css
-  - /icons/...png
-  - /module/main.js //separate the file to use ExtendScript
-  - index.html
-  - index.js
-  - manifest.json
+  - /plugin
+    - /css/index.css
+    - /icons/...png
+    - /module/main.js //separate the file to use ExtendScript
+    - index.html
+    - index.js
+    - manifest.json
+  - /src
+    - /module/main.ts
+    - index.ts
+  - package.json
+  - README.md
+  - watch.sh
 ```
+### index.html replace stylesheet
+```html
+<head>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+```
+### main.ts
+```typescript
+...
+    module.exports = {
+        // export module,UXP must be use this now,
+        // https://www.adobe.io/photoshop/uxp/guides/how-to/
+        deleteAllEmptyLayers
+    }
+
+    // if I don't use ,is has // XXX was also declared here
+    export {}
+
+```
+### index.ts
+```typescript
+    // import module
+    const  { deleteAllEmptyLayers } = require('./module/main')
+...
+
+```
+### install TypeScript
+```
+npm i --save-dev @types/node
+```
+create a `tsconfig.json` in `/plugin name/tscofig.json`, write:
+```json
+{
+    "compilerOptions": {
+      "outDir": "./plugin",
+      "allowJs": true,
+      "target": "es5"
+    },
+    "include": ["./src/**/*"]
+  }
+```
+### 😤 use `tsc` or `tsc.cmd` in vsc terminal, or other.
 ## Tool
 - [Adobe UXP Developer Tool](https://www.adobe.io/photoshop/uxp/)
