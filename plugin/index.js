@@ -1,4 +1,4 @@
-const { fff, showLayerNames, deleteAllEmptyLayers } = require("./module/main.js");
+var deleteAllEmptyLayers = require('./module/main').deleteAllEmptyLayers;
 function doSomething() {
     //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
     //  console.log(fff())
