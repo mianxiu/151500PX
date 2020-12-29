@@ -1,24 +1,23 @@
-
 const app = require("photoshop").app;
 const fs = require("uxp").storage.localFileSystem;
 
 
 const doc = app.activeDocument
 
-// function showLayerNames() {
-//   const allLayers = app.activeDocument.layers;
-//   // const allLayerNames = allLayers.map(layer => layer.name);
-//   // const sortedNames = allLayerNames.sort((a, b) => a < b ? -1 : a > b ? 1 : 0);
+function showLayerNames() {
+  const allLayers = app.activeDocument.layers;
+  // const allLayerNames = allLayers.map(layer => layer.name);
+  // const sortedNames = allLayerNames.sort((a, b) => a < b ? -1 : a > b ? 1 : 0);
 
-//   console.log(allLayers[0])
-//   return allLayers[0].bounds.right
-// }
+  console.log(allLayers[0])
+  return allLayers[0].bounds.right
+}
 
-// async function useFolder():Promise<string> {
-//   let userFolder = await fs.getFolder()
-//   return userFolder.name
+async function useFolder(): Promise<string> {
+  let userFolder = await fs.getFolder()
+  return userFolder.name
 
-// }
+}
 
 
 interface IBounds {
@@ -28,14 +27,19 @@ interface IBounds {
   bottom: number
 }
 
+/**
+ * if have nothing,is empty layer
+ * @param bounds rectangle size of something in layer,base document left-top point, {left,top,right,bottom}
+ */
 function isEmptyLayer(bounds: IBounds): boolean {
-
   let zero = bounds.left + bounds.top + bounds.right + bounds.bottom
-
   return zero === 0 ? true : false
-
 }
 
+
+/**
+ * delete all empty layer
+ */
 function deleteAllEmptyLayers() {
 
   // layer lock is can't delete
@@ -43,8 +47,83 @@ function deleteAllEmptyLayers() {
 
   let layers = doc.layers
 
-  layers.map(layer => isEmptyLayer(layer.bounds) === true ? console.log(layer.bounds) : console.log(layer))
+  layers.map(async layer => {
 
+    if (isEmptyLayer(layer.bounds)) {
+
+      // if unuse selected,sometime it can't set false
+      if (layer.locked) {
+        layer.selected = await true
+        layer.locked = await false
+      }
+
+      await layer.delete()
+    }
+  })
+
+}
+
+/**
+ * 
+ * @param margin maring to document boundary
+ */
+function cropToMargin(margin: number) {
+  let layerBounds: IBounds = doc.activeLayers.length === 1 ? doc.activeLayers[0].bounds : null
+
+  console.log(layerBounds)
+
+  let cropBounds: IBounds = { left: 0, top: 0, right: 0, bottom: 0 }
+
+  console.log(cropBounds)
+
+  cropBounds.left = layerBounds.left - margin
+  cropBounds.top = layerBounds.top - margin
+  cropBounds.right = layerBounds.right + margin
+  cropBounds.bottom = layerBounds.bottom + margin
+
+  doc.crop(cropBounds, 0)
+}
+
+
+interface IELementSize {
+  width: number,
+  height: number
+}
+
+/**
+ * get element rectangle size
+ * @param layer layer
+ */
+function getElementSize(layer: any) {
+  let layerBounds: IBounds = layer.bounds
+
+  let boundsLeft: number = layerBounds.left
+  let boundsTop: number = layerBounds.top
+  let boundsRight: number = layerBounds.right
+  let boundsBottom: number = layerBounds.bottom
+
+  let elementWidth: number = boundsRight - boundsLeft
+  let elementHeight: number = boundsBottom - boundsTop
+
+  let elementSize: IELementSize = {
+    width: 0,
+    height: 0
+  }
+
+  return elementSize = { width: elementWidth, height: elementHeight }
+
+}
+
+
+/**
+ * 
+ * @param elementSize 
+ */
+function isVertcal(elementSize: IELementSize): boolean {
+
+  if (elementSize.height > elementSize.width) { return true }
+  else if (elementSize.height < elementSize.width) { return false }
+  return null
 
 }
 
@@ -52,7 +131,8 @@ function deleteAllEmptyLayers() {
 module.exports = {
   // showLayerNames,
   // useFolder,
-  deleteAllEmptyLayers
+  deleteAllEmptyLayers,
+  cropToMargin
 }
 
 export { }

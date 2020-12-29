@@ -1,10 +1,11 @@
-const { deleteAllEmptyLayers } = require('./module/main')
+const { deleteAllEmptyLayers,cropToMargin } = require('./module/main')
 
 
 function doSomething() {
     //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
     //  console.log(fff())
-    deleteAllEmptyLayers()
+    // deleteAllEmptyLayers()
+    cropToMargin(20)
 
 }
 

@@ -81,5 +81,10 @@ create a `tsconfig.json` in `/plugin name/tscofig.json`, write:
   }
 ```
 ### 😤 use `tsc` or `tsc.cmd` in vsc terminal, or other.
+powershell policy set
+```
+set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+```
+use `Terminal -> Run Task -> typescript -> tsc:watch `
 ## Tool
 - [Adobe UXP Developer Tool](https://www.adobe.io/photoshop/uxp/)
