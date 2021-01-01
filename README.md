@@ -86,5 +86,7 @@ powershell policy set
 set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 ```
 use `Terminal -> Run Task -> typescript -> tsc:watch `
+## 🔔 Use batchPlay -> actionJSON
+[use tool to recode action json](https://github.com/jardicc/alchemist)
 ## Tool
 - [Adobe UXP Developer Tool](https://www.adobe.io/photoshop/uxp/)

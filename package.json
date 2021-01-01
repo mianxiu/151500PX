@@ -5,6 +5,13 @@
   "author": "mianxiu",
   "license": "GPL",
   "devDependencies": {
-    "@types/node": "^14.14.16"
+    "@types/node": "^14.14.16",
+    "tsc-watch": "^4.2.9"
+  },
+  "scripts": {
+    "start": "tsc-watch --onSuccess \"node ./plugin\"/"
+  },
+  "dependencies": {
+    "typescript": "^4.1.3"
   }
 }

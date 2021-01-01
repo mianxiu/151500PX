@@ -1,5 +1,7 @@
+
 const app = require("photoshop").app;
 const fs = require("uxp").storage.localFileSystem;
+const batchPlay = require("photoshop").action.batchPlay
 
 
 const doc = app.activeDocument
@@ -37,10 +39,54 @@ function isEmptyLayer(bounds: IBounds): boolean {
 }
 
 
+
+interface IELementSize {
+  width: number,
+  height: number
+}
+
+/**
+ * get element rectangle size
+ * @param layer layer
+ */
+function getElementSize(layer: any): IELementSize {
+  let layerBounds: IBounds = layer.bounds
+
+  let boundsLeft: number = layerBounds.left
+  let boundsTop: number = layerBounds.top
+  let boundsRight: number = layerBounds.right
+  let boundsBottom: number = layerBounds.bottom
+
+  let elementWidth: number = boundsRight - boundsLeft
+  let elementHeight: number = boundsBottom - boundsTop
+
+  let elementSize: IELementSize = {
+    width: 0,
+    height: 0
+  }
+
+  return elementSize = { width: elementWidth, height: elementHeight }
+
+}
+
+
+/**
+ * decide element is vertcal or horizontal
+ * @param elementSize 
+ */
+function isVertical(elementSize: IELementSize): boolean | null {
+
+  if (elementSize.height > elementSize.width) { return true }
+  else if (elementSize.height < elementSize.width) { return false }
+  return null
+
+}
+
+
 /**
  * delete all empty layer
  */
-function deleteAllEmptyLayers() {
+export function deleteAllEmptyLayers(): void {
 
   // layer lock is can't delete
   // use bounds to find empty layer
@@ -67,64 +113,28 @@ function deleteAllEmptyLayers() {
  * 
  * @param margin maring to document boundary
  */
-function cropToMargin(margin: number) {
+function cropToMargin(margin: number): void {
   let layerBounds: IBounds = doc.activeLayers.length === 1 ? doc.activeLayers[0].bounds : null
 
-  console.log(layerBounds)
+  console.log(doc.activeLayers[0])
 
   let cropBounds: IBounds = { left: 0, top: 0, right: 0, bottom: 0 }
 
-  console.log(cropBounds)
-
-  cropBounds.left = layerBounds.left - margin
-  cropBounds.top = layerBounds.top - margin
-  cropBounds.right = layerBounds.right + margin
-  cropBounds.bottom = layerBounds.bottom + margin
+  cropBounds = {
+    left: layerBounds.left - margin,
+    top: layerBounds.top - margin,
+    right: layerBounds.right + margin,
+    bottom: layerBounds.bottom + margin
+  }
 
   doc.crop(cropBounds, 0)
 }
 
 
-interface IELementSize {
-  width: number,
-  height: number
-}
 
-/**
- * get element rectangle size
- * @param layer layer
- */
-function getElementSize(layer: any) {
-  let layerBounds: IBounds = layer.bounds
-
-  let boundsLeft: number = layerBounds.left
-  let boundsTop: number = layerBounds.top
-  let boundsRight: number = layerBounds.right
-  let boundsBottom: number = layerBounds.bottom
-
-  let elementWidth: number = boundsRight - boundsLeft
-  let elementHeight: number = boundsBottom - boundsTop
-
-  let elementSize: IELementSize = {
-    width: 0,
-    height: 0
-  }
-
-  return elementSize = { width: elementWidth, height: elementHeight }
-
-}
-
-
-/**
- * 
- * @param elementSize 
- */
-function isVertcal(elementSize: IELementSize): boolean {
-
-  if (elementSize.height > elementSize.width) { return true }
-  else if (elementSize.height < elementSize.width) { return false }
-  return null
-
+export function cropToSquare(margin: number) {
+  //todo
+  //something
 }
 
 
@@ -135,4 +145,4 @@ module.exports = {
   cropToMargin
 }
 
-export { }
+export { cropToMargin }

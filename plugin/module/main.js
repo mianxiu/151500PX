@@ -36,8 +36,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.cropToMargin = exports.cropToSquare = exports.deleteAllEmptyLayers = void 0;
 var app = require("photoshop").app;
 var fs = require("uxp").storage.localFileSystem;
+var batchPlay = require("photoshop").action.batchPlay;
 var doc = app.activeDocument;
 function showLayerNames() {
     var allLayers = app.activeDocument.layers;
@@ -66,6 +68,37 @@ function useFolder() {
 function isEmptyLayer(bounds) {
     var zero = bounds.left + bounds.top + bounds.right + bounds.bottom;
     return zero === 0 ? true : false;
+}
+/**
+ * get element rectangle size
+ * @param layer layer
+ */
+function getElementSize(layer) {
+    var layerBounds = layer.bounds;
+    var boundsLeft = layerBounds.left;
+    var boundsTop = layerBounds.top;
+    var boundsRight = layerBounds.right;
+    var boundsBottom = layerBounds.bottom;
+    var elementWidth = boundsRight - boundsLeft;
+    var elementHeight = boundsBottom - boundsTop;
+    var elementSize = {
+        width: 0,
+        height: 0
+    };
+    return elementSize = { width: elementWidth, height: elementHeight };
+}
+/**
+ * decide element is vertcal or horizontal
+ * @param elementSize
+ */
+function isVertical(elementSize) {
+    if (elementSize.height > elementSize.width) {
+        return true;
+    }
+    else if (elementSize.height < elementSize.width) {
+        return false;
+    }
+    return null;
 }
 /**
  * delete all empty layer
@@ -100,52 +133,29 @@ function deleteAllEmptyLayers() {
         });
     }); });
 }
+exports.deleteAllEmptyLayers = deleteAllEmptyLayers;
 /**
  *
  * @param margin maring to document boundary
  */
 function cropToMargin(margin) {
     var layerBounds = doc.activeLayers.length === 1 ? doc.activeLayers[0].bounds : null;
-    console.log(layerBounds);
+    console.log(doc.activeLayers[0]);
     var cropBounds = { left: 0, top: 0, right: 0, bottom: 0 };
-    console.log(cropBounds);
-    cropBounds.left = layerBounds.left - margin;
-    cropBounds.top = layerBounds.top - margin;
-    cropBounds.right = layerBounds.right + margin;
-    cropBounds.bottom = layerBounds.bottom + margin;
+    cropBounds = {
+        left: layerBounds.left - margin,
+        top: layerBounds.top - margin,
+        right: layerBounds.right + margin,
+        bottom: layerBounds.bottom + margin
+    };
     doc.crop(cropBounds, 0);
 }
-/**
- * get element rectangle size
- * @param layer layer
- */
-function getElementSize(layer) {
-    var layerBounds = layer.bounds;
-    var boundsLeft = layerBounds.left;
-    var boundsTop = layerBounds.top;
-    var boundsRight = layerBounds.right;
-    var boundsBottom = layerBounds.bottom;
-    var elementWidth = boundsRight - boundsLeft;
-    var elementHeight = boundsBottom - boundsTop;
-    var elementSize = {
-        width: 0,
-        height: 0
-    };
-    return elementSize = { width: elementWidth, height: elementHeight };
+exports.cropToMargin = cropToMargin;
+function cropToSquare(margin) {
+    //todo
+    //something
 }
-/**
- *
- * @param elementSize
- */
-function isVertcal(elementSize) {
-    if (elementSize.height > elementSize.width) {
-        return true;
-    }
-    else if (elementSize.height < elementSize.width) {
-        return false;
-    }
-    return null;
-}
+exports.cropToSquare = cropToSquare;
 module.exports = {
     // showLayerNames,
     // useFolder,
