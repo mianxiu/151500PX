@@ -9,11 +9,9 @@ function doSomething() {
     //  console.log(fff())
     // deleteAllEmptyLayers()
     //cropToMargin(20)
-    cropToMargin(20)
-    console.log('fuck youw~e~~')
+    cropToMargin(10)
+    console.log('fuck 112231231!@#$%^^1~~')
     
-
-
 }
 
 document.getElementById("btnPopulate").addEventListener("click", doSomething);

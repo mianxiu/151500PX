@@ -1,6 +1,6 @@
 # 151500PX
 A Adobe UXP simple my workflow for PhotoShop CC 2021. 🙃🐟
-## Wolkflow
+## Wolkflow in Window 10 2024H
 use [Adobe UXP Developer Tool](https://www.adobe.io/photoshop/uxp/) (I told it `AUDT`) to `Create Plugin`,`Tamplate` is `ps-start`(other is `ps-start-react`，then the folder tree like this:
 ```
 - plugin name
@@ -31,21 +31,24 @@ until now,i no all idea to use PhotoShop UXP typing for develop, but we can use 
     - /module/main.js //separate the file to use ExtendScript
     - index.html
     - index.js
+    - plugin.js
     - manifest.json
+    - watch.bat
   - /src
     - /module/main.ts
-    - index.ts
+    - plugin.ts
   - package.json
   - README.md
   - watch.sh
 ```
-### index.html replace stylesheet
+### 😳now let's start
+### 1. index.html replace stylesheet
 ```html
 <head>
     <link rel="stylesheet" href="./css/index.css">
 </head>
 ```
-### main.ts
+### 2. main.ts (or other module.ts)
 ```typescript
 ...
     module.exports = {
@@ -58,18 +61,27 @@ until now,i no all idea to use PhotoShop UXP typing for develop, but we can use 
     export {}
 
 ```
-### index.ts
+### 3. plugin.ts (just rename defult index.js to plugin.ts)
 ```typescript
-    // import module
-    const  { deleteAllEmptyLayers } = require('./module/main')
+   // DOM main file
+   // import module
+   // const  { deleteAllEmptyLayers } = require('./module/main')
+   import * as main from './module/main'
+
+   dosomething(){}
+   document.getElementById("btnPopulate").addEventListener("click", doSomething);
 ...
 
 ```
-### install TypeScript & tsc-watch
+### 4. install TypeScript & tsc-watch & npm-run-all , and `[chokidar-cli](https://github.com/kimmobrunfeldt/chokidar-cli)` to watch 
 ```
 npm install -i typescript
 npm install -i tsc-watch
+npm install -i chokidar-cli
+npm install -i npm-run-all
 ```
+
+### 5. create `tsconfig.json` & modify `package.json`
 create a `tsconfig.json` in `/plugin name/tscofig.json`, write:
 ```json
 {
@@ -78,49 +90,31 @@ create a `tsconfig.json` in `/plugin name/tscofig.json`, write:
       "allowJs": true,
       "target": "es5"
     },
-    "include": ["./src/**/*"]
+    "include": ["./src/**/*"],
+    "exclude": [
+    "node_modules"
+  ]
   }
 ```
-modify `package.json`, add 
+modify `package.json`, add this (of course, you can change path or other)
 ```json
   ...
   "scripts": {
-    "start": "tsc-watch --onSuccess \"node ./plugin\"/"
+    "watch": "npm-run-all --parallel watch:*",
+    "watch:tsc": "tsc-watch --onSuccess \"node ./plugin\"/",
+    "watch:plugin": "chokidar \"./src/**/*.ts\" -c \"npm run removeEmodule\"",
+    "removeEmodule": "cd plugin && watch.bat"
   }
   ...
 ```
-**create `.vscode/tasks.json`** folder and file in root, wirte:
-```json
-{
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "npm",
-			"script": "start",
-			"problemMatcher": [],
-			"label": "npm: start",
-			"detail": "./node_modules/.bin/tsc-watch --onSuccess \"node ./plugin\""
-		},
-		{
-			"type": "typescript",
-			"tsconfig": "tsconfig.json",
-			"option": "watch",
-			"problemMatcher": [
-				"$tsc-watch"
-			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"label": "tsc: watch - tsconfig.json"
-		}
-	]
-}
+
+
+### 6. create .bat to delete `Object.defineProperty(exports, "__esModule", { value: true });` & > index.js
+last step we add `removeEmoudle` and use `chokidar` to watch `plugin.ts` to compile `index.js`, now create the `watch.bat` in `./plugin/` folder, write this:
+```bat
+  findstr /V "Object.defineProperty(exports, " plugin.js > index.js
 ```
-
-##
-
-### 😤 use `npm run start` in vsc terminal, or other.
+### 😤 use `npm run watch` in vsc terminal, or other.
 powershell policy set
 ```
 set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted

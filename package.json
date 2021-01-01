@@ -1,5 +1,5 @@
 {
-  "name": "151500PX",
+  "name": "151500px",
   "version": "0.0.1",
   "description": "a plugin for simple my work",
   "author": "mianxiu",
@@ -9,10 +9,14 @@
     "tsc-watch": "^4.2.9"
   },
   "scripts": {
-    "start": "tsc-watch --onSuccess \"node ./plugin\"/",
-    "removeEmodule":"cd plugin && watch.bat"
+    "watch": "npm-run-all --parallel watch:*",
+    "watch:tsc": "tsc-watch --onSuccess \"node ./plugin\"/",
+    "watch:plugin": "chokidar \"./src/**/*.ts\" -c \"npm run removeEmodule\"",
+    "removeEmodule": "cd plugin && watch.bat"
   },
   "dependencies": {
+    "chokidar-cli": "^2.1.0",
+    "npm-run-all": "^4.1.5",
     "typescript": "^4.1.3"
   }
 }
