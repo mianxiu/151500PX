@@ -9,7 +9,8 @@
     "tsc-watch": "^4.2.9"
   },
   "scripts": {
-    "start": "tsc-watch --onSuccess \"node ./plugin\"/"
+    "start": "tsc-watch --onSuccess \"node ./plugin\"/",
+    "removeEmodule":"cd plugin && watch.bat"
   },
   "dependencies": {
     "typescript": "^4.1.3"

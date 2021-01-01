@@ -1,0 +1,1 @@
+findstr /V "Object.defineProperty(exports, " plugin.js > index.js

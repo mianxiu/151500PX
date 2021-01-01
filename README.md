@@ -65,9 +65,10 @@ until now,i no all idea to use PhotoShop UXP typing for develop, but we can use 
 ...
 
 ```
-### install TypeScript
+### install TypeScript & tsc-watch
 ```
-npm i --save-dev @types/node
+npm install -i typescript
+npm install -i tsc-watch
 ```
 create a `tsconfig.json` in `/plugin name/tscofig.json`, write:
 ```json
@@ -80,7 +81,46 @@ create a `tsconfig.json` in `/plugin name/tscofig.json`, write:
     "include": ["./src/**/*"]
   }
 ```
-### 😤 use `tsc` or `tsc.cmd` in vsc terminal, or other.
+modify `package.json`, add 
+```json
+  ...
+  "scripts": {
+    "start": "tsc-watch --onSuccess \"node ./plugin\"/"
+  }
+  ...
+```
+**create `.vscode/tasks.json`** folder and file in root, wirte:
+```json
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "start",
+			"problemMatcher": [],
+			"label": "npm: start",
+			"detail": "./node_modules/.bin/tsc-watch --onSuccess \"node ./plugin\""
+		},
+		{
+			"type": "typescript",
+			"tsconfig": "tsconfig.json",
+			"option": "watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"label": "tsc: watch - tsconfig.json"
+		}
+	]
+}
+```
+
+##
+
+### 😤 use `npm run start` in vsc terminal, or other.
 powershell policy set
 ```
 set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted

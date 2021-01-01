@@ -1,13 +1,20 @@
-"use strict";
 //const { deleteAllEmptyLayers,cropToMargin } = require('./module/main')
-var main_1 = require("./module/main");
+import { cropToMargin } from "./module/main"
 //todos
+
+
+
 function doSomething() {
     //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
     //  console.log(fff())
     // deleteAllEmptyLayers()
     //cropToMargin(20)
-    main_1.cropToMargin(20);
-    console.log('fuck youw~e~~');
+    cropToMargin(20)
+    console.log('fuck youw~e~~')
+    
+
+
 }
+
 document.getElementById("btnPopulate").addEventListener("click", doSomething);
+
