@@ -8,6 +8,6 @@ function doSomething() {
     // deleteAllEmptyLayers()
     //cropToMargin(20)
     main_1.cropToMargin(10);
-    console.log('fuck 112231231!@#$%^^1~~');
+    console.log('fuck UUUU~~^^1~~');
 }
 document.getElementById("btnPopulate").addEventListener("click", doSomething);

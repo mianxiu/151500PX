@@ -10,7 +10,7 @@ function doSomething() {
     // deleteAllEmptyLayers()
     //cropToMargin(20)
     cropToMargin(10)
-    console.log('fuck 112231231!@#$%^^1~~')
+    console.log('fuck UUUU~~^^1~~')
     
 }
 

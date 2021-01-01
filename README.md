@@ -13,12 +13,12 @@ use [Adobe UXP Developer Tool](https://www.adobe.io/photoshop/uxp/) (I told it `
   - README.json
   - watch.sh
 ```
-now you can open `PhotoShope CC 2021`,use `AUDT` to `load`/`debug`/`watch file` etc, and use `VSC` or other to wirte Script.
+now you can open `PhotoShop CC 2021`,use `AUDT` to `load`/`debug`/`watch file` etc, and use `VSC` or other to wirte Script.
 ## What Language you need to know ?
 - JavaScript/HTML/CSS `write plugin panel,interface`
 - Adobe ExtendScript  `Adobe API,but UXP has some change,look this `[PhotoShop JS API](https://adobe-photoshop.github.io/uxp-api-docs/docs/)
 - other look this [Adobe Developer](hhttps://www.adobe.io/photoshop/uxp/)
-- todo PDF
+- you should need to use `batchPlay` in PhotoShop.
 
 ## Use TypeScript
 until now,i no all idea to use PhotoShop UXP typing for develop, but we can use TypeScript,`open the plugin floder`,and you can change file to this like me:
@@ -51,14 +51,13 @@ until now,i no all idea to use PhotoShop UXP typing for develop, but we can use 
 ### 2. main.ts (or other module.ts)
 ```typescript
 ...
-    module.exports = {
-        // export module,UXP must be use this now,
-        // https://www.adobe.io/photoshop/uxp/guides/how-to/
-        deleteAllEmptyLayers
-    }
-
-    // if I don't use ,is has // XXX was also declared here
-    export {}
+    // module.exports = {
+    //     // export module,UXP must be use this now,
+    //     // https://www.adobe.io/photoshop/uxp/guides/how-to/
+    //     deleteAllEmptyLayers
+    // }
+    function doSomeThing(){}
+    export {doSomeThing}
 
 ```
 ### 3. plugin.ts (just rename defult index.js to plugin.ts)
@@ -68,8 +67,7 @@ until now,i no all idea to use PhotoShop UXP typing for develop, but we can use 
    // const  { deleteAllEmptyLayers } = require('./module/main')
    import * as main from './module/main'
 
-   dosomething(){}
-   document.getElementById("btnPopulate").addEventListener("click", doSomething);
+   document.getElementById("btnPopulate").addEventListener("click", main.doSomeThing());
 ...
 
 ```

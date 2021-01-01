@@ -138,11 +138,4 @@ export function cropToSquare(margin: number) {
 }
 
 
-module.exports = {
-  // showLayerNames,
-  // useFolder,
-  deleteAllEmptyLayers,
-  cropToMargin
-}
-
 export { cropToMargin }

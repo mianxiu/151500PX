@@ -156,9 +156,3 @@ function cropToSquare(margin) {
     //something
 }
 exports.cropToSquare = cropToSquare;
-module.exports = {
-    // showLayerNames,
-    // useFolder,
-    deleteAllEmptyLayers: deleteAllEmptyLayers,
-    cropToMargin: cropToMargin
-};
