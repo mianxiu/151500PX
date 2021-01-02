@@ -2,21 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.selectionModifier = exports._targetSeletLayers = exports._ref = exports.defaultOptions = void 0;
 exports.defaultOptions = {
-    "synchronousExecution": false,
-    "modalBehavior": "fail"
+    synchronousExecution: false,
+    modalBehavior: "fail",
 };
 exports._ref = {
     layer: "layer",
-    path: "path"
+    path: "path",
 };
 /**
  * target all seleted layers
  */
-exports._targetSeletLayers = [{
+exports._targetSeletLayers = [
+    {
         _ref: exports._ref.layer,
         _enum: "ordinal",
-        _value: "targetEnum"
-    }];
+        _value: "targetEnum",
+    },
+];
 /**
  * selection modifier
  */

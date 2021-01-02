@@ -1,17 +1,14 @@
-import * as main from "./module/main"
+import * as component from "./module/component";
 //todos
 
-
-
 function doSomething() {
-    //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
-    //  console.log(fff())
-    // deleteAllEmptyLayers()
-    //cropToMargin(20)
-    main.seletAllLayersOnTarget()
-    main.moveLayerToDocTop()
-    
+  //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
+
+  //component.selectAllLayersOnTarget();
+  console.log("123");
+  component.selectLayerByName("MAIN", true);
+  //component.cropToSize(400, 400);
+  //main.moveLayerToDocTop()
 }
 
 document.getElementById("btnPopulate").addEventListener("click", doSomething);
-

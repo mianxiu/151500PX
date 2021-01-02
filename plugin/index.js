@@ -1,12 +1,12 @@
 "use strict";
-var main = require("./module/main");
+var component = require("./module/component");
 //todos
 function doSomething() {
     //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
-    //  console.log(fff())
-    // deleteAllEmptyLayers()
-    //cropToMargin(20)
-    main.seletAllLayersOnTarget();
-    main.moveLayerToDocTop();
+    //component.selectAllLayersOnTarget();
+    console.log("123");
+    component.selectLayerByName("MAIN", true);
+    //component.cropToSize(400, 400);
+    //main.moveLayerToDocTop()
 }
 document.getElementById("btnPopulate").addEventListener("click", doSomething);

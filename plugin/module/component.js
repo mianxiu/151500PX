@@ -1,4 +1,8 @@
 "use strict";
+/**
+ * batchPlay index is bottom to top
+ * js index is top to bottom
+ */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,7 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.cropToSquare = exports.cropToMargin = exports.deleteAllEmptyLayers = void 0;
+exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllEmptyLayers = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var app = require("photoshop").app;
 var fs = require("uxp").storage.localFileSystem;
@@ -136,7 +140,7 @@ function deleteAllEmptyLayers() {
 }
 exports.deleteAllEmptyLayers = deleteAllEmptyLayers;
 /**
- * crop document size to layer bounds, now only for a layer
+ * crop document size to active layer bounds, now only for a layer
  * @param margin maring to document boundary
  */
 function cropToMargin(margin) {
@@ -152,7 +156,7 @@ function cropToMargin(margin) {
 }
 exports.cropToMargin = cropToMargin;
 /**
- * crop document size to base layer bounds's square, now only for a layer
+ * crop document size to base active layer bounds's square, now only for a layer
  * @param margin
  */
 function cropToSquare(margin) {
@@ -183,6 +187,58 @@ function cropToSquare(margin) {
     doc.crop(cropBounds);
 }
 exports.cropToSquare = cropToSquare;
+/**
+ * crop document size to base active layer bounds's to size ( width,height ) ,
+ * now only for a layer
+ * @param width
+ * @param height
+ */
+function cropToSize(width, height) {
+    var layer = doc.activeLayers.length === 1 ? doc.activeLayers[0] : null;
+    var layerBounds = layer !== null ? layer.bounds : null;
+    var layerSize = getElementSize(layer);
+    var marginLeft = (width - layerSize.width) / 2;
+    var marginTop = (height - layerSize.height) / 2;
+    var cropBounds = {
+        left: layerBounds.left - marginLeft,
+        top: layerBounds.top - marginTop,
+        right: layerBounds.right + marginLeft,
+        bottom: layerBounds.bottom + marginTop,
+    };
+    doc.crop(cropBounds);
+}
+exports.cropToSize = cropToSize;
+function selectLayerByName(name, isGroup) {
+    if (isGroup === void 0) { isGroup = false; }
+    return __awaiter(this, void 0, void 0, function () {
+        var nameIndex, layers, layer;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    nameIndex = "--DO-ACTIVE-";
+                    layers = doc.layers;
+                    layer = isGroup === true
+                        ? layers.find(function (layer) { return layer.name === name && layer.isGroupLayer === true; })
+                        : layers.find(function (layer) { return layer.name === name && layer.isGroupLayer === undefined; });
+                    layer.name = "" + nameIndex + name;
+                    return [4 /*yield*/, batchPlay([
+                            {
+                                _obj: "select",
+                                _target: [{ _ref: "layer", _name: "" + nameIndex + name }],
+                            },
+                        ], batchPlayConfig.defaultOptions)];
+                case 1:
+                    _a.sent();
+                    layer.name = name;
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.selectLayerByName = selectLayerByName;
+/**
+ * select all layer on select layer
+ */
 function selectAllLayersOnTarget() {
     return __awaiter(this, void 0, void 0, function () {
         var topLayerName;
