@@ -1,5 +1,4 @@
-//const { deleteAllEmptyLayers,cropToMargin } = require('./module/main')
-import { cropToMargin } from "./module/main"
+import * as main from "./module/main"
 //todos
 
 
@@ -9,8 +8,8 @@ function doSomething() {
     //  console.log(fff())
     // deleteAllEmptyLayers()
     //cropToMargin(20)
-    cropToMargin(10)
-    console.log('fuck UUUU~~^^1~~')
+    main.seletAllLayersOnTarget()
+    main.moveLayerToDocTop()
     
 }
 

@@ -1,7 +1,9 @@
+import * as batchPlayConfig from './batchplayconfig'
 
 const app = require("photoshop").app;
 const fs = require("uxp").storage.localFileSystem;
 const batchPlay = require("photoshop").action.batchPlay
+
 
 
 const doc = app.activeDocument
@@ -110,13 +112,12 @@ export function deleteAllEmptyLayers(): void {
 }
 
 /**
- * 
+ * crop document size to layer bounds, now only for a layer
  * @param margin maring to document boundary
  */
-function cropToMargin(margin: number): void {
-  let layerBounds: IBounds = doc.activeLayers.length === 1 ? doc.activeLayers[0].bounds : null
+export function cropToMargin(margin: number): void {
 
-  console.log(doc.activeLayers[0])
+  let layerBounds: IBounds = doc.activeLayers.length === 1 ? doc.activeLayers[0].bounds : null
 
   let cropBounds: IBounds = { left: 0, top: 0, right: 0, bottom: 0 }
 
@@ -131,11 +132,72 @@ function cropToMargin(margin: number): void {
 }
 
 
-
+/**
+ * crop document size to base layer bounds's square, now only for a layer
+ * @param margin 
+ */
 export function cropToSquare(margin: number) {
   //todo
   //something
+  let layer = doc.activeLayers.length === 1 ? doc.activeLayers[0] : null
+  let layerBounds: IBounds = layer !== null ? layer.bounds : null
+  let layerSize: IELementSize = getElementSize(layer)
+
+  layerBounds = isVertical(layerSize) ?
+    {
+      left: layerBounds.left - (layerSize.height - layerSize.width) / 2,
+      top: layerBounds.top,
+      right: layerBounds.right + (layerSize.height - layerSize.width) / 2,
+      bottom: layerBounds.bottom
+    } :
+    {
+      left: layerBounds.left,
+      top: layerBounds.top - (layerSize.width - layerSize.height) / 2,
+      right: layerBounds.right,
+      bottom: layerBounds.bottom + (layerSize.width - layerSize.height) / 2
+    }
+
+  let cropBounds: IBounds = {
+    left: layerBounds.left - margin,
+    top: layerBounds.top - margin, right:
+      layerBounds.right + margin,
+    bottom: layerBounds.bottom + margin
+  }
+
+  doc.crop(cropBounds)
+
 }
 
 
-export { cropToMargin }
+
+export async function seletAllLayersOnTarget() {
+
+  await batchPlay([
+    {
+      _obj: "move",
+      _target: [{ _ref: "layer", _name: doc.layers[0].name }],
+      selectionModifier:batchPlayConfig.selectionModifier.addToSelection
+    }
+  ])
+
+
+}
+
+/**
+ * use batchplay to move layer to document layers top index
+ */
+export async function moveLayerToDocTop() {
+  await batchPlay(
+    [{
+      "_obj": "move",
+      "_target": batchPlayConfig._targetSeletLayers,
+      "to": {
+        "_ref": "layer",
+        "_index": doc.layers.length + 2
+      },
+      "adjustment": false,
+    }],
+    batchPlayConfig.defaultOptions
+  );
+}
+

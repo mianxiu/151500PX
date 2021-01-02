@@ -36,7 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cropToMargin = exports.cropToSquare = exports.deleteAllEmptyLayers = void 0;
+exports.moveLayerToDocTop = exports.seletAllLayersOnTarget = exports.cropToSquare = exports.cropToMargin = exports.deleteAllEmptyLayers = void 0;
+var batchPlayConfig = require("./batchplayconfig");
 var app = require("photoshop").app;
 var fs = require("uxp").storage.localFileSystem;
 var batchPlay = require("photoshop").action.batchPlay;
@@ -135,12 +136,11 @@ function deleteAllEmptyLayers() {
 }
 exports.deleteAllEmptyLayers = deleteAllEmptyLayers;
 /**
- *
+ * crop document size to layer bounds, now only for a layer
  * @param margin maring to document boundary
  */
 function cropToMargin(margin) {
     var layerBounds = doc.activeLayers.length === 1 ? doc.activeLayers[0].bounds : null;
-    console.log(doc.activeLayers[0]);
     var cropBounds = { left: 0, top: 0, right: 0, bottom: 0 };
     cropBounds = {
         left: layerBounds.left - margin,
@@ -151,8 +151,77 @@ function cropToMargin(margin) {
     doc.crop(cropBounds, 0);
 }
 exports.cropToMargin = cropToMargin;
+/**
+ * crop document size to base layer bounds's square, now only for a layer
+ * @param margin
+ */
 function cropToSquare(margin) {
     //todo
     //something
+    var layer = doc.activeLayers.length === 1 ? doc.activeLayers[0] : null;
+    var layerBounds = layer !== null ? layer.bounds : null;
+    var layerSize = getElementSize(layer);
+    layerBounds = isVertical(layerSize) ?
+        {
+            left: layerBounds.left - (layerSize.height - layerSize.width) / 2,
+            top: layerBounds.top,
+            right: layerBounds.right + (layerSize.height - layerSize.width) / 2,
+            bottom: layerBounds.bottom
+        } :
+        {
+            left: layerBounds.left,
+            top: layerBounds.top - (layerSize.width - layerSize.height) / 2,
+            right: layerBounds.right,
+            bottom: layerBounds.bottom + (layerSize.width - layerSize.height) / 2
+        };
+    var cropBounds = {
+        left: layerBounds.left - margin,
+        top: layerBounds.top - margin, right: layerBounds.right + margin,
+        bottom: layerBounds.bottom + margin
+    };
+    doc.crop(cropBounds);
 }
 exports.cropToSquare = cropToSquare;
+function seletAllLayersOnTarget() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "move",
+                            _target: [{ _ref: "layer", _name: doc.layers[0].name }],
+                            selectionModifier: batchPlayConfig.selectionModifier.addToSelection
+                        }
+                    ])];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.seletAllLayersOnTarget = seletAllLayersOnTarget;
+/**
+ * use batchplay to move layer to document layers top index
+ */
+function moveLayerToDocTop() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([{
+                            "_obj": "move",
+                            "_target": batchPlayConfig._targetSeletLayers,
+                            "to": {
+                                "_ref": "layer",
+                                "_index": doc.layers.length + 2
+                            },
+                            "adjustment": false,
+                        }], batchPlayConfig.defaultOptions)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.moveLayerToDocTop = moveLayerToDocTop;
