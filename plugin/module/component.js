@@ -40,32 +40,62 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllEmptyLayers = void 0;
+exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllEmptyLayers = exports.getSubFolder = exports.getFiles = exports.pickFolder = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var app = require("photoshop").app;
-var fs = require("uxp").storage.localFileSystem;
+var localFileSystem = require("uxp").storage.localFileSystem;
 var batchPlay = require("photoshop").action.batchPlay;
 var doc = app.activeDocument;
-function showLayerNames() {
-    var allLayers = app.activeDocument.layers;
-    // const allLayerNames = allLayers.map(layer => layer.name);
-    // const sortedNames = allLayerNames.sort((a, b) => a < b ? -1 : a > b ? 1 : 0);
-    console.log(allLayers[0]);
-    return allLayers[0].bounds.right;
-}
-function useFolder() {
+function pickFolder() {
     return __awaiter(this, void 0, void 0, function () {
-        var userFolder;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, fs.getFolder()];
-                case 1:
-                    userFolder = _a.sent();
-                    return [2 /*return*/, userFolder.name];
+                case 0: return [4 /*yield*/, localFileSystem.getFolder()];
+                case 1: return [2 /*return*/, _a.sent()];
             }
         });
     });
 }
+exports.pickFolder = pickFolder;
+/**
+ *  return files obj array
+ * @param folder
+ * @param filterFilenameExtension  PSD/TIFF... or other
+ */
+function getFiles(folder, filterFilenameExtension) {
+    if (filterFilenameExtension === void 0) { filterFilenameExtension = ".*"; }
+    return __awaiter(this, void 0, void 0, function () {
+        var entries, nameExtensionRegexp;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, folder.getEntries()];
+                case 1:
+                    entries = _a.sent();
+                    nameExtensionRegexp = RegExp(".*\\." + filterFilenameExtension, "i");
+                    return [2 /*return*/, entries.filter(function (entry) { return nameExtensionRegexp.test(entry.name) && entry.isFile; })];
+            }
+        });
+    });
+}
+exports.getFiles = getFiles;
+/**
+ *
+ * @param folder
+ */
+function getSubFolder(folder) {
+    return __awaiter(this, void 0, void 0, function () {
+        var entries;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, folder.getEntries()];
+                case 1:
+                    entries = _a.sent();
+                    return [2 /*return*/, entries.filter(function (entry) { return entry.isFolder; })];
+            }
+        });
+    });
+}
+exports.getSubFolder = getSubFolder;
 /**
  * if have nothing,is empty layer
  * @param bounds rectangle size of something in layer,base document left-top point, {left,top,right,bottom}

@@ -4,25 +4,35 @@
  */
 
 import * as batchPlayConfig from "./batchplayconfig";
-
 const app = require("photoshop").app;
-const fs = require("uxp").storage.localFileSystem;
+const localFileSystem = require("uxp").storage.localFileSystem;
 const batchPlay = require("photoshop").action.batchPlay;
-
 const doc = app.activeDocument;
 
-function showLayerNames() {
-  const allLayers = app.activeDocument.layers;
-  // const allLayerNames = allLayers.map(layer => layer.name);
-  // const sortedNames = allLayerNames.sort((a, b) => a < b ? -1 : a > b ? 1 : 0);
-
-  console.log(allLayers[0]);
-  return allLayers[0].bounds.right;
+export async function pickFolder() {
+  return await localFileSystem.getFolder();
 }
 
-async function useFolder(): Promise<string> {
-  let userFolder = await fs.getFolder();
-  return userFolder.name;
+/**
+ *  return files obj array
+ * @param folder
+ * @param filterFilenameExtension  PSD/TIFF... or other
+ */
+export async function getFiles(folder, filterFilenameExtension: string = `.*`): Promise<any[]> {
+  const entries = await folder.getEntries();
+
+  const nameExtensionRegexp: RegExp = RegExp(`.*\\.${filterFilenameExtension}`, "i");
+
+  return entries.filter(entry => nameExtensionRegexp.test(entry.name) && entry.isFile);
+}
+
+/**
+ *
+ * @param folder
+ */
+export async function getSubFolder(folder): Promise<any[]> {
+  const entries = await folder.getEntries();
+  return entries.filter(entry => entry.isFolder);
 }
 
 interface IBounds {
@@ -91,7 +101,7 @@ export function deleteAllEmptyLayers(): void {
 
   let layers = doc.layers;
 
-  layers.map(async (layer) => {
+  layers.map(async layer => {
     if (isEmptyLayer(layer.bounds)) {
       // if unuse selected,sometime it can't set false
       if (layer.locked) {
@@ -192,8 +202,8 @@ export async function selectLayerByName(name: string, isGroup: boolean = false) 
   let layers = doc.layers;
   let layer =
     isGroup === true
-      ? layers.find((layer) => layer.name === name && layer.isGroupLayer === true)
-      : layers.find((layer) => layer.name === name && layer.isGroupLayer === undefined);
+      ? layers.find(layer => layer.name === name && layer.isGroupLayer === true)
+      : layers.find(layer => layer.name === name && layer.isGroupLayer === undefined);
 
   layer.name = `${nameIndex}${name}`;
 

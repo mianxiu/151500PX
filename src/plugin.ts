@@ -6,9 +6,8 @@ function doSomething() {
 
   //component.selectAllLayersOnTarget();
   console.log("123");
-  component.selectLayerByName("MAIN", true);
+  //component.selectLayerByName("MAIN", true);
   //component.cropToSize(400, 400);
-  //main.moveLayerToDocTop()
 }
 
 document.getElementById("btnPopulate").addEventListener("click", doSomething);

@@ -153,7 +153,7 @@ npm run watch
 
 ## Tool
 
-- [🔔 Use batchPlay , tool to recode action json](https://github.com/jardicc/alchemist)
+- [🔔 Use batchPlay and `jardicc/alchemist` tool to recode action json](https://github.com/jardicc/alchemist)
 
 - [Adobe UXP Developer Tool](https://www.adobe.io/photoshop/uxp/)
 
