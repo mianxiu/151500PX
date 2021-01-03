@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var component = require("./module/component");
 //todos
 function doSomething() {
     //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
@@ -7,5 +8,6 @@ function doSomething() {
     console.log("123");
     //component.selectLayerByName("MAIN", true);
     //component.cropToSize(400, 400);
+    component.convertToSmartObject();
 }
 document.getElementById("btnPopulate").addEventListener("click", doSomething);

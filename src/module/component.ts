@@ -20,7 +20,6 @@ export async function pickFolder() {
  */
 export async function getFiles(folder, filterFilenameExtension: string = `.*`): Promise<any[]> {
   const entries = await folder.getEntries();
-
   const nameExtensionRegexp: RegExp = RegExp(`.*\\.${filterFilenameExtension}`, "i");
 
   return entries.filter(entry => nameExtensionRegexp.test(entry.name) && entry.isFile);
@@ -223,7 +222,7 @@ export async function selectLayerByName(name: string, isGroup: boolean = false) 
 /**
  * select all layer on select layer
  */
-export async function selectAllLayersOnTarget() {
+export async function selectAllLayersOnTarget(excludeTarget: boolean = false) {
   let topLayerName = await doc.layers[0].name;
   await batchPlay(
     [
@@ -255,3 +254,17 @@ export async function moveLayerToDocTop() {
 }
 
 export async function moveLayerToParentTop() {}
+
+/**
+ * convert select layers to merge smart object
+ */
+export async function convertToSmartObject() {
+  await batchPlay(
+    [
+      {
+        _obj: "newPlacedLayer",
+      },
+    ],
+    batchPlayConfig.defaultOptions
+  );
+}

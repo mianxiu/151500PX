@@ -40,7 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllEmptyLayers = exports.getSubFolder = exports.getFiles = exports.pickFolder = void 0;
+exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllEmptyLayers = exports.getSubFolder = exports.getFiles = exports.pickFolder = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var app = require("photoshop").app;
 var localFileSystem = require("uxp").storage.localFileSystem;
@@ -274,7 +274,8 @@ exports.selectLayerByName = selectLayerByName;
 /**
  * select all layer on select layer
  */
-function selectAllLayersOnTarget() {
+function selectAllLayersOnTarget(excludeTarget) {
+    if (excludeTarget === void 0) { excludeTarget = false; }
     return __awaiter(this, void 0, void 0, function () {
         var topLayerName;
         return __generator(this, function (_a) {
@@ -326,3 +327,23 @@ function moveLayerToParentTop() {
     }); });
 }
 exports.moveLayerToParentTop = moveLayerToParentTop;
+/**
+ * convert select layers to merge smart object
+ */
+function convertToSmartObject() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "newPlacedLayer",
+                        },
+                    ], batchPlayConfig.defaultOptions)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.convertToSmartObject = convertToSmartObject;
