@@ -133,20 +133,30 @@ last step we add `removeEmoudle` and use `chokidar` to watch `plugin.ts` to comp
   findstr /V "Object.defineProperty(exports, " plugin.js > index.js
 ```
 
-### 😤 use `npm run watch` in vsc terminal, or other.
-
-powershell policy set
+### 7. 🚀 use `npm run watch` in vsc terminal, or other.
 
 ```
-set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+npm run watch
 ```
 
-use `Terminal -> Run Task -> typescript -> tsc:watch `
+## other tip
 
-## 🔔 Use batchPlay -> actionJSON
+- [Icons are not specified for panel entrypoints in the manifest. when use default manifest.json](https://forums.creativeclouddeveloper.com/t/help-with-photoshop-manifest-json/2176)
 
-[use tool to recode action json](https://github.com/jardicc/alchemist)
+- powershell policy set
+
+  ```
+  set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+  ```
+
+- use `Terminal -> Run Task -> typescript -> tsc:watch `
 
 ## Tool
 
+- [🔔 Use batchPlay , tool to recode action json](https://github.com/jardicc/alchemist)
+
 - [Adobe UXP Developer Tool](https://www.adobe.io/photoshop/uxp/)
+
+# TODO
+
+- use `---DO-SOMETHING-` for name, like `---DO-MAIN--` for init PSD file

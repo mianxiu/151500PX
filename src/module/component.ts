@@ -157,6 +157,7 @@ export function cropToSquare(margin: number) {
 
   doc.crop(cropBounds);
 }
+
 /**
  * crop document size to base active layer bounds's to size ( width,height ) ,
  * now only for a layer
@@ -181,6 +182,11 @@ export function cropToSize(width: number, height: number) {
   doc.crop(cropBounds);
 }
 
+/**
+ *  select a layer or group by name, if has multiply same type ( layer or group ), select the first base bottom to top index
+ * @param name
+ * @param isGroup
+ */
 export async function selectLayerByName(name: string, isGroup: boolean = false) {
   let nameIndex: string = `--DO-ACTIVE-`;
   let layers = doc.layers;
@@ -202,9 +208,8 @@ export async function selectLayerByName(name: string, isGroup: boolean = false) 
   );
 
   layer.name = name;
-
-  // layer.selected = (await layer) !== undefined ? true : false;
 }
+
 /**
  * select all layer on select layer
  */
@@ -238,3 +243,5 @@ export async function moveLayerToDocTop() {
     batchPlayConfig.defaultOptions
   );
 }
+
+export async function moveLayerToParentTop() {}

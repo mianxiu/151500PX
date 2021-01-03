@@ -40,7 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllEmptyLayers = void 0;
+exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllEmptyLayers = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var app = require("photoshop").app;
 var fs = require("uxp").storage.localFileSystem;
@@ -208,6 +208,11 @@ function cropToSize(width, height) {
     doc.crop(cropBounds);
 }
 exports.cropToSize = cropToSize;
+/**
+ *  select a layer or group by name, if has multiply same type ( layer or group ), select the first base bottom to top index
+ * @param name
+ * @param isGroup
+ */
 function selectLayerByName(name, isGroup) {
     if (isGroup === void 0) { isGroup = false; }
     return __awaiter(this, void 0, void 0, function () {
@@ -285,3 +290,9 @@ function moveLayerToDocTop() {
     });
 }
 exports.moveLayerToDocTop = moveLayerToDocTop;
+function moveLayerToParentTop() {
+    return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+        return [2 /*return*/];
+    }); });
+}
+exports.moveLayerToParentTop = moveLayerToParentTop;
