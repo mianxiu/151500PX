@@ -1,4 +1,4 @@
-import * as component from "./module/component";
+import * as compressAndExport from "./action/compressAndExport";
 //todos
 
 function doSomething() {
@@ -8,7 +8,7 @@ function doSomething() {
   console.log("123");
   //component.selectLayerByName("MAIN", true);
   //component.cropToSize(400, 400);
-  component.convertToSmartObject();
+  compressAndExport.mergeMainToSmartObject();
 }
 
 document.getElementById("btnPopulate").addEventListener("click", doSomething);

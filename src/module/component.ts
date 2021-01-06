@@ -4,35 +4,10 @@
  */
 
 import * as batchPlayConfig from "./batchplayconfig";
+import * as statement from "./name";
 const app = require("photoshop").app;
-const localFileSystem = require("uxp").storage.localFileSystem;
 const batchPlay = require("photoshop").action.batchPlay;
 const doc = app.activeDocument;
-
-export async function pickFolder() {
-  return await localFileSystem.getFolder();
-}
-
-/**
- *  return files obj array
- * @param folder
- * @param filterFilenameExtension  PSD/TIFF... or other
- */
-export async function getFiles(folder, filterFilenameExtension: string = `.*`): Promise<any[]> {
-  const entries = await folder.getEntries();
-  const nameExtensionRegexp: RegExp = RegExp(`.*\\.${filterFilenameExtension}`, "i");
-
-  return entries.filter(entry => nameExtensionRegexp.test(entry.name) && entry.isFile);
-}
-
-/**
- *
- * @param folder
- */
-export async function getSubFolder(folder): Promise<any[]> {
-  const entries = await folder.getEntries();
-  return entries.filter(entry => entry.isFolder);
-}
 
 interface IBounds {
   left: number;
@@ -59,7 +34,7 @@ interface IELementSize {
  * get element rectangle size
  * @param layer layer
  */
-function getElementSize(layer: any): IELementSize {
+export function getElementSize(layer: any): IELementSize {
   let layerBounds: IBounds = layer.bounds;
 
   let boundsLeft: number = layerBounds.left;
@@ -82,7 +57,7 @@ function getElementSize(layer: any): IELementSize {
  * decide element is vertcal or horizontal
  * @param elementSize
  */
-function isVertical(elementSize: IELementSize): boolean | null {
+export function isVertical(elementSize: IELementSize): boolean | null {
   if (elementSize.height > elementSize.width) {
     return true;
   } else if (elementSize.height < elementSize.width) {
@@ -253,6 +228,9 @@ export async function moveLayerToDocTop() {
   );
 }
 
+/**
+ * todo
+ */
 export async function moveLayerToParentTop() {}
 
 /**
@@ -268,3 +246,44 @@ export async function convertToSmartObject() {
     batchPlayConfig.defaultOptions
   );
 }
+
+export async function mergeLayers() {}
+
+/**
+ * ctrl + e
+ */
+export async function rasterizeTargetLayer() {
+  await batchPlay(
+    [
+      {
+        _obj: "rasterizeLayer",
+        _target: batchPlayConfig._targetSeletLayers,
+      },
+    ],
+    batchPlayConfig.defaultOptions
+  );
+}
+
+/**
+ * set layers to a name
+ */
+export async function setLayerName(name: string) {
+  await batchPlay(
+    [
+      {
+        _obj: "set",
+        _target: batchPlayConfig._targetSeletLayers,
+        to: {
+          _obj: "layer",
+          name: name,
+        },
+      },
+    ],
+    batchPlayConfig.defaultOptions
+  );
+}
+
+/**
+ * create white background layer under bottom
+ */
+export async function createWhiteBGLayer() {}

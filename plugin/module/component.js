@@ -40,62 +40,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllEmptyLayers = exports.getSubFolder = exports.getFiles = exports.pickFolder = void 0;
+exports.createWhiteBGLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var app = require("photoshop").app;
-var localFileSystem = require("uxp").storage.localFileSystem;
 var batchPlay = require("photoshop").action.batchPlay;
 var doc = app.activeDocument;
-function pickFolder() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, localFileSystem.getFolder()];
-                case 1: return [2 /*return*/, _a.sent()];
-            }
-        });
-    });
-}
-exports.pickFolder = pickFolder;
-/**
- *  return files obj array
- * @param folder
- * @param filterFilenameExtension  PSD/TIFF... or other
- */
-function getFiles(folder, filterFilenameExtension) {
-    if (filterFilenameExtension === void 0) { filterFilenameExtension = ".*"; }
-    return __awaiter(this, void 0, void 0, function () {
-        var entries, nameExtensionRegexp;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, folder.getEntries()];
-                case 1:
-                    entries = _a.sent();
-                    nameExtensionRegexp = RegExp(".*\\." + filterFilenameExtension, "i");
-                    return [2 /*return*/, entries.filter(function (entry) { return nameExtensionRegexp.test(entry.name) && entry.isFile; })];
-            }
-        });
-    });
-}
-exports.getFiles = getFiles;
-/**
- *
- * @param folder
- */
-function getSubFolder(folder) {
-    return __awaiter(this, void 0, void 0, function () {
-        var entries;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, folder.getEntries()];
-                case 1:
-                    entries = _a.sent();
-                    return [2 /*return*/, entries.filter(function (entry) { return entry.isFolder; })];
-            }
-        });
-    });
-}
-exports.getSubFolder = getSubFolder;
 /**
  * if have nothing,is empty layer
  * @param bounds rectangle size of something in layer,base document left-top point, {left,top,right,bottom}
@@ -122,6 +71,7 @@ function getElementSize(layer) {
     };
     return (elementSize = { width: elementWidth, height: elementHeight });
 }
+exports.getElementSize = getElementSize;
 /**
  * decide element is vertcal or horizontal
  * @param elementSize
@@ -135,6 +85,7 @@ function isVertical(elementSize) {
     }
     return null;
 }
+exports.isVertical = isVertical;
 /**
  * delete all empty layer
  */
@@ -321,6 +272,9 @@ function moveLayerToDocTop() {
     });
 }
 exports.moveLayerToDocTop = moveLayerToDocTop;
+/**
+ * todo
+ */
 function moveLayerToParentTop() {
     return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
         return [2 /*return*/];
@@ -347,3 +301,64 @@ function convertToSmartObject() {
     });
 }
 exports.convertToSmartObject = convertToSmartObject;
+function mergeLayers() {
+    return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+        return [2 /*return*/];
+    }); });
+}
+exports.mergeLayers = mergeLayers;
+/**
+ * ctrl + e
+ */
+function rasterizeTargetLayer() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "rasterizeLayer",
+                            _target: batchPlayConfig._targetSeletLayers,
+                        },
+                    ], batchPlayConfig.defaultOptions)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.rasterizeTargetLayer = rasterizeTargetLayer;
+/**
+ * set layers to a name
+ */
+function setLayerName(name) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "set",
+                            _target: batchPlayConfig._targetSeletLayers,
+                            to: {
+                                _obj: "layer",
+                                name: name,
+                            },
+                        },
+                    ], batchPlayConfig.defaultOptions)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.setLayerName = setLayerName;
+/**
+ * create white background layer under bottom
+ */
+function createWhiteBGLayer() {
+    return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+        return [2 /*return*/];
+    }); });
+}
+exports.createWhiteBGLayer = createWhiteBGLayer;
