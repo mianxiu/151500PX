@@ -38,34 +38,47 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mergeMainToSmartObject = void 0;
 var component = require("../module/component");
-var name = require("../module/name");
+var name = require("../module/layername");
 var app = require("photoshop").app;
+var fuckingExportSize = 1500;
+var fuckingMargin = 20;
 function mergeMainToSmartObject() {
     return __awaiter(this, void 0, void 0, function () {
+        var layerSize;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, component.deleteAllEmptyLayers()];
+                case 0: return [4 /*yield*/, component.selectLayerByName("MAIN")];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, component.selectLayerByName("MAIN")];
+                    return [4 /*yield*/, component.selectAllLayersOnTarget()];
                 case 2:
                     _a.sent();
-                    return [4 /*yield*/, component.selectAllLayersOnTarget()];
+                    return [4 /*yield*/, component.convertToSmartObject()];
                 case 3:
                     _a.sent();
-                    return [4 /*yield*/, component.convertToSmartObject()];
+                    return [4 /*yield*/, component.rasterizeTargetLayer()];
                 case 4:
                     _a.sent();
-                    return [4 /*yield*/, component.rasterizeTargetLayer()];
+                    return [4 /*yield*/, component.convertToSmartObject()];
                 case 5:
                     _a.sent();
-                    return [4 /*yield*/, component.convertToSmartObject()];
+                    return [4 /*yield*/, component.setLayerName(name.__DO_ACTION__)];
                 case 6:
                     _a.sent();
-                    return [4 /*yield*/, component.setLayerName(name.__DO_ACTION__)];
+                    return [4 /*yield*/, component.getElementSize(app.activeDocument.activeLayers[0])];
                 case 7:
+                    layerSize = _a.sent();
+                    console.log(layerSize);
+                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 9];
+                    return [4 /*yield*/, component.cropToSize(fuckingExportSize, fuckingExportSize)];
+                case 8:
                     _a.sent();
-                    return [2 /*return*/];
+                    return [3 /*break*/, 11];
+                case 9: return [4 /*yield*/, component.cropToSquare(fuckingMargin)];
+                case 10:
+                    _a.sent();
+                    _a.label = 11;
+                case 11: return [2 /*return*/];
             }
         });
     });

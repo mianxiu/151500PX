@@ -4,7 +4,7 @@
  */
 
 import * as batchPlayConfig from "./batchplayconfig";
-import * as statement from "./name";
+import * as statement from "./layername";
 const app = require("photoshop").app;
 const batchPlay = require("photoshop").action.batchPlay;
 const doc = app.activeDocument;
