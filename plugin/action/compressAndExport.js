@@ -47,7 +47,7 @@ function mergeMainToSmartObject() {
         var layerSize;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, component.selectLayerByName("MAIN")];
+                case 0: return [4 /*yield*/, component.selectLayerByName("MAIN", true)];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, component.selectAllLayersOnTarget()];

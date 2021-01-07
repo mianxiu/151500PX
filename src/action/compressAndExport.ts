@@ -8,7 +8,7 @@ const fuckingExportSize: number = 1500;
 const fuckingMargin: number = 20;
 
 export async function mergeMainToSmartObject() {
-  await component.selectLayerByName(`MAIN`);
+  await component.selectLayerByName(`MAIN`, true);
   await component.selectAllLayersOnTarget();
   await component.convertToSmartObject();
   await component.rasterizeTargetLayer();
@@ -21,4 +21,6 @@ export async function mergeMainToSmartObject() {
   } else {
     await component.cropToSquare(fuckingMargin);
   }
+
+  // await component.createWhiteBGLayer();
 }

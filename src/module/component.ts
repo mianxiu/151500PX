@@ -4,7 +4,7 @@
  */
 
 import * as batchPlayConfig from "./batchplayconfig";
-import * as statement from "./layername";
+import * as layername from "./layername";
 const app = require("photoshop").app;
 const batchPlay = require("photoshop").action.batchPlay;
 const doc = app.activeDocument;
@@ -273,10 +273,7 @@ export async function setLayerName(name: string) {
       {
         _obj: "set",
         _target: batchPlayConfig._targetSeletLayers,
-        to: {
-          _obj: "layer",
-          name: name,
-        },
+        to: { _obj: "layer", name: name },
       },
     ],
     batchPlayConfig.defaultOptions
@@ -286,4 +283,10 @@ export async function setLayerName(name: string) {
 /**
  * create white background layer under bottom
  */
-export async function createWhiteBGLayer() {}
+export async function createWhiteBGLayer() {
+  // await doc.createLayer({ name: layername.__WHITE_BACKGROUND__ });
+  await batchPlay(
+    [{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }],
+    batchPlayConfig.defaultOptions
+  );
+}
