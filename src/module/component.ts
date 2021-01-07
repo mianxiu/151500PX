@@ -7,6 +7,10 @@ import * as batchPlayConfig from "./batchplayconfig";
 import * as layername from "./layername";
 const app = require("photoshop").app;
 const batchPlay = require("photoshop").action.batchPlay;
+
+/**
+ * app.activeDocument
+ */
 const doc = app.activeDocument;
 
 interface IBounds {
@@ -86,6 +90,12 @@ export function deleteAllEmptyLayers(): void {
       await layer.delete();
     }
   });
+}
+
+export async function deleteAllLayersExcludeTarget() {
+  let layer = doc.activeLayers[0].name === layername.__DO_ACTION__ ? doc.activeLayers[0] : null;
+  if (layer !== null) {
+  }
 }
 
 /**
@@ -195,10 +205,18 @@ export async function selectLayerByName(name: string, isGroup: boolean = false) 
 }
 
 /**
- * select all layer on select layer
+ * select all layer on select layer,if toBottom = true,
+ * @param excludeTarget
+ * @param toBottom
  */
-export async function selectAllLayersOnTarget(excludeTarget: boolean = false) {
-  let topLayerName = await doc.layers[0].name;
+export async function selectAllLayersOnTarget(
+  excludeTarget: boolean = false,
+  toBottom: boolean = false
+) {
+  let topLayerName =
+    toBottom === true ? await doc.layers[doc.layer.length - 1].name : await doc.layers[0].name;
+  if (excludeTarget === true) {
+  }
   await batchPlay(
     [
       {
@@ -248,6 +266,9 @@ export async function convertToSmartObject() {
 }
 
 export async function mergeLayers() {}
+export async function mergeLayerNew() {
+  await batchPlay([{ _obj: "mergeLayersNew" }], batchPlayConfig.defaultOptions);
+}
 
 /**
  * ctrl + e
@@ -283,10 +304,31 @@ export async function setLayerName(name: string) {
 /**
  * create white background layer under bottom
  */
-export async function createWhiteBGLayer() {
-  // await doc.createLayer({ name: layername.__WHITE_BACKGROUND__ });
+export async function createBGLayer() {
+  let backgroundLayer = doc.backgroundLayer;
+  console.log(backgroundLayer.name);
+  if (backgroundLayer === null) {
+    await batchPlay(
+      [{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }],
+      batchPlayConfig.defaultOptions
+    );
+  } else {
+    backgroundLayer.selected = await true;
+    await selectLayerByName(backgroundLayer.name);
+  }
+}
+
+export async function fillWhite() {
   await batchPlay(
-    [{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }],
+    [
+      {
+        _obj: "fill",
+        using: { _enum: "fillContents", _value: "color" },
+        color: { _obj: "RGBColor", red: 255, grain: 255, blue: 255 },
+        opacity: { _unit: "percentUnit", _value: 100 },
+        mode: { _enum: "blendMode", _value: "normal" },
+      },
+    ],
     batchPlayConfig.defaultOptions
   );
 }

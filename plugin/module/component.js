@@ -40,10 +40,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createWhiteBGLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = void 0;
+exports.fillWhite = exports.createBGLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = void 0;
 var batchPlayConfig = require("./batchplayconfig");
+var layername = require("./layername");
 var app = require("photoshop").app;
 var batchPlay = require("photoshop").action.batchPlay;
+/**
+ * app.activeDocument
+ */
 var doc = app.activeDocument;
 /**
  * if have nothing,is empty layer
@@ -120,6 +124,18 @@ function deleteAllEmptyLayers() {
     }); });
 }
 exports.deleteAllEmptyLayers = deleteAllEmptyLayers;
+function deleteAllLayersExcludeTarget() {
+    return __awaiter(this, void 0, void 0, function () {
+        var layer;
+        return __generator(this, function (_a) {
+            layer = doc.activeLayers[0].name === layername.__DO_ACTION__ ? doc.activeLayers[0] : null;
+            if (layer !== null) {
+            }
+            return [2 /*return*/];
+        });
+    });
+}
+exports.deleteAllLayersExcludeTarget = deleteAllLayersExcludeTarget;
 /**
  * crop document size to active layer bounds, now only for a layer
  * @param margin maring to document boundary
@@ -223,17 +239,31 @@ function selectLayerByName(name, isGroup) {
 }
 exports.selectLayerByName = selectLayerByName;
 /**
- * select all layer on select layer
+ * select all layer on select layer,if toBottom = true,
+ * @param excludeTarget
+ * @param toBottom
  */
-function selectAllLayersOnTarget(excludeTarget) {
+function selectAllLayersOnTarget(excludeTarget, toBottom) {
     if (excludeTarget === void 0) { excludeTarget = false; }
+    if (toBottom === void 0) { toBottom = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var topLayerName;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, doc.layers[0].name];
+        var topLayerName, _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    if (!(toBottom === true)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, doc.layers[doc.layer.length - 1].name];
                 case 1:
-                    topLayerName = _a.sent();
+                    _a = _b.sent();
+                    return [3 /*break*/, 4];
+                case 2: return [4 /*yield*/, doc.layers[0].name];
+                case 3:
+                    _a = _b.sent();
+                    _b.label = 4;
+                case 4:
+                    topLayerName = _a;
+                    if (excludeTarget === true) {
+                    }
                     return [4 /*yield*/, batchPlay([
                             {
                                 _obj: "select",
@@ -241,8 +271,8 @@ function selectAllLayersOnTarget(excludeTarget) {
                                 selectionModifier: batchPlayConfig.selectionModifier.addToSelectionContinuous,
                             },
                         ], batchPlayConfig.defaultOptions)];
-                case 2:
-                    _a.sent();
+                case 5:
+                    _b.sent();
                     return [2 /*return*/];
             }
         });
@@ -307,6 +337,19 @@ function mergeLayers() {
     }); });
 }
 exports.mergeLayers = mergeLayers;
+function mergeLayerNew() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([{ _obj: "mergeLayersNew" }], batchPlayConfig.defaultOptions)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.mergeLayerNew = mergeLayerNew;
 /**
  * ctrl + e
  */
@@ -353,19 +396,52 @@ exports.setLayerName = setLayerName;
 /**
  * create white background layer under bottom
  */
-function createWhiteBGLayer() {
+function createBGLayer() {
+    return __awaiter(this, void 0, void 0, function () {
+        var backgroundLayer, _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    backgroundLayer = doc.backgroundLayer;
+                    console.log(backgroundLayer.name);
+                    if (!(backgroundLayer === null)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions)];
+                case 1:
+                    _b.sent();
+                    return [3 /*break*/, 5];
+                case 2:
+                    _a = backgroundLayer;
+                    return [4 /*yield*/, true];
+                case 3:
+                    _a.selected = _b.sent();
+                    return [4 /*yield*/, selectLayerByName(backgroundLayer.name)];
+                case 4:
+                    _b.sent();
+                    _b.label = 5;
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.createBGLayer = createBGLayer;
+function fillWhite() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: 
-                // await doc.createLayer({ name: layername.__WHITE_BACKGROUND__ });
-                return [4 /*yield*/, batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions)];
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "fill",
+                            using: { _enum: "fillContents", _value: "color" },
+                            color: { _obj: "RGBColor", red: 255, grain: 255, blue: 255 },
+                            opacity: { _unit: "percentUnit", _value: 100 },
+                            mode: { _enum: "blendMode", _value: "normal" },
+                        },
+                    ], batchPlayConfig.defaultOptions)];
                 case 1:
-                    // await doc.createLayer({ name: layername.__WHITE_BACKGROUND__ });
                     _a.sent();
                     return [2 /*return*/];
             }
         });
     });
 }
-exports.createWhiteBGLayer = createWhiteBGLayer;
+exports.fillWhite = fillWhite;

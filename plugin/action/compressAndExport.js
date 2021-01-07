@@ -42,43 +42,63 @@ var name = require("../module/layername");
 var app = require("photoshop").app;
 var fuckingExportSize = 1500;
 var fuckingMargin = 20;
+// todo 可能是batchplayer 线程堵塞的问题
 function mergeMainToSmartObject() {
     return __awaiter(this, void 0, void 0, function () {
-        var layerSize;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var layerSize, _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0: return [4 /*yield*/, component.selectLayerByName("MAIN", true)];
                 case 1:
-                    _a.sent();
+                    _b.sent();
                     return [4 /*yield*/, component.selectAllLayersOnTarget()];
                 case 2:
-                    _a.sent();
+                    _b.sent();
                     return [4 /*yield*/, component.convertToSmartObject()];
                 case 3:
-                    _a.sent();
+                    _b.sent();
                     return [4 /*yield*/, component.rasterizeTargetLayer()];
                 case 4:
-                    _a.sent();
-                    return [4 /*yield*/, component.convertToSmartObject()];
+                    _b.sent();
+                    return [4 /*yield*/, component.mergeLayerNew()];
                 case 5:
-                    _a.sent();
-                    return [4 /*yield*/, component.setLayerName(name.__DO_ACTION__)];
+                    _b.sent();
+                    return [4 /*yield*/, component.convertToSmartObject()];
                 case 6:
-                    _a.sent();
-                    return [4 /*yield*/, component.getElementSize(app.activeDocument.activeLayers[0])];
+                    _b.sent();
+                    return [4 /*yield*/, component.setLayerName(name.__DO_ACTION__)];
                 case 7:
-                    layerSize = _a.sent();
-                    console.log(layerSize);
-                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 9];
-                    return [4 /*yield*/, component.cropToSize(fuckingExportSize, fuckingExportSize)];
+                    _b.sent();
+                    return [4 /*yield*/, component.getElementSize(app.activeDocument.activeLayers[0])];
                 case 8:
-                    _a.sent();
-                    return [3 /*break*/, 11];
-                case 9: return [4 /*yield*/, component.cropToSquare(fuckingMargin)];
-                case 10:
-                    _a.sent();
-                    _a.label = 11;
-                case 11: return [2 /*return*/];
+                    layerSize = _b.sent();
+                    console.log(layerSize.width, layerSize.height);
+                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 10];
+                    return [4 /*yield*/, component.cropToSize(fuckingExportSize, fuckingExportSize)];
+                case 9:
+                    _b.sent();
+                    return [3 /*break*/, 12];
+                case 10: return [4 /*yield*/, component.cropToSquare(fuckingMargin)];
+                case 11:
+                    _b.sent();
+                    _b.label = 12;
+                case 12: return [4 /*yield*/, component.createBGLayer()];
+                case 13:
+                    _b.sent();
+                    return [4 /*yield*/, component.selectAllLayersOnTarget()];
+                case 14:
+                    _b.sent();
+                    _a = app.activeDocument.layers[0];
+                    return [4 /*yield*/, false];
+                case 15:
+                    _a.selected = _b.sent(); // unselected --DO-ACTION--
+                    return [4 /*yield*/, component.mergeLayerNew()];
+                case 16:
+                    _b.sent();
+                    return [4 /*yield*/, component.fillWhite()];
+                case 17:
+                    _b.sent();
+                    return [2 /*return*/];
             }
         });
     });
