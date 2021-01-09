@@ -9,9 +9,9 @@ const app = require("photoshop").app;
 const batchPlay = require("photoshop").action.batchPlay;
 
 /**
- * app.activeDocument
+ * app.documents 0
  */
-const doc = app.activeDocument;
+const doc = app.documents[0];
 
 interface IBounds {
   left: number;

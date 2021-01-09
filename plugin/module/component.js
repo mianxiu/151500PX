@@ -46,9 +46,9 @@ var layername = require("./layername");
 var app = require("photoshop").app;
 var batchPlay = require("photoshop").action.batchPlay;
 /**
- * app.activeDocument
+ * app.documents 0
  */
-var doc = app.activeDocument;
+var doc = app.documents[0];
 /**
  * if have nothing,is empty layer
  * @param bounds rectangle size of something in layer,base document left-top point, {left,top,right,bottom}

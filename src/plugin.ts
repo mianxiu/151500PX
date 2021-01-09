@@ -8,7 +8,8 @@ function doSomething() {
   console.log("123");
   //component.selectLayerByName("MAIN", true);
   //component.cropToSize(400, 400);
-  compressAndExport.mergeMainToSmartObject();
+  //compressAndExport.mergeMainToSmartObject();
+  compressAndExport.ffff();
 }
 
 document.getElementById("btnPopulate").addEventListener("click", doSomething);

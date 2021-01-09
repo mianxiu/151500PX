@@ -36,11 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSubFolder = exports.getFiles = exports.pickFolder = void 0;
+exports.getAllSubFolder = exports.createSubFolder = exports.createFolder = exports.getSubFolder = exports.getFiles = exports.pickFolder = void 0;
 var localFileSystem = require("uxp").storage.localFileSystem;
-/**
- * retrun a folder<promise>
- */
 function pickFolder() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -74,7 +71,7 @@ function getFiles(folder, filterFilenameExtension) {
 }
 exports.getFiles = getFiles;
 /**
- *
+ * return sub folder promise
  * @param folder
  */
 function getSubFolder(folder) {
@@ -91,3 +88,79 @@ function getSubFolder(folder) {
     });
 }
 exports.getSubFolder = getSubFolder;
+function createFolder(path) {
+    return __awaiter(this, void 0, void 0, function () {
+        var aa;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, pickFolder()];
+                case 1:
+                    aa = _a.sent();
+                    aa.createFolder(path);
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.createFolder = createFolder;
+function createSubFolder(parentPath, subFolderNamer) {
+    return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+        return [2 /*return*/];
+    }); });
+}
+exports.createSubFolder = createSubFolder;
+function getAllSubFolder(pickFolder) {
+    return __awaiter(this, void 0, void 0, function () {
+        var allSubFolder, loopFolder, _a, _b, _c;
+        var _this = this;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0:
+                    allSubFolder = [];
+                    loopFolder = function (subFolders) { return __awaiter(_this, void 0, void 0, function () {
+                        var _this = this;
+                        return __generator(this, function (_a) {
+                            subFolders.forEach(function (subFolder) { return __awaiter(_this, void 0, void 0, function () {
+                                var folderTree, _a;
+                                return __generator(this, function (_b) {
+                                    switch (_b.label) {
+                                        case 0: return [4 /*yield*/, {
+                                                rootPath: pickFolder.nativePath,
+                                                nativePath: subFolder.nativePath,
+                                                folderName: subFolder.name,
+                                                folderSymbol: subFolder,
+                                            }];
+                                        case 1:
+                                            folderTree = _b.sent();
+                                            return [4 /*yield*/, allSubFolder.push(folderTree)];
+                                        case 2:
+                                            _b.sent();
+                                            if (!(subFolders.length > 0)) return [3 /*break*/, 5];
+                                            console.log(subFolders.length);
+                                            _a = loopFolder;
+                                            return [4 /*yield*/, getSubFolder(subFolder)];
+                                        case 3: return [4 /*yield*/, _a.apply(void 0, [_b.sent()])];
+                                        case 4:
+                                            _b.sent();
+                                            _b.label = 5;
+                                        case 5: return [2 /*return*/];
+                                    }
+                                });
+                            }); });
+                            return [2 /*return*/];
+                        });
+                    }); };
+                    _a = loopFolder;
+                    return [4 /*yield*/, getSubFolder(pickFolder)];
+                case 1:
+                    _a.apply(void 0, [_d.sent()]);
+                    _c = (_b = console).log;
+                    return [4 /*yield*/, allSubFolder];
+                case 2:
+                    _c.apply(_b, [_d.sent()]);
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.getAllSubFolder = getAllSubFolder;
