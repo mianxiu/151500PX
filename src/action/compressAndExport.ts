@@ -1,7 +1,8 @@
 import * as batchPlayConfig from "../module/batchplayconfig";
 import * as component from "../module/component";
-import * as name from "../module/layername";
+import * as names from "../module/names";
 import * as folder from "../module/floder";
+import * as secureStorage from "../module/securestorage";
 
 const app = require("photoshop").app;
 
@@ -9,6 +10,9 @@ const fuckingExportSize: number = 1500;
 const fuckingMargin: number = 20;
 // todo 可能是batchplayer 线程堵塞的问题
 
+/**
+ *
+ */
 export async function mergeMainToSmartObject() {
   await component.selectLayerByName(`MAIN`, true);
   await component.mergeLayerNew();
@@ -17,7 +21,7 @@ export async function mergeMainToSmartObject() {
   await component.rasterizeTargetLayer();
   await component.mergeLayerNew();
   await component.convertToSmartObject();
-  await component.setLayerName(name.__DO_ACTION__);
+  await component.setLayerName(names.__DO_ACTION__);
   let layerSize = await component.getElementSize(app.activeDocument.activeLayers[0]);
   console.log(layerSize.width, layerSize.height);
   if (layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize) {
@@ -35,5 +39,5 @@ export async function mergeMainToSmartObject() {
 export async function ffff() {
   //await folder.createFolder(`1oo`);
   let pickfolder = await folder.pickFolder();
-  await folder.getAllSubFolder(pickfolder);
+  await folder.createAllSubFolderOnRoot(await folder.getAllSubFolders(pickfolder));
 }

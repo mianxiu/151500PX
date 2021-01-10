@@ -38,12 +38,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ffff = exports.mergeMainToSmartObject = void 0;
 var component = require("../module/component");
-var name = require("../module/layername");
+var names = require("../module/names");
 var folder = require("../module/floder");
 var app = require("photoshop").app;
 var fuckingExportSize = 1500;
 var fuckingMargin = 20;
 // todo 可能是batchplayer 线程堵塞的问题
+/**
+ *
+ */
 function mergeMainToSmartObject() {
     return __awaiter(this, void 0, void 0, function () {
         var layerSize, _a;
@@ -70,7 +73,7 @@ function mergeMainToSmartObject() {
                     return [4 /*yield*/, component.convertToSmartObject()];
                 case 7:
                     _b.sent();
-                    return [4 /*yield*/, component.setLayerName(name.__DO_ACTION__)];
+                    return [4 /*yield*/, component.setLayerName(names.__DO_ACTION__)];
                 case 8:
                     _b.sent();
                     return [4 /*yield*/, component.getElementSize(app.activeDocument.activeLayers[0])];
@@ -110,15 +113,17 @@ function mergeMainToSmartObject() {
 exports.mergeMainToSmartObject = mergeMainToSmartObject;
 function ffff() {
     return __awaiter(this, void 0, void 0, function () {
-        var pickfolder;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var pickfolder, _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0: return [4 /*yield*/, folder.pickFolder()];
                 case 1:
-                    pickfolder = _a.sent();
-                    return [4 /*yield*/, folder.getAllSubFolder(pickfolder)];
-                case 2:
-                    _a.sent();
+                    pickfolder = _c.sent();
+                    _b = (_a = folder).createAllSubFolderOnRoot;
+                    return [4 /*yield*/, folder.getAllSubFolders(pickfolder)];
+                case 2: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
+                case 3:
+                    _c.sent();
                     return [2 /*return*/];
             }
         });

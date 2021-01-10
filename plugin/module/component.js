@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fillWhite = exports.createBGLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = void 0;
 var batchPlayConfig = require("./batchplayconfig");
-var layername = require("./layername");
+var layername = require("./names");
 var app = require("photoshop").app;
 var batchPlay = require("photoshop").action.batchPlay;
 /**

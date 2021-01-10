@@ -1,3 +1,4 @@
+import * as names from "../module/names";
 const localFileSystem = require("uxp").storage.localFileSystem;
 
 //(4.4.1) Always invoke a picker once per document session when accessing a user file (excludes temporary and plugin data).
@@ -24,6 +25,12 @@ export async function pickFolder() {
   return await localFileSystem.getFolder();
 }
 
+export async function isExitSubFolder(parentFolderSymbol: any, folderName: string) {
+  return (await parentFolderSymbol.getEntries().filter(entry => entry.name === folderName && entry.isFolder).length) > 0
+    ? true
+    : false;
+}
+
 /**
  *  return files obj array
  * @param folder
@@ -36,13 +43,54 @@ export async function getFiles(folder, filterFilenameExtension: string = `.*`): 
   return entries.filter(entry => nameExtensionRegexp.test(entry.name) && entry.isFile);
 }
 
+export async function getSubFolderByName(parentFolderSymbol: any, folderName: string): Promise<any | null> {
+  let subFolderSymbols = await parentFolderSymbol
+    .getEntries()
+    .filter(entry => entry.name === folderName && entry.isFolder);
+  return subFolderSymbols.length > 0 ? subFolderSymbols[0] : null;
+}
+
 /**
  * return sub folder promise
  * @param folder
  */
-export async function getSubFolder(folder): Promise<any[]> {
+export async function getSubFolders(folder): Promise<any[]> {
   const entries = await folder.getEntries();
   return entries.filter(entry => entry.isFolder);
+}
+
+interface IFloderTreePath {
+  pickFloderSymbol: IFolder | any;
+  nativePath: string;
+  folderName: string;
+  folderSymbol: any;
+}
+
+/**
+ * loop get all sub folder
+ * @param pickFolder
+ */
+export async function getAllSubFolders(pickFolder) {
+  let allSubFolder: IFloderTreePath[] = [];
+
+  let loopFolder = async subFolders => {
+    subFolders.forEach(async subFolder => {
+      let folderTree: IFloderTreePath = await {
+        pickFloderSymbol: pickFolder,
+        nativePath: subFolder.nativePath,
+        folderName: subFolder.name,
+        folderSymbol: subFolder,
+      };
+      await allSubFolder.push(folderTree);
+
+      if (subFolders.length > 0) {
+        await loopFolder(await getSubFolders(subFolder));
+      }
+    });
+  };
+
+  loopFolder(await getSubFolders(pickFolder));
+  return allSubFolder;
 }
 
 export async function createFolder(path: string) {
@@ -52,33 +100,22 @@ export async function createFolder(path: string) {
 
 export async function createSubFolder(parentPath: string, subFolderNamer) {}
 
-interface IFloderTreePath {
-  rootPath: string;
-  nativePath: string;
-  folderName: string;
-  folderSymbol: any;
-}
-export async function getAllSubFolder(pickFolder) {
-  let allSubFolder: IFloderTreePath[] = [];
+/**
+ *
+ * @param folderTreePaths
+ */
+export async function createAllSubFolderOnRoot(folderTreePaths: IFloderTreePath[]) {
+  if (folderTreePaths.length < 1) {
+    return console.log(names.folderError.subFolderIsEmpty);
+  }
 
-  let loopFolder = async subFolders => {
-    subFolders.forEach(async subFolder => {
-      let folderTree: IFloderTreePath = await {
-        rootPath: pickFolder.nativePath,
-        nativePath: subFolder.nativePath,
-        folderName: subFolder.name,
-        folderSymbol: subFolder,
-      };
-      await allSubFolder.push(folderTree);
+  let pickFLoder = await folderTreePaths[0].pickFloderSymbol;
+  let exportFoloderName = pickFLoder.nativePath.replace(/.*[\\|\/](.*)/gm, `$1 EXPORT`);
 
-      if (subFolders.length > 0) {
-        console.log(subFolders.length);
-        await loopFolder(await getSubFolder(subFolder));
-      }
-    });
-  };
+  console.log(exportFoloderName);
+  let exportFolder = isExitSubFolder(pickFLoder, exportFoloderName)
+    ? await pickFLoder.createFolder(exportFoloderName)
+    : await getSubFolderByName(pickFLoder, exportFoloderName);
 
-  loopFolder(await getSubFolder(pickFolder));
-
-  console.log(await allSubFolder);
+  folderTreePaths.forEach(folderTree => {});
 }
