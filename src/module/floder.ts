@@ -61,35 +61,40 @@ export async function getSubFolders(folder): Promise<any[]> {
 
 interface IFloderTreePath {
   pickFloderSymbol: IFolder | any;
-  nativePath: string;
+  pickFolderName: string;
+  parentName: string;
   folderName: string;
   folderSymbol: any;
 }
 
 /**
- * loop get all sub folder
+ * loop get all sub folder,return folderSymbol array [left,left-sub,right,right-sub]
  * @param pickFolder
  */
-export async function getAllSubFolders(pickFolder) {
+export async function getAllSubFolders(pickFolder, filterPSD: boolean = false) {
   let allSubFolder: IFloderTreePath[] = [];
-
+  let pickFolderName = pickFolder.nativePath.replace(/.*[\\|\/](.*)/gm, "$1");
   let loopFolder = async subFolders => {
-    subFolders.forEach(async subFolder => {
-      let folderTree: IFloderTreePath = await {
-        pickFloderSymbol: pickFolder,
-        nativePath: subFolder.nativePath,
-        folderName: subFolder.name,
-        folderSymbol: subFolder,
-      };
-      await allSubFolder.push(folderTree);
+    /**
+     * for loop is left-leftSub-right-rightSub
+     * foreach loop is left-right-leftSub-rightSub
+     */
+    for (let i = 0; i < subFolders.length; i++) {
+      let element = subFolders[i];
+      let parentName = element.nativePath.replace(/.*[\\|\/](.+?)[\\|\/]/, `$1/`).replace(/(.*)\/.*/gm, `$1`);
 
-      if (subFolders.length > 0) {
-        await loopFolder(await getSubFolders(subFolder));
-      }
-    });
+      await allSubFolder.push({
+        pickFloderSymbol: pickFolder,
+        pickFolderName: pickFolderName,
+        parentName: parentName,
+        folderName: element.name,
+        folderSymbol: element,
+      });
+      await loopFolder(await getSubFolders(element));
+    }
   };
 
-  loopFolder(await getSubFolders(pickFolder));
+  await loopFolder(await getSubFolders(pickFolder));
   return allSubFolder;
 }
 
@@ -104,18 +109,18 @@ export async function createSubFolder(parentPath: string, subFolderNamer) {}
  *
  * @param folderTreePaths
  */
-export async function createAllSubFolderOnRoot(folderTreePaths: IFloderTreePath[]) {
+export async function createExportFolderOnRoot(folderTreePaths: IFloderTreePath[]) {
   if (folderTreePaths.length < 1) {
     return console.log(names.folderError.subFolderIsEmpty);
   }
 
   let pickFLoder = await folderTreePaths[0].pickFloderSymbol;
-  let exportFoloderName = pickFLoder.nativePath.replace(/.*[\\|\/](.*)/gm, `$1 EXPORT`);
+  let exportFoloderName = pickFLoder.nativePath.replace(/.*[\\|\/](.*)/gm, `$1${names.__EXPORT__}`);
 
+  let rootFolderSymbol = await getSubFolderByName(pickFLoder, exportFoloderName);
   console.log(exportFoloderName);
-  let exportFolder = isExitSubFolder(pickFLoder, exportFoloderName)
-    ? await pickFLoder.createFolder(exportFoloderName)
-    : await getSubFolderByName(pickFLoder, exportFoloderName);
+  let exportRootFolder =
+    rootFolderSymbol !== null ? await pickFLoder.createFolder(exportFoloderName) : rootFolderSymbol;
 
   folderTreePaths.forEach(folderTree => {});
 }

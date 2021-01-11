@@ -39,5 +39,6 @@ export async function mergeMainToSmartObject() {
 export async function ffff() {
   //await folder.createFolder(`1oo`);
   let pickfolder = await folder.pickFolder();
-  await folder.createAllSubFolderOnRoot(await folder.getAllSubFolders(pickfolder));
+  console.log(await folder.getAllSubFolders(pickfolder));
+  //await folder.createAllSubFolderOnRoot(await folder.getAllSubFolders(pickfolder));
 }

@@ -119,11 +119,10 @@ function ffff() {
                 case 0: return [4 /*yield*/, folder.pickFolder()];
                 case 1:
                     pickfolder = _c.sent();
-                    _b = (_a = folder).createAllSubFolderOnRoot;
+                    _b = (_a = console).log;
                     return [4 /*yield*/, folder.getAllSubFolders(pickfolder)];
-                case 2: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
-                case 3:
-                    _c.sent();
+                case 2:
+                    _b.apply(_a, [_c.sent()]);
                     return [2 /*return*/];
             }
         });
