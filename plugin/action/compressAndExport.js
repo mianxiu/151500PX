@@ -113,16 +113,19 @@ function mergeMainToSmartObject() {
 exports.mergeMainToSmartObject = mergeMainToSmartObject;
 function ffff() {
     return __awaiter(this, void 0, void 0, function () {
-        var pickfolder, _a, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var pickfolder, allSubFolders;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0: return [4 /*yield*/, folder.pickFolder()];
                 case 1:
-                    pickfolder = _c.sent();
-                    _b = (_a = console).log;
+                    pickfolder = _a.sent();
                     return [4 /*yield*/, folder.getAllSubFolders(pickfolder)];
                 case 2:
-                    _b.apply(_a, [_c.sent()]);
+                    allSubFolders = _a.sent();
+                    console.log(allSubFolders);
+                    return [4 /*yield*/, folder.createExportFolderOnRoot(pickfolder, allSubFolders)];
+                case 3:
+                    _a.sent();
                     return [2 /*return*/];
             }
         });

@@ -27,8 +27,8 @@ export async function pickFolder() {
 
 export async function isExitSubFolder(parentFolderSymbol: any, folderName: string) {
   return (await parentFolderSymbol.getEntries().filter(entry => entry.name === folderName && entry.isFolder).length) > 0
-    ? true
-    : false;
+    ? await true
+    : await false;
 }
 
 /**
@@ -41,13 +41,6 @@ export async function getFiles(folder, filterFilenameExtension: string = `.*`): 
   const nameExtensionRegexp: RegExp = RegExp(`.*\\.${filterFilenameExtension}`, "i");
 
   return entries.filter(entry => nameExtensionRegexp.test(entry.name) && entry.isFile);
-}
-
-export async function getSubFolderByName(parentFolderSymbol: any, folderName: string): Promise<any | null> {
-  let subFolderSymbols = await parentFolderSymbol
-    .getEntries()
-    .filter(entry => entry.name === folderName && entry.isFolder);
-  return subFolderSymbols.length > 0 ? subFolderSymbols[0] : null;
 }
 
 /**
@@ -82,14 +75,16 @@ export async function getAllSubFolders(pickFolder, filterPSD: boolean = false) {
     for (let i = 0; i < subFolders.length; i++) {
       let element = subFolders[i];
       let parentName = element.nativePath.replace(/.*[\\|\/](.+?)[\\|\/]/, `$1/`).replace(/(.*)\/.*/gm, `$1`);
+      if (element.name !== `${parentName} ${names.__EXPORT__}`) {
+        await allSubFolder.push({
+          pickFloderSymbol: pickFolder,
+          pickFolderName: pickFolderName,
+          parentName: parentName,
+          folderName: element.name,
+          folderSymbol: element,
+        });
+      }
 
-      await allSubFolder.push({
-        pickFloderSymbol: pickFolder,
-        pickFolderName: pickFolderName,
-        parentName: parentName,
-        folderName: element.name,
-        folderSymbol: element,
-      });
       await loopFolder(await getSubFolders(element));
     }
   };
@@ -109,18 +104,27 @@ export async function createSubFolder(parentPath: string, subFolderNamer) {}
  *
  * @param folderTreePaths
  */
-export async function createExportFolderOnRoot(folderTreePaths: IFloderTreePath[]) {
+export async function createExportFolderOnRoot(
+  pickfoler,
+  folderTreePaths: IFloderTreePath[],
+  filterPSD: boolean = false,
+  getSourceFileAndDoExport?: (entry) => void
+) {
   if (folderTreePaths.length < 1) {
     return console.log(names.folderError.subFolderIsEmpty);
   }
+  // create export root folder
+  let pickFloderSymbol = folderTreePaths[0].pickFloderSymbol;
+  let exportRootFolderName = `${folderTreePaths[0].pickFolderName} ${names.__EXPORT__}`;
 
-  let pickFLoder = await folderTreePaths[0].pickFloderSymbol;
-  let exportFoloderName = pickFLoder.nativePath.replace(/.*[\\|\/](.*)/gm, `$1${names.__EXPORT__}`);
+  // // pickfolder can't use obj pass
+  // let exportRootFolder = isExitSubFolder(pickfoler, exportRootFolderName)
+  //   ? getSubFolderByName(pickfoler, exportRootFolderName)
+  //   : pickfoler.createFolder(exportRootFolderName);
 
-  let rootFolderSymbol = await getSubFolderByName(pickFLoder, exportFoloderName);
-  console.log(exportFoloderName);
-  let exportRootFolder =
-    rootFolderSymbol !== null ? await pickFLoder.createFolder(exportFoloderName) : rootFolderSymbol;
-
-  folderTreePaths.forEach(folderTree => {});
+  console.log(pickfoler.getEntry(`${exportRootFolderName}`));
+  folderTreePaths.forEach(async folderSymbol => {
+    // create folder
+    // e.getEntry.foreach(e=>{doSomething(e)})
+  });
 }

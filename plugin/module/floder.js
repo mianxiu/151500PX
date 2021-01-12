@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createExportFolderOnRoot = exports.createSubFolder = exports.createFolder = exports.getAllSubFolders = exports.getSubFolders = exports.getSubFolderByName = exports.getFiles = exports.isExitSubFolder = exports.pickFolder = void 0;
+exports.createExportFolderOnRoot = exports.createSubFolder = exports.createFolder = exports.getAllSubFolders = exports.getSubFolders = exports.getFiles = exports.isExitSubFolder = exports.pickFolder = void 0;
 var names = require("../module/names");
 var localFileSystem = require("uxp").storage.localFileSystem;
 function pickFolder() {
@@ -52,12 +52,21 @@ function pickFolder() {
 exports.pickFolder = pickFolder;
 function isExitSubFolder(parentFolderSymbol, folderName) {
     return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0: return [4 /*yield*/, parentFolderSymbol.getEntries().filter(function (entry) { return entry.name === folderName && entry.isFolder; }).length];
-                case 1: return [2 /*return*/, (_a.sent()) > 0
-                        ? true
-                        : false];
+                case 1:
+                    if (!((_b.sent()) > 0)) return [3 /*break*/, 3];
+                    return [4 /*yield*/, true];
+                case 2:
+                    _a = _b.sent();
+                    return [3 /*break*/, 5];
+                case 3: return [4 /*yield*/, false];
+                case 4:
+                    _a = _b.sent();
+                    _b.label = 5;
+                case 5: return [2 /*return*/, _a];
             }
         });
     });
@@ -84,22 +93,6 @@ function getFiles(folder, filterFilenameExtension) {
     });
 }
 exports.getFiles = getFiles;
-function getSubFolderByName(parentFolderSymbol, folderName) {
-    return __awaiter(this, void 0, void 0, function () {
-        var subFolderSymbols;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, parentFolderSymbol
-                        .getEntries()
-                        .filter(function (entry) { return entry.name === folderName && entry.isFolder; })];
-                case 1:
-                    subFolderSymbols = _a.sent();
-                    return [2 /*return*/, subFolderSymbols.length > 0 ? subFolderSymbols[0] : null];
-            }
-        });
-    });
-}
-exports.getSubFolderByName = getSubFolderByName;
 /**
  * return sub folder promise
  * @param folder
@@ -140,9 +133,10 @@ function getAllSubFolders(pickFolder, filterPSD) {
                                     i = 0;
                                     _b.label = 1;
                                 case 1:
-                                    if (!(i < subFolders.length)) return [3 /*break*/, 6];
+                                    if (!(i < subFolders.length)) return [3 /*break*/, 7];
                                     element = subFolders[i];
                                     parentName = element.nativePath.replace(/.*[\\|\/](.+?)[\\|\/]/, "$1/").replace(/(.*)\/.*/gm, "$1");
+                                    if (!(element.name !== parentName + " " + names.__EXPORT__)) return [3 /*break*/, 3];
                                     return [4 /*yield*/, allSubFolder.push({
                                             pickFloderSymbol: pickFolder,
                                             pickFolderName: pickFolderName,
@@ -152,16 +146,18 @@ function getAllSubFolders(pickFolder, filterPSD) {
                                         })];
                                 case 2:
                                     _b.sent();
+                                    _b.label = 3;
+                                case 3:
                                     _a = loopFolder;
                                     return [4 /*yield*/, getSubFolders(element)];
-                                case 3: return [4 /*yield*/, _a.apply(void 0, [_b.sent()])];
-                                case 4:
-                                    _b.sent();
-                                    _b.label = 5;
+                                case 4: return [4 /*yield*/, _a.apply(void 0, [_b.sent()])];
                                 case 5:
+                                    _b.sent();
+                                    _b.label = 6;
+                                case 6:
                                     i++;
                                     return [3 /*break*/, 1];
-                                case 6: return [2 /*return*/];
+                                case 7: return [2 /*return*/];
                             }
                         });
                     }); };
@@ -201,36 +197,28 @@ exports.createSubFolder = createSubFolder;
  *
  * @param folderTreePaths
  */
-function createExportFolderOnRoot(folderTreePaths) {
+function createExportFolderOnRoot(pickfoler, folderTreePaths, filterPSD, getSourceFileAndDoExport) {
+    if (filterPSD === void 0) { filterPSD = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var pickFLoder, exportFoloderName, rootFolderSymbol, exportRootFolder, _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    if (folderTreePaths.length < 1) {
-                        return [2 /*return*/, console.log(names.folderError.subFolderIsEmpty)];
-                    }
-                    return [4 /*yield*/, folderTreePaths[0].pickFloderSymbol];
-                case 1:
-                    pickFLoder = _b.sent();
-                    exportFoloderName = pickFLoder.nativePath.replace(/.*[\\|\/](.*)/gm, "$1" + names.__EXPORT__);
-                    return [4 /*yield*/, getSubFolderByName(pickFLoder, exportFoloderName)];
-                case 2:
-                    rootFolderSymbol = _b.sent();
-                    console.log(exportFoloderName);
-                    if (!(rootFolderSymbol !== null)) return [3 /*break*/, 4];
-                    return [4 /*yield*/, pickFLoder.createFolder(exportFoloderName)];
-                case 3:
-                    _a = _b.sent();
-                    return [3 /*break*/, 5];
-                case 4:
-                    _a = rootFolderSymbol;
-                    _b.label = 5;
-                case 5:
-                    exportRootFolder = _a;
-                    folderTreePaths.forEach(function (folderTree) { });
-                    return [2 /*return*/];
+        var pickFloderSymbol, exportRootFolderName;
+        var _this = this;
+        return __generator(this, function (_a) {
+            if (folderTreePaths.length < 1) {
+                return [2 /*return*/, console.log(names.folderError.subFolderIsEmpty)];
             }
+            pickFloderSymbol = folderTreePaths[0].pickFloderSymbol;
+            exportRootFolderName = folderTreePaths[0].pickFolderName + " " + names.__EXPORT__;
+            // // pickfolder can't use obj pass
+            // let exportRootFolder = isExitSubFolder(pickfoler, exportRootFolderName)
+            //   ? getSubFolderByName(pickfoler, exportRootFolderName)
+            //   : pickfoler.createFolder(exportRootFolderName);
+            console.log(pickfoler.getEntry("" + exportRootFolderName));
+            folderTreePaths.forEach(function (folderSymbol) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/];
+                });
+            }); });
+            return [2 /*return*/];
         });
     });
 }
