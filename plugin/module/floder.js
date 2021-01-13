@@ -200,25 +200,29 @@ exports.createSubFolder = createSubFolder;
 function createExportFolderOnRoot(pickfoler, folderTreePaths, filterPSD, getSourceFileAndDoExport) {
     if (filterPSD === void 0) { filterPSD = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var pickFloderSymbol, exportRootFolderName;
+        var pickFloderSymbol, exportRootFolderName, c;
         var _this = this;
         return __generator(this, function (_a) {
-            if (folderTreePaths.length < 1) {
-                return [2 /*return*/, console.log(names.folderError.subFolderIsEmpty)];
-            }
-            pickFloderSymbol = folderTreePaths[0].pickFloderSymbol;
-            exportRootFolderName = folderTreePaths[0].pickFolderName + " " + names.__EXPORT__;
-            // // pickfolder can't use obj pass
-            // let exportRootFolder = isExitSubFolder(pickfoler, exportRootFolderName)
-            //   ? getSubFolderByName(pickfoler, exportRootFolderName)
-            //   : pickfoler.createFolder(exportRootFolderName);
-            console.log(pickfoler.getEntry("" + exportRootFolderName));
-            folderTreePaths.forEach(function (folderSymbol) { return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (folderTreePaths.length < 1) {
+                        return [2 /*return*/, console.log(names.folderError.subFolderIsEmpty)];
+                    }
+                    pickFloderSymbol = folderTreePaths[0].pickFloderSymbol;
+                    exportRootFolderName = folderTreePaths[0].pickFolderName + " " + names.__EXPORT__;
+                    return [4 /*yield*/, pickfoler.getEntry("" + exportRootFolderName).catch(function (onRejected) {
+                            console.log(123456);
+                            pickfoler.createFolder(exportRootFolderName);
+                        })];
+                case 1:
+                    c = _a.sent();
+                    folderTreePaths.forEach(function (folderSymbol) { return __awaiter(_this, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            return [2 /*return*/];
+                        });
+                    }); });
                     return [2 /*return*/];
-                });
-            }); });
-            return [2 /*return*/];
+            }
         });
     });
 }

@@ -122,7 +122,12 @@ export async function createExportFolderOnRoot(
   //   ? getSubFolderByName(pickfoler, exportRootFolderName)
   //   : pickfoler.createFolder(exportRootFolderName);
 
-  console.log(pickfoler.getEntry(`${exportRootFolderName}`));
+  let c = await pickfoler.getEntry(`${exportRootFolderName}`).catch(onRejected=>{
+    console.log(123456);
+    pickfoler.createFolder(exportRootFolderName)
+  })
+
+ 
   folderTreePaths.forEach(async folderSymbol => {
     // create folder
     // e.getEntry.foreach(e=>{doSomething(e)})
