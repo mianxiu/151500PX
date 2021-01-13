@@ -121,6 +121,7 @@ export async function createExportFolderOnRoot(
   let pickFloderSymbol = folderTreePaths[0].pickFloderSymbol;
   let exportRootFolderName = `${folderTreePaths[0].pickFolderName} ${names.__EXPORT__}`;
 
+  // create root export folder
   let exportRootFolder = await pickFloderSymbol.getEntry(`${exportRootFolderName}`).catch(onRejected => {
     return pickFloderSymbol.createFolder(exportRootFolderName);
   });
