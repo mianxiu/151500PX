@@ -26,9 +26,14 @@ export async function pickFolder() {
 }
 
 export async function isExitSubFolder(parentFolderSymbol: any, folderName: string) {
-  return (await parentFolderSymbol.getEntries().filter(entry => entry.name === folderName && entry.isFolder).length) > 0
-    ? await true
-    : await false;
+  return await parentFolderSymbol
+    .getEntry(folderName)
+    .then(done => {
+      return true;
+    })
+    .catch(error => {
+      return false;
+    });
 }
 
 /**
@@ -105,7 +110,6 @@ export async function createSubFolder(parentPath: string, subFolderNamer) {}
  * @param folderTreePaths
  */
 export async function createExportFolderOnRoot(
-  pickfoler,
   folderTreePaths: IFloderTreePath[],
   filterPSD: boolean = false,
   getSourceFileAndDoExport?: (entry) => void
@@ -117,17 +121,12 @@ export async function createExportFolderOnRoot(
   let pickFloderSymbol = folderTreePaths[0].pickFloderSymbol;
   let exportRootFolderName = `${folderTreePaths[0].pickFolderName} ${names.__EXPORT__}`;
 
-  // // pickfolder can't use obj pass
-  // let exportRootFolder = isExitSubFolder(pickfoler, exportRootFolderName)
-  //   ? getSubFolderByName(pickfoler, exportRootFolderName)
-  //   : pickfoler.createFolder(exportRootFolderName);
+  let exportRootFolder = await pickFloderSymbol.getEntry(`${exportRootFolderName}`).catch(onRejected => {
+    return pickFloderSymbol.createFolder(exportRootFolderName);
+  });
 
-  let c = await pickfoler.getEntry(`${exportRootFolderName}`).catch(onRejected=>{
-    console.log(123456);
-    pickfoler.createFolder(exportRootFolderName)
-  })
+  console.log(exportRootFolder);
 
- 
   folderTreePaths.forEach(async folderSymbol => {
     // create folder
     // e.getEntry.foreach(e=>{doSomething(e)})

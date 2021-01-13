@@ -41,7 +41,7 @@ export async function ffff() {
   let pickfolder = await folder.pickFolder();
   let allSubFolders = await folder.getAllSubFolders(pickfolder);
   console.log(allSubFolders);
-  await folder.createExportFolderOnRoot(pickfolder, allSubFolders);
+  await folder.createExportFolderOnRoot(allSubFolders);
 
   //await folder.createAllSubFolderOnRoot(await folder.getAllSubFolders(pickfolder));
 }

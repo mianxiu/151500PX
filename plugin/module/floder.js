@@ -52,21 +52,17 @@ function pickFolder() {
 exports.pickFolder = pickFolder;
 function isExitSubFolder(parentFolderSymbol, folderName) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4 /*yield*/, parentFolderSymbol.getEntries().filter(function (entry) { return entry.name === folderName && entry.isFolder; }).length];
-                case 1:
-                    if (!((_b.sent()) > 0)) return [3 /*break*/, 3];
-                    return [4 /*yield*/, true];
-                case 2:
-                    _a = _b.sent();
-                    return [3 /*break*/, 5];
-                case 3: return [4 /*yield*/, false];
-                case 4:
-                    _a = _b.sent();
-                    _b.label = 5;
-                case 5: return [2 /*return*/, _a];
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, parentFolderSymbol
+                        .getEntry(folderName)
+                        .then(function (done) {
+                        return true;
+                    })
+                        .catch(function (error) {
+                        return false;
+                    })];
+                case 1: return [2 /*return*/, _a.sent()];
             }
         });
     });
@@ -197,10 +193,10 @@ exports.createSubFolder = createSubFolder;
  *
  * @param folderTreePaths
  */
-function createExportFolderOnRoot(pickfoler, folderTreePaths, filterPSD, getSourceFileAndDoExport) {
+function createExportFolderOnRoot(folderTreePaths, filterPSD, getSourceFileAndDoExport) {
     if (filterPSD === void 0) { filterPSD = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var pickFloderSymbol, exportRootFolderName, c;
+        var pickFloderSymbol, exportRootFolderName, exportRootFolder;
         var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -210,12 +206,12 @@ function createExportFolderOnRoot(pickfoler, folderTreePaths, filterPSD, getSour
                     }
                     pickFloderSymbol = folderTreePaths[0].pickFloderSymbol;
                     exportRootFolderName = folderTreePaths[0].pickFolderName + " " + names.__EXPORT__;
-                    return [4 /*yield*/, pickfoler.getEntry("" + exportRootFolderName).catch(function (onRejected) {
-                            console.log(123456);
-                            pickfoler.createFolder(exportRootFolderName);
+                    return [4 /*yield*/, pickFloderSymbol.getEntry("" + exportRootFolderName).catch(function (onRejected) {
+                            return pickFloderSymbol.createFolder(exportRootFolderName);
                         })];
                 case 1:
-                    c = _a.sent();
+                    exportRootFolder = _a.sent();
+                    console.log(exportRootFolder);
                     folderTreePaths.forEach(function (folderSymbol) { return __awaiter(_this, void 0, void 0, function () {
                         return __generator(this, function (_a) {
                             return [2 /*return*/];

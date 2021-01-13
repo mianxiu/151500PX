@@ -123,7 +123,7 @@ function ffff() {
                 case 2:
                     allSubFolders = _a.sent();
                     console.log(allSubFolders);
-                    return [4 /*yield*/, folder.createExportFolderOnRoot(pickfolder, allSubFolders)];
+                    return [4 /*yield*/, folder.createExportFolderOnRoot(allSubFolders)];
                 case 3:
                     _a.sent();
                     return [2 /*return*/];
