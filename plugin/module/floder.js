@@ -133,14 +133,13 @@ function getAllSubFolders(pickFolder, filterPSD) {
                                     element = subFolders[i];
                                     parentNames = element.nativePath
                                         .replace(new RegExp(".*" + pickFolderName + "[\\\\|\\/]"), "")
-                                        .split(/\\|\//gm)
-                                        .pop();
-                                    console.log();
+                                        .split(/\\|\//gm);
+                                    console.log(parentNames);
                                     if (!(element.name !== pickFolderName + " " + names.__EXPORT__)) return [3 /*break*/, 3];
                                     return [4 /*yield*/, allSubFolder.push({
                                             pickFloderSymbol: pickFolder,
                                             pickFolderName: pickFolderName,
-                                            parentName: parentNames,
+                                            parentNames: parentNames,
                                             folderName: element.name,
                                             folderSymbol: element,
                                         })];

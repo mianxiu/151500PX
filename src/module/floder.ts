@@ -60,7 +60,7 @@ export async function getSubFolders(folder): Promise<any[]> {
 interface IFloderTreePath {
   pickFloderSymbol: IFolder | any;
   pickFolderName: string;
-  parentName: string[];
+  parentNames: string[];
   folderName: string;
   folderSymbol: any;
 }
@@ -79,17 +79,16 @@ export async function getAllSubFolders(pickFolder, filterPSD: boolean = false) {
      */
     for (let i = 0; i < subFolders.length; i++) {
       let element = subFolders[i];
-      let parentNames = element.nativePath
+      let parentNames: string[] = element.nativePath
         .replace(new RegExp(`.*${pickFolderName}[\\\\|\\/]`), "")
-        .split(/\\|\//gm)
-        .pop();
+        .split(/\\|\//gm);
 
-      console.log();
+      console.log(parentNames);
       if (element.name !== `${pickFolderName} ${names.__EXPORT__}`) {
         await allSubFolder.push({
           pickFloderSymbol: pickFolder,
           pickFolderName: pickFolderName,
-          parentName: parentNames,
+          parentNames: parentNames,
           folderName: element.name,
           folderSymbol: element,
         });
