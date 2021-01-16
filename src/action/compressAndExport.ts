@@ -36,12 +36,13 @@ export async function mergeMainToSmartObject() {
   await component.fillWhite();
 }
 
-export async function ffff() {
-  //await folder.createFolder(`1oo`);
-  let pickfolder = await folder.pickFolder();
-  let allSubFolders = await folder.getAllSubFolders(pickfolder);
-  console.log(allSubFolders);
-  await folder.createExportFolderOnRoot(allSubFolders);
+export async function fuck() {
+  // 有文档的时候不会重复打开
+  if (app.documents.length < 1)
+    await app.createDocument({ width: 1, height: 1, resolution: 1, mode: "RGBColorMode", fill: "transparent" });
 
-  //await folder.createAllSubFolderOnRoot(await folder.getAllSubFolders(pickfolder));
+  let pick = await folder.pickFolder();
+  console.log(pick);
+  let s = await folder.getAllSubFolders(pick);
+  await folder.createExportFolderOnRoot(s);
 }

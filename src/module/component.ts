@@ -209,12 +209,8 @@ export async function selectLayerByName(name: string, isGroup: boolean = false) 
  * @param excludeTarget
  * @param toBottom
  */
-export async function selectAllLayersOnTarget(
-  excludeTarget: boolean = false,
-  toBottom: boolean = false
-) {
-  let topLayerName =
-    toBottom === true ? await doc.layers[doc.layer.length - 1].name : await doc.layers[0].name;
+export async function selectAllLayersOnTarget(excludeTarget: boolean = false, toBottom: boolean = false) {
+  let topLayerName = toBottom === true ? await doc.layers[doc.layer.length - 1].name : await doc.layers[0].name;
   if (excludeTarget === true) {
   }
   await batchPlay(
@@ -308,10 +304,7 @@ export async function createBGLayer() {
   let backgroundLayer = doc.backgroundLayer;
   console.log(backgroundLayer.name);
   if (backgroundLayer === null) {
-    await batchPlay(
-      [{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }],
-      batchPlayConfig.defaultOptions
-    );
+    await batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions);
   } else {
     backgroundLayer.selected = await true;
     await selectLayerByName(backgroundLayer.name);

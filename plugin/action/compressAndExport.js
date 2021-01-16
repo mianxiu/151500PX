@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ffff = exports.mergeMainToSmartObject = void 0;
+exports.fuck = exports.mergeMainToSmartObject = void 0;
 var component = require("../module/component");
 var names = require("../module/names");
 var folder = require("../module/floder");
@@ -111,24 +111,30 @@ function mergeMainToSmartObject() {
     });
 }
 exports.mergeMainToSmartObject = mergeMainToSmartObject;
-function ffff() {
+function fuck() {
     return __awaiter(this, void 0, void 0, function () {
-        var pickfolder, allSubFolders;
+        var pick, s;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, folder.pickFolder()];
+                case 0:
+                    if (!(app.documents.length < 1)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, app.createDocument({ width: 1, height: 1, resolution: 1, mode: "RGBColorMode", fill: "transparent" })];
                 case 1:
-                    pickfolder = _a.sent();
-                    return [4 /*yield*/, folder.getAllSubFolders(pickfolder)];
-                case 2:
-                    allSubFolders = _a.sent();
-                    console.log(allSubFolders);
-                    return [4 /*yield*/, folder.createExportFolderOnRoot(allSubFolders)];
+                    _a.sent();
+                    _a.label = 2;
+                case 2: return [4 /*yield*/, folder.pickFolder()];
                 case 3:
+                    pick = _a.sent();
+                    console.log(pick);
+                    return [4 /*yield*/, folder.getAllSubFolders(pick)];
+                case 4:
+                    s = _a.sent();
+                    return [4 /*yield*/, folder.createExportFolderOnRoot(s)];
+                case 5:
                     _a.sent();
                     return [2 /*return*/];
             }
         });
     });
 }
-exports.ffff = ffff;
+exports.fuck = fuck;
