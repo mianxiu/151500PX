@@ -38,7 +38,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fuck = exports.mergeMainToSmartObject = void 0;
 var component = require("../module/component");
-var names = require("../module/names");
 var folder = require("../module/floder");
 var save = require("../module/save");
 var app = require("photoshop").app;
@@ -50,65 +49,18 @@ var fuckingMargin = 20;
  */
 function mergeMainToSmartObject() {
     return __awaiter(this, void 0, void 0, function () {
-        var layerSize, _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: 
-                // select layer by name has problem
-                return [4 /*yield*/, component.selectLayerByName("MAIN", true)];
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    console.log(app.activeDocument);
+                    // select layer by name has problem
+                    return [4 /*yield*/, component.selectLayerByName("MAIN", true)];
                 case 1:
                     // select layer by name has problem
-                    _b.sent();
+                    _a.sent();
                     return [4 /*yield*/, component.mergeLayerNew()];
                 case 2:
-                    _b.sent();
-                    return [4 /*yield*/, component.selectAllLayersOnTarget()];
-                case 3:
-                    _b.sent();
-                    return [4 /*yield*/, component.convertToSmartObject()];
-                case 4:
-                    _b.sent();
-                    return [4 /*yield*/, component.rasterizeTargetLayer()];
-                case 5:
-                    _b.sent();
-                    return [4 /*yield*/, component.mergeLayerNew()];
-                case 6:
-                    _b.sent();
-                    return [4 /*yield*/, component.convertToSmartObject()];
-                case 7:
-                    _b.sent();
-                    return [4 /*yield*/, component.setLayerName(names.__DO_ACTION__)];
-                case 8:
-                    _b.sent();
-                    return [4 /*yield*/, component.getElementSize(app.activeDocument.activeLayers[0])];
-                case 9:
-                    layerSize = _b.sent();
-                    console.log(layerSize.width, layerSize.height);
-                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 11];
-                    return [4 /*yield*/, component.cropToSize(fuckingExportSize, fuckingExportSize)];
-                case 10:
-                    _b.sent();
-                    return [3 /*break*/, 13];
-                case 11: return [4 /*yield*/, component.cropToSquare(fuckingMargin)];
-                case 12:
-                    _b.sent();
-                    _b.label = 13;
-                case 13: return [4 /*yield*/, component.createBGLayer()];
-                case 14:
-                    _b.sent();
-                    return [4 /*yield*/, component.selectAllLayersOnTarget()];
-                case 15:
-                    _b.sent();
-                    _a = app.activeDocument.layers[0];
-                    return [4 /*yield*/, false];
-                case 16:
-                    _a.selected = _b.sent(); // unselected --DO-ACTION--
-                    return [4 /*yield*/, component.mergeLayerNew()];
-                case 17:
-                    _b.sent();
-                    return [4 /*yield*/, component.fillWhite()];
-                case 18:
-                    _b.sent();
+                    _a.sent();
                     return [2 /*return*/];
             }
         });
@@ -155,37 +107,36 @@ function fuck() {
                     _c = (_b = folder).createExportFolderOnRoot;
                     return [4 /*yield*/, folder.getAllSubFoldersPath(pickFolder)];
                 case 6: return [4 /*yield*/, _c.apply(_b, [_d.sent(), function (entryPath) { return __awaiter(_this, void 0, void 0, function () {
-                            var docs, _a, jpegFolderSymbol, tiffFolderSymbol;
-                            return __generator(this, function (_b) {
-                                switch (_b.label) {
+                            var jpegFolderSymbol, tiffFolderSymbol;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
                                         if (!(app.documents.length < 2)) return [3 /*break*/, 2];
                                         return [4 /*yield*/, app.open(entryPath.entrySymbol)];
                                     case 1:
-                                        _b.sent();
-                                        _b.label = 2;
-                                    case 2: return [4 /*yield*/, app.documents];
+                                        _a.sent();
+                                        _a.label = 2;
+                                    case 2: 
+                                    // do something
+                                    return [4 /*yield*/, mergeMainToSmartObject()];
                                     case 3:
-                                        docs = _b.sent();
-                                        _a = app;
-                                        return [4 /*yield*/, docs[0]];
-                                    case 4:
-                                        _a.activeDocument = _b.sent();
-                                        console.log(app.activeDocument);
+                                        // do something
+                                        _a.sent();
                                         return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath)];
-                                    case 5:
-                                        jpegFolderSymbol = _b.sent();
+                                    case 4:
+                                        jpegFolderSymbol = _a.sent();
                                         return [4 /*yield*/, save.saveToJPEG(jpegFolderSymbol, entryPath.entrySymbol.name)];
-                                    case 6:
-                                        _b.sent();
+                                    case 5:
+                                        _a.sent();
                                         return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath + entryPath.relateivePath.replace(/.*([\\|\/]).*/gm, "$1TIFF"))];
+                                    case 6:
+                                        tiffFolderSymbol = _a.sent();
+                                        return [4 /*yield*/, save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name)];
                                     case 7:
-                                        tiffFolderSymbol = _b.sent();
-                                        //await save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name);
+                                        _a.sent();
                                         return [4 /*yield*/, app.activeDocument.close()];
                                     case 8:
-                                        //await save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name);
-                                        _b.sent();
+                                        _a.sent();
                                         return [2 /*return*/];
                                 }
                             });

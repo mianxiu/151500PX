@@ -211,7 +211,9 @@ export async function selectLayerByName(name: string, isGroup: boolean = false) 
  * @param toBottom
  */
 export async function selectAllLayersOnTarget(excludeTarget: boolean = false, toBottom: boolean = false) {
-  let topLayerName = toBottom === true ? await doc.layers[doc.layer.length - 1].name : await doc.layers[0].name;
+  let d = doc.layers;
+  let topLayerName = toBottom === true ? await d[d.length - 1].name : await d[0].name;
+  console.log(topLayerName);
   if (excludeTarget === true) {
   }
   await batchPlay(

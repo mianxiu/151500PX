@@ -299,21 +299,23 @@ function selectAllLayersOnTarget(excludeTarget, toBottom) {
     if (excludeTarget === void 0) { excludeTarget = false; }
     if (toBottom === void 0) { toBottom = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var topLayerName, _a;
+        var d, topLayerName, _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
+                    d = doc.layers;
                     if (!(toBottom === true)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, doc.layers[doc.layer.length - 1].name];
+                    return [4 /*yield*/, d[d.length - 1].name];
                 case 1:
                     _a = _b.sent();
                     return [3 /*break*/, 4];
-                case 2: return [4 /*yield*/, doc.layers[0].name];
+                case 2: return [4 /*yield*/, d[0].name];
                 case 3:
                     _a = _b.sent();
                     _b.label = 4;
                 case 4:
                     topLayerName = _a;
+                    console.log(topLayerName);
                     if (excludeTarget === true) {
                     }
                     return [4 /*yield*/, batchPlay([

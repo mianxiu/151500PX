@@ -15,27 +15,28 @@ const fuckingMargin: number = 20;
  *
  */
 export async function mergeMainToSmartObject() {
+  console.log(app.activeDocument);
   // select layer by name has problem
   await component.selectLayerByName(`MAIN`, true);
   await component.mergeLayerNew();
-  await component.selectAllLayersOnTarget();
-  await component.convertToSmartObject();
-  await component.rasterizeTargetLayer();
-  await component.mergeLayerNew();
-  await component.convertToSmartObject();
-  await component.setLayerName(names.__DO_ACTION__);
-  let layerSize = await component.getElementSize(app.activeDocument.activeLayers[0]);
-  console.log(layerSize.width, layerSize.height);
-  if (layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize) {
-    await component.cropToSize(fuckingExportSize, fuckingExportSize);
-  } else {
-    await component.cropToSquare(fuckingMargin);
-  }
-  await component.createBGLayer();
-  await component.selectAllLayersOnTarget();
-  app.activeDocument.layers[0].selected = await false; // unselected --DO-ACTION--
-  await component.mergeLayerNew();
-  await component.fillWhite();
+  // await component.selectAllLayersOnTarget();
+  // await component.convertToSmartObject();
+  // await component.rasterizeTargetLayer();
+  // await component.mergeLayerNew();
+  // await component.convertToSmartObject();
+  // await component.setLayerName(names.__DO_ACTION__);
+  // let layerSize = await component.getElementSize(app.activeDocument.activeLayers[0]);
+  // console.log(layerSize.width, layerSize.height);
+  // if (layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize) {
+  //   await component.cropToSize(fuckingExportSize, fuckingExportSize);
+  // } else {
+  //   await component.cropToSquare(fuckingMargin);
+  // }
+  // await component.createBGLayer();
+  // await component.selectAllLayersOnTarget();
+  // app.activeDocument.layers[0].selected = await false; // unselected --DO-ACTION--
+  // await component.mergeLayerNew();
+  // await component.fillWhite();
 }
 
 export async function fuck() {
@@ -57,10 +58,7 @@ export async function fuck() {
     await folder.createExportFolderOnRoot(await folder.getAllSubFoldersPath(pickFolder), async entryPath => {
       if (app.documents.length < 2) await app.open(entryPath.entrySymbol);
       // do something
-      let docs = await app.documents;
-      app.activeDocument = await docs[0];
-      console.log(app.activeDocument);
-
+      await mergeMainToSmartObject();
       // export jpeg
       let jpegFolderSymbol = await folder.createSubPathFolder(
         pickFolder,
@@ -77,7 +75,7 @@ export async function fuck() {
           "$1TIFF"
         )}`
       );
-      //await save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name);
+      await save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name);
       await app.activeDocument.close();
     });
   }
