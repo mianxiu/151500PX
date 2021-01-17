@@ -40,7 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fillWhite = exports.createBGLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = void 0;
+exports.fillWhite = exports.createBGLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var layername = require("./names");
 var app = require("photoshop").app;
@@ -48,32 +48,43 @@ var batchPlay = require("photoshop").action.batchPlay;
 /**
  * app.documents 0
  */
-var doc = app.documents[0];
+var doc = app.activeDocument;
 /**
  * if have nothing,is empty layer
  * @param bounds rectangle size of something in layer,base document left-top point, {left,top,right,bottom}
  */
 function isEmptyLayer(bounds) {
-    var zero = bounds.left + bounds.top + bounds.right + bounds.bottom;
-    return zero === 0 ? true : false;
+    return __awaiter(this, void 0, void 0, function () {
+        var zero;
+        return __generator(this, function (_a) {
+            zero = bounds.left + bounds.top + bounds.right + bounds.bottom;
+            return [2 /*return*/, zero === 0 ? true : false];
+        });
+    });
 }
+exports.isEmptyLayer = isEmptyLayer;
 /**
  * get element rectangle size
  * @param layer layer
  */
 function getElementSize(layer) {
-    var layerBounds = layer.bounds;
-    var boundsLeft = layerBounds.left;
-    var boundsTop = layerBounds.top;
-    var boundsRight = layerBounds.right;
-    var boundsBottom = layerBounds.bottom;
-    var elementWidth = boundsRight - boundsLeft;
-    var elementHeight = boundsBottom - boundsTop;
-    var elementSize = {
-        width: 0,
-        height: 0,
-    };
-    return (elementSize = { width: elementWidth, height: elementHeight });
+    return __awaiter(this, void 0, void 0, function () {
+        var layerBounds, boundsLeft, boundsTop, boundsRight, boundsBottom, elementWidth, elementHeight, elementSize;
+        return __generator(this, function (_a) {
+            layerBounds = layer.bounds;
+            boundsLeft = layerBounds.left;
+            boundsTop = layerBounds.top;
+            boundsRight = layerBounds.right;
+            boundsBottom = layerBounds.bottom;
+            elementWidth = boundsRight - boundsLeft;
+            elementHeight = boundsBottom - boundsTop;
+            elementSize = {
+                width: 0,
+                height: 0,
+            };
+            return [2 /*return*/, (elementSize = { width: elementWidth, height: elementHeight })];
+        });
+    });
 }
 exports.getElementSize = getElementSize;
 /**
@@ -81,47 +92,55 @@ exports.getElementSize = getElementSize;
  * @param elementSize
  */
 function isVertical(elementSize) {
-    if (elementSize.height > elementSize.width) {
-        return true;
-    }
-    else if (elementSize.height < elementSize.width) {
-        return false;
-    }
-    return null;
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            if (elementSize.height > elementSize.width) {
+                return [2 /*return*/, true];
+            }
+            else if (elementSize.height < elementSize.width) {
+                return [2 /*return*/, false];
+            }
+            return [2 /*return*/, null];
+        });
+    });
 }
 exports.isVertical = isVertical;
 /**
  * delete all empty layer
  */
 function deleteAllEmptyLayers() {
-    // layer lock is can't delete
-    // use bounds to find empty layer
-    var _this = this;
-    var layers = doc.layers;
-    layers.map(function (layer) { return __awaiter(_this, void 0, void 0, function () {
-        var _a, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0:
-                    if (!isEmptyLayer(layer.bounds)) return [3 /*break*/, 5];
-                    if (!layer.locked) return [3 /*break*/, 3];
-                    _a = layer;
-                    return [4 /*yield*/, true];
-                case 1:
-                    _a.selected = _c.sent();
-                    _b = layer;
-                    return [4 /*yield*/, false];
-                case 2:
-                    _b.locked = _c.sent();
-                    _c.label = 3;
-                case 3: return [4 /*yield*/, layer.delete()];
-                case 4:
-                    _c.sent();
-                    _c.label = 5;
-                case 5: return [2 /*return*/];
-            }
+    return __awaiter(this, void 0, void 0, function () {
+        var layers;
+        var _this = this;
+        return __generator(this, function (_a) {
+            layers = doc.layers;
+            layers.map(function (layer) { return __awaiter(_this, void 0, void 0, function () {
+                var _a, _b;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
+                        case 0:
+                            if (!isEmptyLayer(layer.bounds)) return [3 /*break*/, 5];
+                            if (!layer.locked) return [3 /*break*/, 3];
+                            _a = layer;
+                            return [4 /*yield*/, true];
+                        case 1:
+                            _a.selected = _c.sent();
+                            _b = layer;
+                            return [4 /*yield*/, false];
+                        case 2:
+                            _b.locked = _c.sent();
+                            _c.label = 3;
+                        case 3: return [4 /*yield*/, layer.delete()];
+                        case 4:
+                            _c.sent();
+                            _c.label = 5;
+                        case 5: return [2 /*return*/];
+                    }
+                });
+            }); });
+            return [2 /*return*/];
         });
-    }); });
+    });
 }
 exports.deleteAllEmptyLayers = deleteAllEmptyLayers;
 function deleteAllLayersExcludeTarget() {
@@ -141,15 +160,21 @@ exports.deleteAllLayersExcludeTarget = deleteAllLayersExcludeTarget;
  * @param margin maring to document boundary
  */
 function cropToMargin(margin) {
-    var layerBounds = doc.activeLayers.length === 1 ? doc.activeLayers[0].bounds : null;
-    var cropBounds = { left: 0, top: 0, right: 0, bottom: 0 };
-    cropBounds = {
-        left: layerBounds.left - margin,
-        top: layerBounds.top - margin,
-        right: layerBounds.right + margin,
-        bottom: layerBounds.bottom + margin,
-    };
-    doc.crop(cropBounds, 0);
+    return __awaiter(this, void 0, void 0, function () {
+        var layerBounds, cropBounds;
+        return __generator(this, function (_a) {
+            layerBounds = doc.activeLayers.length === 1 ? doc.activeLayers[0].bounds : null;
+            cropBounds = { left: 0, top: 0, right: 0, bottom: 0 };
+            cropBounds = {
+                left: layerBounds.left - margin,
+                top: layerBounds.top - margin,
+                right: layerBounds.right + margin,
+                bottom: layerBounds.bottom + margin,
+            };
+            doc.crop(cropBounds, 0);
+            return [2 /*return*/];
+        });
+    });
 }
 exports.cropToMargin = cropToMargin;
 /**
@@ -157,31 +182,40 @@ exports.cropToMargin = cropToMargin;
  * @param margin
  */
 function cropToSquare(margin) {
-    //todo
-    //something
-    var layer = doc.activeLayers.length === 1 ? doc.activeLayers[0] : null;
-    var layerBounds = layer !== null ? layer.bounds : null;
-    var layerSize = getElementSize(layer);
-    layerBounds = isVertical(layerSize)
-        ? {
-            left: layerBounds.left - (layerSize.height - layerSize.width) / 2,
-            top: layerBounds.top,
-            right: layerBounds.right + (layerSize.height - layerSize.width) / 2,
-            bottom: layerBounds.bottom,
-        }
-        : {
-            left: layerBounds.left,
-            top: layerBounds.top - (layerSize.width - layerSize.height) / 2,
-            right: layerBounds.right,
-            bottom: layerBounds.bottom + (layerSize.width - layerSize.height) / 2,
-        };
-    var cropBounds = {
-        left: layerBounds.left - margin,
-        top: layerBounds.top - margin,
-        right: layerBounds.right + margin,
-        bottom: layerBounds.bottom + margin,
-    };
-    doc.crop(cropBounds);
+    return __awaiter(this, void 0, void 0, function () {
+        var layer, layerBounds, layerSize, cropBounds;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    layer = doc.activeLayers.length === 1 ? doc.activeLayers[0] : null;
+                    layerBounds = layer !== null ? layer.bounds : null;
+                    return [4 /*yield*/, getElementSize(layer)];
+                case 1:
+                    layerSize = _a.sent();
+                    layerBounds = isVertical(layerSize)
+                        ? {
+                            left: layerBounds.left - (layerSize.height - layerSize.width) / 2,
+                            top: layerBounds.top,
+                            right: layerBounds.right + (layerSize.height - layerSize.width) / 2,
+                            bottom: layerBounds.bottom,
+                        }
+                        : {
+                            left: layerBounds.left,
+                            top: layerBounds.top - (layerSize.width - layerSize.height) / 2,
+                            right: layerBounds.right,
+                            bottom: layerBounds.bottom + (layerSize.width - layerSize.height) / 2,
+                        };
+                    cropBounds = {
+                        left: layerBounds.left - margin,
+                        top: layerBounds.top - margin,
+                        right: layerBounds.right + margin,
+                        bottom: layerBounds.bottom + margin,
+                    };
+                    doc.crop(cropBounds);
+                    return [2 /*return*/];
+            }
+        });
+    });
 }
 exports.cropToSquare = cropToSquare;
 /**
@@ -191,18 +225,29 @@ exports.cropToSquare = cropToSquare;
  * @param height
  */
 function cropToSize(width, height) {
-    var layer = doc.activeLayers.length === 1 ? doc.activeLayers[0] : null;
-    var layerBounds = layer !== null ? layer.bounds : null;
-    var layerSize = getElementSize(layer);
-    var marginLeft = (width - layerSize.width) / 2;
-    var marginTop = (height - layerSize.height) / 2;
-    var cropBounds = {
-        left: layerBounds.left - marginLeft,
-        top: layerBounds.top - marginTop,
-        right: layerBounds.right + marginLeft,
-        bottom: layerBounds.bottom + marginTop,
-    };
-    doc.crop(cropBounds);
+    return __awaiter(this, void 0, void 0, function () {
+        var layer, layerBounds, layerSize, marginLeft, marginTop, cropBounds;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    layer = doc.activeLayers.length === 1 ? doc.activeLayers[0] : null;
+                    layerBounds = layer !== null ? layer.bounds : null;
+                    return [4 /*yield*/, getElementSize(layer)];
+                case 1:
+                    layerSize = _a.sent();
+                    marginLeft = (width - layerSize.width) / 2;
+                    marginTop = (height - layerSize.height) / 2;
+                    cropBounds = {
+                        left: layerBounds.left - marginLeft,
+                        top: layerBounds.top - marginTop,
+                        right: layerBounds.right + marginLeft,
+                        bottom: layerBounds.bottom + marginTop,
+                    };
+                    doc.crop(cropBounds);
+                    return [2 /*return*/];
+            }
+        });
+    });
 }
 exports.cropToSize = cropToSize;
 /**
@@ -213,25 +258,32 @@ exports.cropToSize = cropToSize;
 function selectLayerByName(name, isGroup) {
     if (isGroup === void 0) { isGroup = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var nameIndex, layers, layer;
+        var nameIndex;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    console.log("do someting");
                     nameIndex = "--DO-ACTIVE-";
-                    layers = doc.layers;
-                    layer = isGroup === true
-                        ? layers.find(function (layer) { return layer.name === name && layer.isGroupLayer === true; })
-                        : layers.find(function (layer) { return layer.name === name && layer.isGroupLayer === undefined; });
-                    layer.name = "" + nameIndex + name;
+                    // let layers = await doc.layers;
+                    // let layer =
+                    //   (await isGroup) === true
+                    //     ? await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === true)
+                    //     : await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === undefined);
+                    // layer.name = await `${nameIndex}${name}`;
                     return [4 /*yield*/, batchPlay([
                             {
                                 _obj: "select",
-                                _target: [{ _ref: "layer", _name: "" + nameIndex + name }],
+                                _target: [{ _ref: "layer", _name: "MAIN" }],
                             },
                         ], batchPlayConfig.defaultOptions)];
                 case 1:
+                    // let layers = await doc.layers;
+                    // let layer =
+                    //   (await isGroup) === true
+                    //     ? await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === true)
+                    //     : await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === undefined);
+                    // layer.name = await `${nameIndex}${name}`;
                     _a.sent();
-                    layer.name = name;
                     return [2 /*return*/];
             }
         });

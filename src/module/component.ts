@@ -11,7 +11,7 @@ const batchPlay = require("photoshop").action.batchPlay;
 /**
  * app.documents 0
  */
-const doc = app.documents[0];
+const doc = app.activeDocument;
 
 interface IBounds {
   left: number;
@@ -24,7 +24,7 @@ interface IBounds {
  * if have nothing,is empty layer
  * @param bounds rectangle size of something in layer,base document left-top point, {left,top,right,bottom}
  */
-function isEmptyLayer(bounds: IBounds): boolean {
+export async function isEmptyLayer(bounds: IBounds): Promise<boolean> {
   let zero = bounds.left + bounds.top + bounds.right + bounds.bottom;
   return zero === 0 ? true : false;
 }
@@ -38,7 +38,7 @@ interface IELementSize {
  * get element rectangle size
  * @param layer layer
  */
-export function getElementSize(layer: any): IELementSize {
+export async function getElementSize(layer: any): Promise<IELementSize> {
   let layerBounds: IBounds = layer.bounds;
 
   let boundsLeft: number = layerBounds.left;
@@ -61,7 +61,7 @@ export function getElementSize(layer: any): IELementSize {
  * decide element is vertcal or horizontal
  * @param elementSize
  */
-export function isVertical(elementSize: IELementSize): boolean | null {
+export async function isVertical(elementSize: IELementSize): Promise<boolean | null> {
   if (elementSize.height > elementSize.width) {
     return true;
   } else if (elementSize.height < elementSize.width) {
@@ -73,7 +73,7 @@ export function isVertical(elementSize: IELementSize): boolean | null {
 /**
  * delete all empty layer
  */
-export function deleteAllEmptyLayers(): void {
+export async function deleteAllEmptyLayers() {
   // layer lock is can't delete
   // use bounds to find empty layer
 
@@ -102,7 +102,7 @@ export async function deleteAllLayersExcludeTarget() {
  * crop document size to active layer bounds, now only for a layer
  * @param margin maring to document boundary
  */
-export function cropToMargin(margin: number): void {
+export async function cropToMargin(margin: number) {
   let layerBounds: IBounds = doc.activeLayers.length === 1 ? doc.activeLayers[0].bounds : null;
 
   let cropBounds: IBounds = { left: 0, top: 0, right: 0, bottom: 0 };
@@ -121,12 +121,12 @@ export function cropToMargin(margin: number): void {
  * crop document size to base active layer bounds's square, now only for a layer
  * @param margin
  */
-export function cropToSquare(margin: number) {
+export async function cropToSquare(margin: number) {
   //todo
   //something
   let layer = doc.activeLayers.length === 1 ? doc.activeLayers[0] : null;
   let layerBounds: IBounds = layer !== null ? layer.bounds : null;
-  let layerSize: IELementSize = getElementSize(layer);
+  let layerSize: IELementSize = await getElementSize(layer);
 
   layerBounds = isVertical(layerSize)
     ? {
@@ -158,10 +158,10 @@ export function cropToSquare(margin: number) {
  * @param width
  * @param height
  */
-export function cropToSize(width: number, height: number) {
+export async function cropToSize(width: number, height: number) {
   let layer = doc.activeLayers.length === 1 ? doc.activeLayers[0] : null;
   let layerBounds: IBounds = layer !== null ? layer.bounds : null;
-  let layerSize: IELementSize = getElementSize(layer);
+  let layerSize: IELementSize = await getElementSize(layer);
 
   let marginLeft = (width - layerSize.width) / 2;
   let marginTop = (height - layerSize.height) / 2;
@@ -182,26 +182,27 @@ export function cropToSize(width: number, height: number) {
  * @param isGroup
  */
 export async function selectLayerByName(name: string, isGroup: boolean = false) {
+  console.log(`do someting`);
   let nameIndex: string = `--DO-ACTIVE-`;
-  let layers = doc.layers;
-  let layer =
-    isGroup === true
-      ? layers.find(layer => layer.name === name && layer.isGroupLayer === true)
-      : layers.find(layer => layer.name === name && layer.isGroupLayer === undefined);
+  // let layers = await doc.layers;
+  // let layer =
+  //   (await isGroup) === true
+  //     ? await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === true)
+  //     : await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === undefined);
 
-  layer.name = `${nameIndex}${name}`;
+  // layer.name = await `${nameIndex}${name}`;
 
   await batchPlay(
     [
       {
         _obj: "select",
-        _target: [{ _ref: "layer", _name: `${nameIndex}${name}` }],
+        _target: [{ _ref: "layer", _name: `MAIN` }],
       },
     ],
     batchPlayConfig.defaultOptions
   );
 
-  layer.name = name;
+  // layer.name = name;
 }
 
 /**

@@ -32,3 +32,9 @@ export var selectionModifier = {
   addToSelection: { _enum: "selectionModifierType", _value: "addToSelection" },
   addToSelectionContinuous: { _enum: "selectionModifierType", _value: "addToSelectionContinuous" },
 };
+
+export var TiffConfig = {
+  _obj: "TIFF",
+  byteOrder: { _enum: "platform", _value: "IBMPC" },
+  layerCompression: { _enum: "encoding", _value: "RLE" },
+};

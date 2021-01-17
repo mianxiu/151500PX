@@ -3,6 +3,7 @@ import * as component from "../module/component";
 import * as names from "../module/names";
 import * as folder from "../module/floder";
 import * as secureStorage from "../module/securestorage";
+import * as save from "../module/save";
 
 const app = require("photoshop").app;
 
@@ -14,6 +15,7 @@ const fuckingMargin: number = 20;
  *
  */
 export async function mergeMainToSmartObject() {
+  // select layer by name has problem
   await component.selectLayerByName(`MAIN`, true);
   await component.mergeLayerNew();
   await component.selectAllLayersOnTarget();
@@ -37,12 +39,46 @@ export async function mergeMainToSmartObject() {
 }
 
 export async function fuck() {
+  app.documents.map(async d => await d.close());
   // 有文档的时候不会重复打开
   if (app.documents.length < 1)
-    await app.createDocument({ width: 1, height: 1, resolution: 1, mode: "RGBColorMode", fill: "transparent" });
+    await app.createDocument({
+      title: "please pick folder",
+      width: 1,
+      height: 1,
+      resolution: 1,
+      mode: "RGBColorMode",
+      fill: "transparent",
+    });
 
-  let pick = await folder.pickFolder();
-  console.log(pick);
-  let s = await folder.getAllSubFolders(pick);
-  await folder.createExportFolderOnRoot(s);
+  let pickFolder = app.documents.length === 1 ? await folder.pickFolder() : null;
+
+  if (pickFolder !== null) {
+    await folder.createExportFolderOnRoot(await folder.getAllSubFoldersPath(pickFolder), async entryPath => {
+      if (app.documents.length < 2) await app.open(entryPath.entrySymbol);
+      // do something
+      let docs = await app.documents;
+      app.activeDocument = await docs[0];
+      console.log(app.activeDocument);
+
+      // export jpeg
+      let jpegFolderSymbol = await folder.createSubPathFolder(
+        pickFolder,
+        `${entryPath.exportRoot}${entryPath.relateivePath}`
+      );
+
+      await save.saveToJPEG(jpegFolderSymbol, entryPath.entrySymbol.name);
+
+      // export tif
+      let tiffFolderSymbol = await folder.createSubPathFolder(
+        pickFolder,
+        `${entryPath.exportRoot}${entryPath.relateivePath}${entryPath.relateivePath.replace(
+          /.*([\\|\/]).*/gm,
+          "$1TIFF"
+        )}`
+      );
+      //await save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name);
+      await app.activeDocument.close();
+    });
+  }
 }

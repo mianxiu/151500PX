@@ -40,6 +40,7 @@ exports.fuck = exports.mergeMainToSmartObject = void 0;
 var component = require("../module/component");
 var names = require("../module/names");
 var folder = require("../module/floder");
+var save = require("../module/save");
 var app = require("photoshop").app;
 var fuckingExportSize = 1500;
 var fuckingMargin = 20;
@@ -52,8 +53,11 @@ function mergeMainToSmartObject() {
         var layerSize, _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0: return [4 /*yield*/, component.selectLayerByName("MAIN", true)];
+                case 0: 
+                // select layer by name has problem
+                return [4 /*yield*/, component.selectLayerByName("MAIN", true)];
                 case 1:
+                    // select layer by name has problem
                     _b.sent();
                     return [4 /*yield*/, component.mergeLayerNew()];
                 case 2:
@@ -113,26 +117,83 @@ function mergeMainToSmartObject() {
 exports.mergeMainToSmartObject = mergeMainToSmartObject;
 function fuck() {
     return __awaiter(this, void 0, void 0, function () {
-        var pick, s;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var pickFolder, _a, _b, _c;
+        var _this = this;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
+                    app.documents.map(function (d) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, d.close()];
+                            case 1: return [2 /*return*/, _a.sent()];
+                        }
+                    }); }); });
                     if (!(app.documents.length < 1)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, app.createDocument({ width: 1, height: 1, resolution: 1, mode: "RGBColorMode", fill: "transparent" })];
+                    return [4 /*yield*/, app.createDocument({
+                            title: "please pick folder",
+                            width: 1,
+                            height: 1,
+                            resolution: 1,
+                            mode: "RGBColorMode",
+                            fill: "transparent",
+                        })];
                 case 1:
-                    _a.sent();
-                    _a.label = 2;
-                case 2: return [4 /*yield*/, folder.pickFolder()];
+                    _d.sent();
+                    _d.label = 2;
+                case 2:
+                    if (!(app.documents.length === 1)) return [3 /*break*/, 4];
+                    return [4 /*yield*/, folder.pickFolder()];
                 case 3:
-                    pick = _a.sent();
-                    console.log(pick);
-                    return [4 /*yield*/, folder.getAllSubFolders(pick)];
+                    _a = _d.sent();
+                    return [3 /*break*/, 5];
                 case 4:
-                    s = _a.sent();
-                    return [4 /*yield*/, folder.createExportFolderOnRoot(s)];
+                    _a = null;
+                    _d.label = 5;
                 case 5:
-                    _a.sent();
-                    return [2 /*return*/];
+                    pickFolder = _a;
+                    if (!(pickFolder !== null)) return [3 /*break*/, 8];
+                    _c = (_b = folder).createExportFolderOnRoot;
+                    return [4 /*yield*/, folder.getAllSubFoldersPath(pickFolder)];
+                case 6: return [4 /*yield*/, _c.apply(_b, [_d.sent(), function (entryPath) { return __awaiter(_this, void 0, void 0, function () {
+                            var docs, _a, jpegFolderSymbol, tiffFolderSymbol;
+                            return __generator(this, function (_b) {
+                                switch (_b.label) {
+                                    case 0:
+                                        if (!(app.documents.length < 2)) return [3 /*break*/, 2];
+                                        return [4 /*yield*/, app.open(entryPath.entrySymbol)];
+                                    case 1:
+                                        _b.sent();
+                                        _b.label = 2;
+                                    case 2: return [4 /*yield*/, app.documents];
+                                    case 3:
+                                        docs = _b.sent();
+                                        _a = app;
+                                        return [4 /*yield*/, docs[0]];
+                                    case 4:
+                                        _a.activeDocument = _b.sent();
+                                        console.log(app.activeDocument);
+                                        return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath)];
+                                    case 5:
+                                        jpegFolderSymbol = _b.sent();
+                                        return [4 /*yield*/, save.saveToJPEG(jpegFolderSymbol, entryPath.entrySymbol.name)];
+                                    case 6:
+                                        _b.sent();
+                                        return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath + entryPath.relateivePath.replace(/.*([\\|\/]).*/gm, "$1TIFF"))];
+                                    case 7:
+                                        tiffFolderSymbol = _b.sent();
+                                        //await save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name);
+                                        return [4 /*yield*/, app.activeDocument.close()];
+                                    case 8:
+                                        //await save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name);
+                                        _b.sent();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }); }])];
+                case 7:
+                    _d.sent();
+                    _d.label = 8;
+                case 8: return [2 /*return*/];
             }
         });
     });

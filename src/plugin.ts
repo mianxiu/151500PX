@@ -3,12 +3,11 @@ import * as compressAndExport from "./action/compressAndExport";
 
 function doSomething() {
   //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
-
   //component.selectAllLayersOnTarget();
   //component.selectLayerByName("MAIN", true);
   //component.cropToSize(400, 400);
   //compressAndExport.mergeMainToSmartObject();
-  compressAndExport.fuck();
+  compressAndExport.mergeMainToSmartObject();
 }
 
 document.getElementById("btnPopulate").addEventListener("click", doSomething);

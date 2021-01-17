@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.selectionModifier = exports._targetSeletLayers = exports._ref = exports.defaultOptions = void 0;
+exports.TiffConfig = exports.selectionModifier = exports._targetSeletLayers = exports._ref = exports.defaultOptions = void 0;
 exports.defaultOptions = {
     synchronousExecution: false,
     modalBehavior: "fail",
@@ -25,4 +25,9 @@ exports._targetSeletLayers = [
 exports.selectionModifier = {
     addToSelection: { _enum: "selectionModifierType", _value: "addToSelection" },
     addToSelectionContinuous: { _enum: "selectionModifierType", _value: "addToSelectionContinuous" },
+};
+exports.TiffConfig = {
+    _obj: "TIFF",
+    byteOrder: { _enum: "platform", _value: "IBMPC" },
+    layerCompression: { _enum: "encoding", _value: "RLE" },
 };
