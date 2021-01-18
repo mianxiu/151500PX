@@ -48,7 +48,9 @@ var batchPlay = require("photoshop").action.batchPlay;
 /**
  * app.documents 0
  */
-var doc = app.activeDocument;
+var activeDoc = function () {
+    return app.documents.filter(function (e) { return e._id === app.activeDocument._id; })[0];
+};
 /**
  * if have nothing,is empty layer
  * @param bounds rectangle size of something in layer,base document left-top point, {left,top,right,bottom}
@@ -113,7 +115,7 @@ function deleteAllEmptyLayers() {
         var layers;
         var _this = this;
         return __generator(this, function (_a) {
-            layers = doc.layers;
+            layers = activeDoc().layers;
             layers.map(function (layer) { return __awaiter(_this, void 0, void 0, function () {
                 var _a, _b;
                 return __generator(this, function (_c) {
@@ -147,7 +149,7 @@ function deleteAllLayersExcludeTarget() {
     return __awaiter(this, void 0, void 0, function () {
         var layer;
         return __generator(this, function (_a) {
-            layer = doc.activeLayers[0].name === layername.__DO_ACTION__ ? doc.activeLayers[0] : null;
+            layer = activeDoc().activeLayers[0].name === layername.__DO_ACTION__ ? activeDoc().activeLayers[0] : null;
             if (layer !== null) {
             }
             return [2 /*return*/];
@@ -163,7 +165,7 @@ function cropToMargin(margin) {
     return __awaiter(this, void 0, void 0, function () {
         var layerBounds, cropBounds;
         return __generator(this, function (_a) {
-            layerBounds = doc.activeLayers.length === 1 ? doc.activeLayers[0].bounds : null;
+            layerBounds = activeDoc().activeLayers.length === 1 ? activeDoc().activeLayers[0].bounds : null;
             cropBounds = { left: 0, top: 0, right: 0, bottom: 0 };
             cropBounds = {
                 left: layerBounds.left - margin,
@@ -171,7 +173,7 @@ function cropToMargin(margin) {
                 right: layerBounds.right + margin,
                 bottom: layerBounds.bottom + margin,
             };
-            doc.crop(cropBounds, 0);
+            activeDoc().crop(cropBounds, 0);
             return [2 /*return*/];
         });
     });
@@ -187,7 +189,7 @@ function cropToSquare(margin) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    layer = doc.activeLayers.length === 1 ? doc.activeLayers[0] : null;
+                    layer = activeDoc().activeLayers.length === 1 ? activeDoc().activeLayers[0] : null;
                     layerBounds = layer !== null ? layer.bounds : null;
                     return [4 /*yield*/, getElementSize(layer)];
                 case 1:
@@ -211,7 +213,7 @@ function cropToSquare(margin) {
                         right: layerBounds.right + margin,
                         bottom: layerBounds.bottom + margin,
                     };
-                    doc.crop(cropBounds);
+                    activeDoc().crop(cropBounds);
                     return [2 /*return*/];
             }
         });
@@ -230,7 +232,7 @@ function cropToSize(width, height) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    layer = doc.activeLayers.length === 1 ? doc.activeLayers[0] : null;
+                    layer = activeDoc().activeLayers.length === 1 ? activeDoc().activeLayers[0] : null;
                     layerBounds = layer !== null ? layer.bounds : null;
                     return [4 /*yield*/, getElementSize(layer)];
                 case 1:
@@ -243,7 +245,7 @@ function cropToSize(width, height) {
                         right: layerBounds.right + marginLeft,
                         bottom: layerBounds.bottom + marginTop,
                     };
-                    doc.crop(cropBounds);
+                    activeDoc().crop(cropBounds);
                     return [2 /*return*/];
             }
         });
@@ -258,32 +260,51 @@ exports.cropToSize = cropToSize;
 function selectLayerByName(name, isGroup) {
     if (isGroup === void 0) { isGroup = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var nameIndex;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var nameIndex, layers, layer, _a, _b;
+        var _this = this;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
                     console.log("do someting");
                     nameIndex = "--DO-ACTIVE-";
-                    // let layers = await doc.layers;
-                    // let layer =
-                    //   (await isGroup) === true
-                    //     ? await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === true)
-                    //     : await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === undefined);
-                    // layer.name = await `${nameIndex}${name}`;
+                    return [4 /*yield*/, activeDoc().layers];
+                case 1:
+                    layers = _c.sent();
+                    return [4 /*yield*/, isGroup];
+                case 2:
+                    if (!((_c.sent()) === true)) return [3 /*break*/, 4];
+                    return [4 /*yield*/, layers.find(function (layer) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0: return [4 /*yield*/, layer.name];
+                                case 1: return [2 /*return*/, (_a.sent()) === name && layer.isGroupLayer === true];
+                            }
+                        }); }); })];
+                case 3:
+                    _a = _c.sent();
+                    return [3 /*break*/, 6];
+                case 4: return [4 /*yield*/, layers.find(function (layer) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, layer.name];
+                            case 1: return [2 /*return*/, (_a.sent()) === name && layer.isGroupLayer === undefined];
+                        }
+                    }); }); })];
+                case 5:
+                    _a = _c.sent();
+                    _c.label = 6;
+                case 6:
+                    layer = _a;
+                    _b = layer;
+                    return [4 /*yield*/, "" + nameIndex + name];
+                case 7:
+                    _b.name = _c.sent();
                     return [4 /*yield*/, batchPlay([
                             {
                                 _obj: "select",
                                 _target: [{ _ref: "layer", _name: "MAIN" }],
                             },
                         ], batchPlayConfig.defaultOptions)];
-                case 1:
-                    // let layers = await doc.layers;
-                    // let layer =
-                    //   (await isGroup) === true
-                    //     ? await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === true)
-                    //     : await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === undefined);
-                    // layer.name = await `${nameIndex}${name}`;
-                    _a.sent();
+                case 8:
+                    _c.sent();
                     return [2 /*return*/];
             }
         });
@@ -303,7 +324,7 @@ function selectAllLayersOnTarget(excludeTarget, toBottom) {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    d = doc.layers;
+                    d = activeDoc().layers;
                     if (!(toBottom === true)) return [3 /*break*/, 2];
                     return [4 /*yield*/, d[d.length - 1].name];
                 case 1:
@@ -315,7 +336,6 @@ function selectAllLayersOnTarget(excludeTarget, toBottom) {
                     _b.label = 4;
                 case 4:
                     topLayerName = _a;
-                    console.log(topLayerName);
                     if (excludeTarget === true) {
                     }
                     return [4 /*yield*/, batchPlay([
@@ -344,7 +364,7 @@ function moveLayerToDocTop() {
                         {
                             _obj: "move",
                             _target: batchPlayConfig._targetSeletLayers,
-                            to: { _ref: "layer", _index: doc.layers.length + 2 },
+                            to: { _ref: "layer", _index: activeDoc().layers.length + 2 },
                             adjustment: false,
                         },
                     ], batchPlayConfig.defaultOptions)];
@@ -456,7 +476,7 @@ function createBGLayer() {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    backgroundLayer = doc.backgroundLayer;
+                    backgroundLayer = activeDoc().backgroundLayer;
                     console.log(backgroundLayer.name);
                     if (!(backgroundLayer === null)) return [3 /*break*/, 2];
                     return [4 /*yield*/, batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions)];
