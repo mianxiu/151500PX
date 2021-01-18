@@ -50,68 +50,71 @@ var fuckingMargin = 20;
  */
 function mergeMainToSmartObject() {
     return __awaiter(this, void 0, void 0, function () {
-        var layerSize, _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: 
-                // select layer by name has problem
-                return [4 /*yield*/, component.selectLayerByName("MAIN", true)];
+        var acitveDocumet, layerSize, _a, _b, _c;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0:
+                    acitveDocumet = component.activeDocument();
+                    // select layer by name has problem
+                    return [4 /*yield*/, component.selectLayerByName("MAIN", true)];
                 case 1:
                     // select layer by name has problem
-                    _b.sent();
+                    _d.sent();
                     return [4 /*yield*/, component.mergeLayerNew()];
                 case 2:
-                    _b.sent();
+                    _d.sent();
                     return [4 /*yield*/, component.selectAllLayersOnTarget()];
                 case 3:
-                    _b.sent();
+                    _d.sent();
                     return [4 /*yield*/, component.convertToSmartObject()];
                 case 4:
-                    _b.sent();
+                    _d.sent();
                     return [4 /*yield*/, component.rasterizeTargetLayer()];
                 case 5:
-                    _b.sent();
+                    _d.sent();
                     return [4 /*yield*/, component.mergeLayerNew()];
                 case 6:
-                    _b.sent();
+                    _d.sent();
                     return [4 /*yield*/, component.convertToSmartObject()];
                 case 7:
-                    _b.sent();
+                    _d.sent();
                     return [4 /*yield*/, component.setLayerName(names.__DO_ACTION__)];
                 case 8:
-                    _b.sent();
-                    return [4 /*yield*/, component.getElementSize(app.activeDocument.activeLayers[0])];
-                case 9:
-                    layerSize = _b.sent();
-                    console.log(layerSize.width, layerSize.height);
-                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 11];
-                    return [4 /*yield*/, component.cropToSize(fuckingExportSize, fuckingExportSize)];
+                    _d.sent();
+                    _b = (_a = component).getElementSize;
+                    return [4 /*yield*/, acitveDocumet.activeLayers[0]];
+                case 9: return [4 /*yield*/, _b.apply(_a, [_d.sent()])];
                 case 10:
-                    _b.sent();
-                    return [3 /*break*/, 14];
-                case 11: return [4 /*yield*/, component.cropToSquare(fuckingMargin)];
-                case 12:
-                    _b.sent();
-                    return [4 /*yield*/, component.activeDocument().resizeImage(fuckingExportSize, fuckingExportSize)];
+                    layerSize = _d.sent();
+                    console.log(layerSize.width, layerSize.height);
+                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 12];
+                    return [4 /*yield*/, component.cropToSize(fuckingExportSize, fuckingExportSize)];
+                case 11:
+                    _d.sent();
+                    return [3 /*break*/, 15];
+                case 12: return [4 /*yield*/, component.cropToSquare(fuckingMargin)];
                 case 13:
-                    _b.sent();
-                    _b.label = 14;
-                case 14: return [4 /*yield*/, component.createBGLayer()];
-                case 15:
-                    _b.sent();
-                    return [4 /*yield*/, component.selectAllLayersOnTarget()];
+                    _d.sent();
+                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
+                case 14:
+                    _d.sent();
+                    _d.label = 15;
+                case 15: return [4 /*yield*/, component.createBGLayer()];
                 case 16:
-                    _b.sent();
-                    _a = app.activeDocument.layers[0];
-                    return [4 /*yield*/, false];
+                    _d.sent();
+                    return [4 /*yield*/, component.selectAllLayersOnTarget()];
                 case 17:
-                    _a.selected = _b.sent(); // unselected --DO-ACTION--
-                    return [4 /*yield*/, component.mergeLayerNew()];
+                    _d.sent();
+                    _c = acitveDocumet.layers[0];
+                    return [4 /*yield*/, false];
                 case 18:
-                    _b.sent();
-                    return [4 /*yield*/, component.fillWhite()];
+                    _c.selected = _d.sent(); // unselected --DO-ACTION--
+                    return [4 /*yield*/, component.mergeLayerNew()];
                 case 19:
-                    _b.sent();
+                    _d.sent();
+                    return [4 /*yield*/, component.fillWhite()];
+                case 20:
+                    _d.sent();
                     return [2 /*return*/];
             }
         });

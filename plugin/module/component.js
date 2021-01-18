@@ -477,7 +477,6 @@ function createBGLayer() {
             switch (_b.label) {
                 case 0:
                     backgroundLayer = exports.activeDocument().backgroundLayer;
-                    console.log(backgroundLayer.name);
                     if (!(backgroundLayer === null)) return [3 /*break*/, 2];
                     return [4 /*yield*/, batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions)];
                 case 1:

@@ -306,7 +306,6 @@ export async function setLayerName(name: string) {
  */
 export async function createBGLayer() {
   let backgroundLayer = activeDocument().backgroundLayer;
-  console.log(backgroundLayer.name);
   if (backgroundLayer === null) {
     await batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions);
   } else {
