@@ -44,7 +44,7 @@ var save = require("../module/save");
 var app = require("photoshop").app;
 var fuckingExportSize = 1500;
 var fuckingMargin = 20;
-// todo 可能是batchplayer 线程堵塞的问题
+// 2021/1/18 解决，是app.activeDocument 获取错误
 /**
  *
  */
@@ -88,26 +88,29 @@ function mergeMainToSmartObject() {
                     return [4 /*yield*/, component.cropToSize(fuckingExportSize, fuckingExportSize)];
                 case 10:
                     _b.sent();
-                    return [3 /*break*/, 13];
+                    return [3 /*break*/, 14];
                 case 11: return [4 /*yield*/, component.cropToSquare(fuckingMargin)];
                 case 12:
                     _b.sent();
-                    _b.label = 13;
-                case 13: return [4 /*yield*/, component.createBGLayer()];
-                case 14:
+                    return [4 /*yield*/, component.activeDocument().resizeImage(fuckingExportSize, fuckingExportSize)];
+                case 13:
+                    _b.sent();
+                    _b.label = 14;
+                case 14: return [4 /*yield*/, component.createBGLayer()];
+                case 15:
                     _b.sent();
                     return [4 /*yield*/, component.selectAllLayersOnTarget()];
-                case 15:
+                case 16:
                     _b.sent();
                     _a = app.activeDocument.layers[0];
                     return [4 /*yield*/, false];
-                case 16:
+                case 17:
                     _a.selected = _b.sent(); // unselected --DO-ACTION--
                     return [4 /*yield*/, component.mergeLayerNew()];
-                case 17:
+                case 18:
                     _b.sent();
                     return [4 /*yield*/, component.fillWhite()];
-                case 18:
+                case 19:
                     _b.sent();
                     return [2 /*return*/];
             }
@@ -192,7 +195,14 @@ function fuck() {
                 case 7:
                     _d.sent();
                     _d.label = 8;
-                case 8: return [2 /*return*/];
+                case 8:
+                    app.documents.map(function (d) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, d.close()];
+                            case 1: return [2 /*return*/, _a.sent()];
+                        }
+                    }); }); });
+                    return [2 /*return*/];
             }
         });
     });

@@ -4,14 +4,14 @@
  */
 
 import * as batchPlayConfig from "./batchplayconfig";
-import * as layername from "./names";
+import * as names from "./names";
 const app = require("photoshop").app;
 const batchPlay = require("photoshop").action.batchPlay;
 
 /**
  * app.documents 0
  */
-const activeDoc = () => {
+export const activeDocument = () => {
   return app.documents.filter(e => e._id === app.activeDocument._id)[0];
 };
 
@@ -79,7 +79,7 @@ export async function deleteAllEmptyLayers() {
   // layer lock is can't delete
   // use bounds to find empty layer
 
-  let layers = activeDoc().layers;
+  let layers = activeDocument().layers;
 
   layers.map(async layer => {
     if (isEmptyLayer(layer.bounds)) {
@@ -95,7 +95,7 @@ export async function deleteAllEmptyLayers() {
 }
 
 export async function deleteAllLayersExcludeTarget() {
-  let layer = activeDoc().activeLayers[0].name === layername.__DO_ACTION__ ? activeDoc().activeLayers[0] : null;
+  let layer = activeDocument().activeLayers[0].name === names.__DO_ACTION__ ? activeDocument().activeLayers[0] : null;
   if (layer !== null) {
   }
 }
@@ -105,7 +105,8 @@ export async function deleteAllLayersExcludeTarget() {
  * @param margin maring to document boundary
  */
 export async function cropToMargin(margin: number) {
-  let layerBounds: IBounds = activeDoc().activeLayers.length === 1 ? activeDoc().activeLayers[0].bounds : null;
+  let layerBounds: IBounds =
+    activeDocument().activeLayers.length === 1 ? activeDocument().activeLayers[0].bounds : null;
 
   let cropBounds: IBounds = { left: 0, top: 0, right: 0, bottom: 0 };
 
@@ -116,7 +117,7 @@ export async function cropToMargin(margin: number) {
     bottom: layerBounds.bottom + margin,
   };
 
-  activeDoc().crop(cropBounds, 0);
+  activeDocument().crop(cropBounds, 0);
 }
 
 /**
@@ -126,7 +127,7 @@ export async function cropToMargin(margin: number) {
 export async function cropToSquare(margin: number) {
   //todo
   //something
-  let layer = activeDoc().activeLayers.length === 1 ? activeDoc().activeLayers[0] : null;
+  let layer = activeDocument().activeLayers.length === 1 ? activeDocument().activeLayers[0] : null;
   let layerBounds: IBounds = layer !== null ? layer.bounds : null;
   let layerSize: IELementSize = await getElementSize(layer);
 
@@ -151,7 +152,7 @@ export async function cropToSquare(margin: number) {
     bottom: layerBounds.bottom + margin,
   };
 
-  activeDoc().crop(cropBounds);
+  activeDocument().crop(cropBounds);
 }
 
 /**
@@ -161,7 +162,7 @@ export async function cropToSquare(margin: number) {
  * @param height
  */
 export async function cropToSize(width: number, height: number) {
-  let layer = activeDoc().activeLayers.length === 1 ? activeDoc().activeLayers[0] : null;
+  let layer = activeDocument().activeLayers.length === 1 ? activeDocument().activeLayers[0] : null;
   let layerBounds: IBounds = layer !== null ? layer.bounds : null;
   let layerSize: IELementSize = await getElementSize(layer);
 
@@ -175,7 +176,7 @@ export async function cropToSize(width: number, height: number) {
     bottom: layerBounds.bottom + marginTop,
   };
 
-  activeDoc().crop(cropBounds);
+  activeDocument().crop(cropBounds);
 }
 
 /**
@@ -184,9 +185,8 @@ export async function cropToSize(width: number, height: number) {
  * @param isGroup
  */
 export async function selectLayerByName(name: string, isGroup: boolean = false) {
-  console.log(`do someting`);
-  let nameIndex: string = `--DO-ACTIVE-`;
-  let layers = await activeDoc().layers;
+  let nameIndex: string = names.__DO_ACTION__;
+  let layers = await activeDocument().layers;
   let layer =
     (await isGroup) === true
       ? await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === true)
@@ -213,7 +213,7 @@ export async function selectLayerByName(name: string, isGroup: boolean = false) 
  * @param toBottom
  */
 export async function selectAllLayersOnTarget(excludeTarget: boolean = false, toBottom: boolean = false) {
-  let d = activeDoc().layers;
+  let d = activeDocument().layers;
   let topLayerName = toBottom === true ? await d[d.length - 1].name : await d[0].name;
   if (excludeTarget === true) {
   }
@@ -238,7 +238,7 @@ export async function moveLayerToDocTop() {
       {
         _obj: "move",
         _target: batchPlayConfig._targetSeletLayers,
-        to: { _ref: "layer", _index: activeDoc().layers.length + 2 },
+        to: { _ref: "layer", _index: activeDocument().layers.length + 2 },
         adjustment: false,
       },
     ],
@@ -305,7 +305,7 @@ export async function setLayerName(name: string) {
  * create white background layer under bottom
  */
 export async function createBGLayer() {
-  let backgroundLayer = activeDoc().backgroundLayer;
+  let backgroundLayer = activeDocument().backgroundLayer;
   console.log(backgroundLayer.name);
   if (backgroundLayer === null) {
     await batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions);

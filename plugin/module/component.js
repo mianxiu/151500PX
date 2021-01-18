@@ -40,17 +40,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fillWhite = exports.createBGLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = void 0;
+exports.fillWhite = exports.createBGLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
 var batchPlayConfig = require("./batchplayconfig");
-var layername = require("./names");
+var names = require("./names");
 var app = require("photoshop").app;
 var batchPlay = require("photoshop").action.batchPlay;
 /**
  * app.documents 0
  */
-var activeDoc = function () {
+var activeDocument = function () {
     return app.documents.filter(function (e) { return e._id === app.activeDocument._id; })[0];
 };
+exports.activeDocument = activeDocument;
 /**
  * if have nothing,is empty layer
  * @param bounds rectangle size of something in layer,base document left-top point, {left,top,right,bottom}
@@ -115,7 +116,7 @@ function deleteAllEmptyLayers() {
         var layers;
         var _this = this;
         return __generator(this, function (_a) {
-            layers = activeDoc().layers;
+            layers = exports.activeDocument().layers;
             layers.map(function (layer) { return __awaiter(_this, void 0, void 0, function () {
                 var _a, _b;
                 return __generator(this, function (_c) {
@@ -149,7 +150,7 @@ function deleteAllLayersExcludeTarget() {
     return __awaiter(this, void 0, void 0, function () {
         var layer;
         return __generator(this, function (_a) {
-            layer = activeDoc().activeLayers[0].name === layername.__DO_ACTION__ ? activeDoc().activeLayers[0] : null;
+            layer = exports.activeDocument().activeLayers[0].name === names.__DO_ACTION__ ? exports.activeDocument().activeLayers[0] : null;
             if (layer !== null) {
             }
             return [2 /*return*/];
@@ -165,7 +166,7 @@ function cropToMargin(margin) {
     return __awaiter(this, void 0, void 0, function () {
         var layerBounds, cropBounds;
         return __generator(this, function (_a) {
-            layerBounds = activeDoc().activeLayers.length === 1 ? activeDoc().activeLayers[0].bounds : null;
+            layerBounds = exports.activeDocument().activeLayers.length === 1 ? exports.activeDocument().activeLayers[0].bounds : null;
             cropBounds = { left: 0, top: 0, right: 0, bottom: 0 };
             cropBounds = {
                 left: layerBounds.left - margin,
@@ -173,7 +174,7 @@ function cropToMargin(margin) {
                 right: layerBounds.right + margin,
                 bottom: layerBounds.bottom + margin,
             };
-            activeDoc().crop(cropBounds, 0);
+            exports.activeDocument().crop(cropBounds, 0);
             return [2 /*return*/];
         });
     });
@@ -189,7 +190,7 @@ function cropToSquare(margin) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    layer = activeDoc().activeLayers.length === 1 ? activeDoc().activeLayers[0] : null;
+                    layer = exports.activeDocument().activeLayers.length === 1 ? exports.activeDocument().activeLayers[0] : null;
                     layerBounds = layer !== null ? layer.bounds : null;
                     return [4 /*yield*/, getElementSize(layer)];
                 case 1:
@@ -213,7 +214,7 @@ function cropToSquare(margin) {
                         right: layerBounds.right + margin,
                         bottom: layerBounds.bottom + margin,
                     };
-                    activeDoc().crop(cropBounds);
+                    exports.activeDocument().crop(cropBounds);
                     return [2 /*return*/];
             }
         });
@@ -232,7 +233,7 @@ function cropToSize(width, height) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    layer = activeDoc().activeLayers.length === 1 ? activeDoc().activeLayers[0] : null;
+                    layer = exports.activeDocument().activeLayers.length === 1 ? exports.activeDocument().activeLayers[0] : null;
                     layerBounds = layer !== null ? layer.bounds : null;
                     return [4 /*yield*/, getElementSize(layer)];
                 case 1:
@@ -245,7 +246,7 @@ function cropToSize(width, height) {
                         right: layerBounds.right + marginLeft,
                         bottom: layerBounds.bottom + marginTop,
                     };
-                    activeDoc().crop(cropBounds);
+                    exports.activeDocument().crop(cropBounds);
                     return [2 /*return*/];
             }
         });
@@ -265,9 +266,8 @@ function selectLayerByName(name, isGroup) {
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    console.log("do someting");
-                    nameIndex = "--DO-ACTIVE-";
-                    return [4 /*yield*/, activeDoc().layers];
+                    nameIndex = names.__DO_ACTION__;
+                    return [4 /*yield*/, exports.activeDocument().layers];
                 case 1:
                     layers = _c.sent();
                     return [4 /*yield*/, isGroup];
@@ -324,7 +324,7 @@ function selectAllLayersOnTarget(excludeTarget, toBottom) {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    d = activeDoc().layers;
+                    d = exports.activeDocument().layers;
                     if (!(toBottom === true)) return [3 /*break*/, 2];
                     return [4 /*yield*/, d[d.length - 1].name];
                 case 1:
@@ -364,7 +364,7 @@ function moveLayerToDocTop() {
                         {
                             _obj: "move",
                             _target: batchPlayConfig._targetSeletLayers,
-                            to: { _ref: "layer", _index: activeDoc().layers.length + 2 },
+                            to: { _ref: "layer", _index: exports.activeDocument().layers.length + 2 },
                             adjustment: false,
                         },
                     ], batchPlayConfig.defaultOptions)];
@@ -476,7 +476,7 @@ function createBGLayer() {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    backgroundLayer = activeDoc().backgroundLayer;
+                    backgroundLayer = exports.activeDocument().backgroundLayer;
                     console.log(backgroundLayer.name);
                     if (!(backgroundLayer === null)) return [3 /*break*/, 2];
                     return [4 /*yield*/, batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions)];

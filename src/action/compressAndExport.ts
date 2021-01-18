@@ -9,7 +9,7 @@ const app = require("photoshop").app;
 
 const fuckingExportSize: number = 1500;
 const fuckingMargin: number = 20;
-// todo 可能是batchplayer 线程堵塞的问题
+// 2021/1/18 解决，是app.activeDocument 获取错误
 
 /**
  *
@@ -30,6 +30,7 @@ export async function mergeMainToSmartObject() {
     await component.cropToSize(fuckingExportSize, fuckingExportSize);
   } else {
     await component.cropToSquare(fuckingMargin);
+    await component.activeDocument().resizeImage(fuckingExportSize, fuckingExportSize);
   }
   await component.createBGLayer();
   await component.selectAllLayersOnTarget();
@@ -78,4 +79,6 @@ export async function fuck() {
       await app.activeDocument.close();
     });
   }
+
+  app.documents.map(async d => await d.close());
 }
