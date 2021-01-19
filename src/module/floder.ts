@@ -86,8 +86,9 @@ export async function getAllSubFoldersPath(pickFolderSymbol) {
      */
     for (let i = 0; i < subFolders.length; i++) {
       let element = subFolders[i];
+
       let relativePath: string = element.nativePath.replace(
-        new RegExp(`.*${await getFolderName(pickFolderSymbol)}(.*)`),
+        new RegExp(`.*\\${await getFolderName(pickFolderSymbol)}([\\\\|\\/].*)`),
         "$1"
       );
       //.split(/\\|\//gm);
@@ -171,6 +172,7 @@ export async function createExportFolderOnRoot(
 
   for (let i = 0; i < folderTreePaths.length; i++) {
     const element = folderTreePaths[i];
+    console.log(element);
     await createSubPathFolder(exportRootFolder, element.relativePath);
 
     let soureFiles = await getFiles(element.folderSymbol, `PSD`);

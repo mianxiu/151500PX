@@ -57,6 +57,7 @@ export async function fuck() {
 
   if (pickFolder !== null) {
     await folder.createExportFolderOnRoot(await folder.getAllSubFoldersPath(pickFolder), async entryPath => {
+      console.log(entryPath);
       if (app.documents.length < 2) await app.open(entryPath.entrySymbol);
       // do something
       await mergeMainToSmartObject();

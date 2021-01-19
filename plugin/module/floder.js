@@ -144,10 +144,10 @@ function getAllSubFoldersPath(pickFolderSymbol) {
                                     element = subFolders[i];
                                     _b = (_a = element.nativePath).replace;
                                     _c = RegExp.bind;
-                                    _d = ".*";
+                                    _d = ".*\\";
                                     return [4 /*yield*/, getFolderName(pickFolderSymbol)];
                                 case 2:
-                                    relativePath = _b.apply(_a, [new (_c.apply(RegExp, [void 0, _d + (_f.sent()) + "(.*)"]))(), "$1"]);
+                                    relativePath = _b.apply(_a, [new (_c.apply(RegExp, [void 0, _d + (_f.sent()) + "([\\\\|\\/].*)"]))(), "$1"]);
                                     if (!(element.name !== pickFolderName + " " + names.__EXPORT__)) return [3 /*break*/, 4];
                                     return [4 /*yield*/, subFolderTreePath.push({
                                             pickFloderSymbol: pickFolderSymbol,
@@ -256,6 +256,7 @@ function createExportFolderOnRoot(folderTreePaths, doWithEntry) {
                 case 2:
                     if (!(i < folderTreePaths.length)) return [3 /*break*/, 9];
                     element = folderTreePaths[i];
+                    console.log(element);
                     return [4 /*yield*/, createSubPathFolder(exportRootFolder, element.relativePath)];
                 case 3:
                     _a.sent();

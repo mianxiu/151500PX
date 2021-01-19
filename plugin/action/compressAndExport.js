@@ -165,6 +165,7 @@ function fuck() {
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
+                                        console.log(entryPath);
                                         if (!(app.documents.length < 2)) return [3 /*break*/, 2];
                                         return [4 /*yield*/, app.open(entryPath.entrySymbol)];
                                     case 1:
