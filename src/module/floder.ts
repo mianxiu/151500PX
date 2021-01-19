@@ -79,6 +79,7 @@ interface IFloderTreePath {
 export async function getAllSubFoldersPath(pickFolderSymbol) {
   let subFolderTreePath: IFloderTreePath[] = [];
   let pickFolderName = pickFolderSymbol.nativePath.replace(/.*[\\|\/](.*)/gm, "$1");
+
   let loopFolder = async subFolders => {
     /**
      * for loop is left-leftSub-right-rightSub
@@ -87,6 +88,7 @@ export async function getAllSubFoldersPath(pickFolderSymbol) {
     for (let i = 0; i < subFolders.length; i++) {
       let element = subFolders[i];
 
+      // relativepath is path string, like \a\b\c on pickfolder
       let relativePath: string = element.nativePath.replace(
         new RegExp(`.*\\${await getFolderName(pickFolderSymbol)}([\\\\|\\/].*)`),
         "$1"
@@ -94,15 +96,15 @@ export async function getAllSubFoldersPath(pickFolderSymbol) {
       //.split(/\\|\//gm);
 
       // let parentName = element.nativePath.replace(/.*[\\|\/](.+?)[\\|\/]/, "$1/").replace(/(.*)\/.*/gm, "$1");
+      await subFolderTreePath.push({
+        pickFloderSymbol: pickFolderSymbol,
+        pickFolderName: pickFolderName,
+        relativePath: relativePath,
+        folderName: element.name,
+        folderSymbol: element,
+      });
 
       if (element.name !== `${pickFolderName} ${names.__EXPORT__}`) {
-        await subFolderTreePath.push({
-          pickFloderSymbol: pickFolderSymbol,
-          pickFolderName: pickFolderName,
-          relativePath: relativePath,
-          folderName: element.name,
-          folderSymbol: element,
-        });
       }
 
       await loopFolder(await getSubFolders(element));
@@ -126,6 +128,7 @@ export async function createSubFolder(parentSymbol: any, subFolderName: string) 
 
 /**
  * create sub folder in parentSymbol folder, use path， return the last foldersymbol
+ * if path is /|\, return parent symbol
  * @param parentSymbol
  * @param path c:\...\... or c/.../...
  */
@@ -139,6 +142,8 @@ export async function createSubPathFolder(parentSymbol: any, path: string) {
       const element = paths[f];
       parentSymbol = await createSubFolder(parentSymbol, element);
     }
+  } else {
+    return await parentSymbol;
   }
   return await parentSymbol;
 }
@@ -165,22 +170,43 @@ interface IEntryPath {
  */
 export async function createExportFolderOnRoot(
   folderTreePaths: IFloderTreePath[],
+  ignoreEmptyFolder: boolean = false,
   doWithEntry?: (entry: IEntryPath) => void
 ) {
+  /**
+   *  create source folder and get root files and do something
+   */
+  let pickFolderSymbol = folderTreePaths[0].pickFloderSymbol;
   let exportRootFolderName = `${folderTreePaths[0].pickFolderName} ${names.__EXPORT__}`;
-  let exportRootFolder = await createSubFolder(folderTreePaths[0].pickFloderSymbol, exportRootFolderName);
+  let exportRootFolder = await createSubFolder(pickFolderSymbol, exportRootFolderName);
 
+  let sourceRootFiles = await getFiles(pickFolderSymbol, `PSD`);
+  for (let r = 0; r < sourceRootFiles.length; r++) {
+    const rootEntry = sourceRootFiles[r];
+    await doWithEntry({
+      entrySymbol: rootEntry,
+      exportRoot: exportRootFolderName,
+      relateivePath: "/",
+    });
+  }
+
+  /**
+   * loop create sub folder files and do something
+   */
   for (let i = 0; i < folderTreePaths.length; i++) {
     const element = folderTreePaths[i];
-    console.log(element);
-    await createSubPathFolder(exportRootFolder, element.relativePath);
 
-    let soureFiles = await getFiles(element.folderSymbol, `PSD`);
+    let sourceFiles = await getFiles(element.folderSymbol, `PSD`);
+    if (ignoreEmptyFolder === false) {
+      await createSubPathFolder(exportRootFolder, element.relativePath);
+    } else if (ignoreEmptyFolder === true && sourceFiles.length > 0) {
+      await createSubPathFolder(exportRootFolder, element.relativePath);
+    }
 
-    if (soureFiles.length > 0)
-      for (let j = 0; j < soureFiles.length; j++) {
+    if (sourceFiles.length > 0)
+      for (let j = 0; j < sourceFiles.length; j++) {
         let entryPath: IEntryPath = {
-          entrySymbol: soureFiles[j],
+          entrySymbol: sourceFiles[j],
           exportRoot: exportRootFolderName,
           relateivePath: element.relativePath,
         };

@@ -136,7 +136,7 @@ function fuck() {
                     }); }); });
                     if (!(app.documents.length < 1)) return [3 /*break*/, 2];
                     return [4 /*yield*/, app.createDocument({
-                            title: "please pick folder",
+                            name: "please pick folder",
                             width: 1,
                             height: 1,
                             resolution: 1,
@@ -160,7 +160,7 @@ function fuck() {
                     if (!(pickFolder !== null)) return [3 /*break*/, 8];
                     _c = (_b = folder).createExportFolderOnRoot;
                     return [4 /*yield*/, folder.getAllSubFoldersPath(pickFolder)];
-                case 6: return [4 /*yield*/, _c.apply(_b, [_d.sent(), function (entryPath) { return __awaiter(_this, void 0, void 0, function () {
+                case 6: return [4 /*yield*/, _c.apply(_b, [_d.sent(), false, function (entryPath) { return __awaiter(_this, void 0, void 0, function () {
                             var jpegFolderSymbol, tiffFolderSymbol;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {

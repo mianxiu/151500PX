@@ -45,7 +45,7 @@ export async function fuck() {
   // 有文档的时候不会重复打开
   if (app.documents.length < 1)
     await app.createDocument({
-      title: "please pick folder",
+      name: "please pick folder",
       width: 1,
       height: 1,
       resolution: 1,
@@ -56,20 +56,23 @@ export async function fuck() {
   let pickFolder = app.documents.length === 1 ? await folder.pickFolder() : null;
 
   if (pickFolder !== null) {
-    await folder.createExportFolderOnRoot(await folder.getAllSubFoldersPath(pickFolder), async entryPath => {
+    await folder.createExportFolderOnRoot(await folder.getAllSubFoldersPath(pickFolder), false, async entryPath => {
       console.log(entryPath);
       if (app.documents.length < 2) await app.open(entryPath.entrySymbol);
       // do something
       await mergeMainToSmartObject();
-      // export jpeg
+      /**
+       * export jpeg
+       */
       let jpegFolderSymbol = await folder.createSubPathFolder(
         pickFolder,
         `${entryPath.exportRoot}${entryPath.relateivePath}`
       );
-
       await save.saveToJPEG(jpegFolderSymbol, entryPath.entrySymbol.name);
 
-      // export tif
+      /**
+       * export tif
+       */
       let tiffFolderSymbol = await folder.createSubPathFolder(
         pickFolder,
         `${entryPath.exportRoot}${entryPath.relateivePath}${entryPath.relateivePath.replace(
