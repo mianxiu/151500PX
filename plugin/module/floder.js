@@ -125,13 +125,27 @@ exports.getSubFolders = getSubFolders;
  */
 function getAllSubFoldersPath(pickFolderSymbol) {
     return __awaiter(this, void 0, void 0, function () {
-        var subFolderTreePath, pickFolderName, loopFolder, _a;
+        var subFolderTreePath, pickFolderName, isEmptySubFolder, loopFolder, _a;
         var _this = this;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     subFolderTreePath = [];
                     pickFolderName = pickFolderSymbol.nativePath.replace(/.*[\\|\/](.*)/gm, "$1");
+                    return [4 /*yield*/, getSubFolders(pickFolderSymbol)];
+                case 1: return [4 /*yield*/, (_b.sent()).length];
+                case 2:
+                    isEmptySubFolder = (_b.sent()) < 1 ? true : false;
+                    if (isEmptySubFolder === true)
+                        return [2 /*return*/, subFolderTreePath = [
+                                {
+                                    pickFloderSymbol: pickFolderSymbol,
+                                    pickFolderName: pickFolderName,
+                                    relativePath: '/',
+                                    folderName: pickFolderName,
+                                    folderSymbol: pickFolderSymbol,
+                                }
+                            ]];
                     loopFolder = function (subFolders) { return __awaiter(_this, void 0, void 0, function () {
                         var i, element, relativePath, _a, _b, _c, _d, _e;
                         return __generator(this, function (_f) {
@@ -178,8 +192,8 @@ function getAllSubFoldersPath(pickFolderSymbol) {
                     }); };
                     _a = loopFolder;
                     return [4 /*yield*/, getSubFolders(pickFolderSymbol)];
-                case 1: return [4 /*yield*/, _a.apply(void 0, [_b.sent()])];
-                case 2:
+                case 3: return [4 /*yield*/, _a.apply(void 0, [_b.sent()])];
+                case 4:
                     _b.sent();
                     return [2 /*return*/, subFolderTreePath];
             }
@@ -251,76 +265,66 @@ exports.createSubPathFolder = createSubPathFolder;
 function createExportFolderOnRoot(folderTreePaths, ignoreEmptyFolder, doWithEntry) {
     if (ignoreEmptyFolder === void 0) { ignoreEmptyFolder = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var pickFolderSymbol, exportRootFolderName, exportRootFolder, sourceRootFiles, r, rootEntry, i, element, sourceFiles, j, entryPath;
+        var pickFolderSymbol, exportRootFolderName, exportRootFolder, sourceRootFiles, i, element, sourceFiles, j, entryPath;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    pickFolderSymbol = folderTreePaths[0].pickFloderSymbol;
-                    exportRootFolderName = folderTreePaths[0].pickFolderName + " " + names.__EXPORT__;
-                    return [4 /*yield*/, createSubFolder(pickFolderSymbol, exportRootFolderName)];
+                    console.log(12346);
+                    console.log(folderTreePaths);
+                    return [4 /*yield*/, folderTreePaths[0].pickFloderSymbol];
                 case 1:
+                    pickFolderSymbol = _a.sent();
+                    return [4 /*yield*/, folderTreePaths[0].pickFolderName + " " + names.__EXPORT__];
+                case 2:
+                    exportRootFolderName = _a.sent();
+                    return [4 /*yield*/, createSubFolder(pickFolderSymbol, exportRootFolderName)];
+                case 3:
                     exportRootFolder = _a.sent();
                     return [4 /*yield*/, getFiles(pickFolderSymbol, "PSD")];
-                case 2:
-                    sourceRootFiles = _a.sent();
-                    r = 0;
-                    _a.label = 3;
-                case 3:
-                    if (!(r < sourceRootFiles.length)) return [3 /*break*/, 6];
-                    rootEntry = sourceRootFiles[r];
-                    return [4 /*yield*/, doWithEntry({
-                            entrySymbol: rootEntry,
-                            exportRoot: exportRootFolderName,
-                            relateivePath: "/",
-                        })];
                 case 4:
-                    _a.sent();
+                    sourceRootFiles = _a.sent();
+                    i = 0;
                     _a.label = 5;
                 case 5:
-                    r++;
-                    return [3 /*break*/, 3];
-                case 6:
-                    i = 0;
-                    _a.label = 7;
-                case 7:
-                    if (!(i < folderTreePaths.length)) return [3 /*break*/, 17];
+                    if (!(i < folderTreePaths.length)) return [3 /*break*/, 15];
                     element = folderTreePaths[i];
+                    console.log(element);
                     return [4 /*yield*/, getFiles(element.folderSymbol, "PSD")];
-                case 8:
+                case 6:
                     sourceFiles = _a.sent();
-                    if (!(ignoreEmptyFolder === false)) return [3 /*break*/, 10];
+                    if (!(ignoreEmptyFolder === false)) return [3 /*break*/, 8];
+                    return [4 /*yield*/, createSubPathFolder(exportRootFolder, element.relativePath)];
+                case 7:
+                    _a.sent();
+                    return [3 /*break*/, 10];
+                case 8:
+                    if (!(ignoreEmptyFolder === true && sourceFiles.length > 0)) return [3 /*break*/, 10];
                     return [4 /*yield*/, createSubPathFolder(exportRootFolder, element.relativePath)];
                 case 9:
                     _a.sent();
-                    return [3 /*break*/, 12];
+                    _a.label = 10;
                 case 10:
-                    if (!(ignoreEmptyFolder === true && sourceFiles.length > 0)) return [3 /*break*/, 12];
-                    return [4 /*yield*/, createSubPathFolder(exportRootFolder, element.relativePath)];
-                case 11:
-                    _a.sent();
-                    _a.label = 12;
-                case 12:
-                    if (!(sourceFiles.length > 0)) return [3 /*break*/, 16];
+                    if (!(sourceFiles.length > 0)) return [3 /*break*/, 14];
                     j = 0;
-                    _a.label = 13;
-                case 13:
-                    if (!(j < sourceFiles.length)) return [3 /*break*/, 16];
+                    _a.label = 11;
+                case 11:
+                    if (!(j < sourceFiles.length)) return [3 /*break*/, 14];
                     entryPath = {
                         entrySymbol: sourceFiles[j],
                         exportRoot: exportRootFolderName,
                         relateivePath: element.relativePath,
                     };
                     return [4 /*yield*/, doWithEntry(entryPath)];
-                case 14:
+                case 12:
                     _a.sent();
-                    _a.label = 15;
-                case 15:
+                    _a.label = 13;
+                case 13:
                     j++;
-                    return [3 /*break*/, 13];
-                case 16:
+                    return [3 /*break*/, 11];
+                case 14:
                     i++;
-                    return [3 /*break*/, 7];
-                case 17: return [2 /*return*/];
+                    return [3 /*break*/, 5];
+                case 15: return [2 /*return*/];
             }
         });
     });

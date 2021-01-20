@@ -157,41 +157,46 @@ function fuck() {
                     _d.label = 5;
                 case 5:
                     pickFolder = _a;
+                    console.log(pickFolder);
                     if (!(pickFolder !== null)) return [3 /*break*/, 8];
+                    console.log("do create");
                     _c = (_b = folder).createExportFolderOnRoot;
                     return [4 /*yield*/, folder.getAllSubFoldersPath(pickFolder)];
-                case 6: return [4 /*yield*/, _c.apply(_b, [_d.sent(), false, function (entryPath) { return __awaiter(_this, void 0, void 0, function () {
-                            var jpegFolderSymbol, tiffFolderSymbol;
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
+                case 6: return [4 /*yield*/, _c.apply(_b, [_d.sent(), true, function (entryPath) { return __awaiter(_this, void 0, void 0, function () {
+                            var _a, _b, jpegFolderSymbol, tiffFolderSymbol;
+                            return __generator(this, function (_c) {
+                                switch (_c.label) {
                                     case 0:
-                                        console.log(entryPath);
-                                        if (!(app.documents.length < 2)) return [3 /*break*/, 2];
-                                        return [4 /*yield*/, app.open(entryPath.entrySymbol)];
+                                        _b = (_a = console).log;
+                                        return [4 /*yield*/, folder.getAllSubFoldersPath(pickFolder)];
                                     case 1:
-                                        _a.sent();
-                                        _a.label = 2;
-                                    case 2: 
+                                        _b.apply(_a, [_c.sent()]);
+                                        if (!(app.documents.length < 2)) return [3 /*break*/, 3];
+                                        return [4 /*yield*/, app.open(entryPath.entrySymbol)];
+                                    case 2:
+                                        _c.sent();
+                                        _c.label = 3;
+                                    case 3: 
                                     // do something
                                     return [4 /*yield*/, mergeMainToSmartObject()];
-                                    case 3:
-                                        // do something
-                                        _a.sent();
-                                        return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath)];
                                     case 4:
-                                        jpegFolderSymbol = _a.sent();
-                                        return [4 /*yield*/, save.saveToJPEG(jpegFolderSymbol, entryPath.entrySymbol.name)];
+                                        // do something
+                                        _c.sent();
+                                        return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath)];
                                     case 5:
-                                        _a.sent();
-                                        return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath + entryPath.relateivePath.replace(/.*([\\|\/]).*/gm, "$1TIFF"))];
+                                        jpegFolderSymbol = _c.sent();
+                                        return [4 /*yield*/, save.saveToJPEG(jpegFolderSymbol, entryPath.entrySymbol.name)];
                                     case 6:
-                                        tiffFolderSymbol = _a.sent();
-                                        return [4 /*yield*/, save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name)];
+                                        _c.sent();
+                                        return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath + entryPath.relateivePath.replace(/.*([\\|\/]).*/gm, "$1TIFF"))];
                                     case 7:
-                                        _a.sent();
-                                        return [4 /*yield*/, app.activeDocument.close()];
+                                        tiffFolderSymbol = _c.sent();
+                                        return [4 /*yield*/, save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name)];
                                     case 8:
-                                        _a.sent();
+                                        _c.sent();
+                                        return [4 /*yield*/, app.activeDocument.close()];
+                                    case 9:
+                                        _c.sent();
                                         return [2 /*return*/];
                                 }
                             });

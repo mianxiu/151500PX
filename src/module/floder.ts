@@ -77,8 +77,23 @@ interface IFloderTreePath {
  * @param pickFolderSymbol
  */
 export async function getAllSubFoldersPath(pickFolderSymbol) {
+
+
+
   let subFolderTreePath: IFloderTreePath[] = [];
   let pickFolderName = pickFolderSymbol.nativePath.replace(/.*[\\|\/](.*)/gm, "$1");
+
+  let isEmptySubFolder:boolean = await (await getSubFolders(pickFolderSymbol)).length < 1 ? true : false
+  if(isEmptySubFolder===true) return subFolderTreePath = [
+    {  
+      pickFloderSymbol: pickFolderSymbol,
+      pickFolderName: pickFolderName,
+      relativePath: '/',
+      folderName: pickFolderName,
+      folderSymbol: pickFolderSymbol,
+    }
+  ]
+
 
   let loopFolder = async subFolders => {
     /**
@@ -173,28 +188,36 @@ export async function createExportFolderOnRoot(
   ignoreEmptyFolder: boolean = false,
   doWithEntry?: (entry: IEntryPath) => void
 ) {
+  console.log(12346)
+  console.log(folderTreePaths)
   /**
    *  create source folder and get root files and do something
    */
-  let pickFolderSymbol = folderTreePaths[0].pickFloderSymbol;
-  let exportRootFolderName = `${folderTreePaths[0].pickFolderName} ${names.__EXPORT__}`;
+  let pickFolderSymbol = await folderTreePaths[0].pickFloderSymbol;
+
+  let exportRootFolderName = await `${folderTreePaths[0].pickFolderName} ${names.__EXPORT__}`;
   let exportRootFolder = await createSubFolder(pickFolderSymbol, exportRootFolderName);
 
   let sourceRootFiles = await getFiles(pickFolderSymbol, `PSD`);
-  for (let r = 0; r < sourceRootFiles.length; r++) {
-    const rootEntry = sourceRootFiles[r];
-    await doWithEntry({
-      entrySymbol: rootEntry,
-      exportRoot: exportRootFolderName,
-      relateivePath: "/",
-    });
-  }
+
+
+
+  // for (let r = 0; r < sourceRootFiles.length; r++) {
+  //   const rootEntry = sourceRootFiles[r];
+  //   await doWithEntry({
+  //     entrySymbol: rootEntry,
+  //     exportRoot: exportRootFolderName,
+  //     relateivePath: "/",
+  //   });
+  // }
 
   /**
    * loop create sub folder files and do something
    */
   for (let i = 0; i < folderTreePaths.length; i++) {
     const element = folderTreePaths[i];
+
+    console.log(element)
 
     let sourceFiles = await getFiles(element.folderSymbol, `PSD`);
     if (ignoreEmptyFolder === false) {
