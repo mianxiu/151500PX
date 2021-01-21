@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fuck = exports.mergeMainToSmartObject = void 0;
 var component = require("../module/component");
+var names = require("../module/names");
 var folder = require("../module/floder");
 var save = require("../module/save");
 var app = require("photoshop").app;
@@ -51,28 +52,98 @@ var fuckingMargin = 20;
  */
 function mergeMainToSmartObject() {
     return __awaiter(this, void 0, void 0, function () {
-        var acitveDocumet;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var acitveDocumet, layerSize, _a, _b, _c;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
                     acitveDocumet = component.activeDocument();
                     // select layer by name has problem
                     return [4 /*yield*/, component.selectLayerByName("MAIN", true)];
                 case 1:
                     // select layer by name has problem
-                    _a.sent();
+                    _d.sent();
                     return [4 /*yield*/, component.mergeLayerNew()];
                 case 2:
-                    _a.sent();
+                    _d.sent();
                     return [4 /*yield*/, component.selectAllLayersOnTarget(true, true)];
                 case 3:
-                    _a.sent();
+                    _d.sent();
                     return [4 /*yield*/, component.hideLayers()];
                 case 4:
-                    _a.sent();
+                    _d.sent();
                     return [4 /*yield*/, component.selectLayerByName("MAIN", true)];
                 case 5:
-                    _a.sent();
+                    _d.sent();
+                    return [4 /*yield*/, component.selectAllLayersOnTarget()];
+                case 6:
+                    _d.sent();
+                    return [4 /*yield*/, component.mergeLayerNew()];
+                case 7:
+                    _d.sent();
+                    return [4 /*yield*/, component.createLayer('123')];
+                case 8:
+                    _d.sent();
+                    return [4 /*yield*/, component.selectLayerByName(names.__DO_ACTION__)];
+                case 9:
+                    _d.sent();
+                    return [4 /*yield*/, component.selectAllLayersOnTarget()];
+                case 10:
+                    _d.sent();
+                    return [4 /*yield*/, component.mergeVisible()];
+                case 11:
+                    _d.sent();
+                    return [4 /*yield*/, component.selectAllLayersOnTarget()];
+                case 12:
+                    _d.sent();
+                    return [4 /*yield*/, component.convertToSmartObject()];
+                case 13:
+                    _d.sent();
+                    return [4 /*yield*/, component.rasterizeTargetLayer()];
+                case 14:
+                    _d.sent();
+                    return [4 /*yield*/, component.mergeLayerNew()];
+                case 15:
+                    _d.sent();
+                    return [4 /*yield*/, component.convertToSmartObject()];
+                case 16:
+                    _d.sent();
+                    return [4 /*yield*/, component.setLayerName(names.__DO_ACTION__)];
+                case 17:
+                    _d.sent();
+                    _b = (_a = component).getElementSize;
+                    return [4 /*yield*/, acitveDocumet.activeLayers[0]];
+                case 18: return [4 /*yield*/, _b.apply(_a, [_d.sent()])];
+                case 19:
+                    layerSize = _d.sent();
+                    console.log(layerSize.width, layerSize.height);
+                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 21];
+                    return [4 /*yield*/, component.cropToSize(fuckingExportSize, fuckingExportSize)];
+                case 20:
+                    _d.sent();
+                    return [3 /*break*/, 24];
+                case 21: return [4 /*yield*/, component.cropToSquare(fuckingMargin)];
+                case 22:
+                    _d.sent();
+                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
+                case 23:
+                    _d.sent();
+                    _d.label = 24;
+                case 24: return [4 /*yield*/, component.createBGLayer()];
+                case 25:
+                    _d.sent();
+                    return [4 /*yield*/, component.selectAllLayersOnTarget()];
+                case 26:
+                    _d.sent();
+                    _c = acitveDocumet.layers[0];
+                    return [4 /*yield*/, false];
+                case 27:
+                    _c.selected = _d.sent(); // unselected --DO-ACTION--
+                    return [4 /*yield*/, component.mergeLayerNew()];
+                case 28:
+                    _d.sent();
+                    return [4 /*yield*/, component.fillWhite()];
+                case 29:
+                    _d.sent();
                     return [2 /*return*/];
             }
         });

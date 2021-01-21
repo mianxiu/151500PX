@@ -7,6 +7,7 @@ function doSomething() {
   //component.selectLayerByName("MAIN", true);
   //component.cropToSize(400, 400);
   //compressAndExport.mergeMainToSmartObject();
+  
   compressAndExport.mergeMainToSmartObject();
   //compressAndExport.fuck();
 }

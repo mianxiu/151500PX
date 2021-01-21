@@ -214,7 +214,8 @@ export async function selectLayerByName(
             (await layer.name) === name && layer.isGroupLayer === undefined
         );
 
-  layer.name = await `${nameIndex}${name}`;
+        // 2021/1/21
+  layer.name = await `${nameIndex}`;
 
   await batchPlay(
     [
@@ -262,7 +263,7 @@ export async function selectAllLayersOnTarget(
    * need fix
    */
   if (excludeTarget === true) {
-    console.log(a)
+    console.log(a);
     a.map(async (e) => {
       e.selected = await false;
     });
@@ -309,6 +310,23 @@ export async function mergeLayers() {}
 export async function mergeLayerNew() {
   await batchPlay([{ _obj: "mergeLayersNew" }], batchPlayConfig.defaultOptions);
 }
+export async function mergeVisible() {
+  await batchPlay(
+    [
+      {
+        _obj: "mergeVisible",
+        _isCommand: true,
+        _options: {
+          dialogOptions: "dontDisplay",
+        },
+      },
+    ],
+    {
+      synchronousExecution: false,
+      modalBehavior: "fail",
+    }
+  );
+}
 
 /**
  * ctrl + e
@@ -341,6 +359,33 @@ export async function setLayerName(name: string) {
   );
 }
 
+export async function createLayer(layerName?: string) {
+  let name = layerName !== "" ? layerName : "";
+  await batchPlay(
+    [
+      {
+        _obj: "make",
+        _target: [
+          {
+            _ref: "layer",
+          },
+        ],
+        using: {
+          _obj: layerName,
+          name: "123",
+        },
+        _isCommand: true,
+        _options: {
+          dialogOptions: "dontDisplay",
+        },
+      },
+    ],
+    {
+      synchronousExecution: false,
+      modalBehavior: "fail",
+    }
+  );
+}
 /**
  * create white background layer under bottom
  */
@@ -377,7 +422,7 @@ export async function hideLayers() {
     [
       {
         _obj: "hide",
-        null: [batchPlayConfig._targetSeletLayers],
+        null: batchPlayConfig._targetSeletLayers,
       },
     ],
     batchPlayConfig.defaultOptions

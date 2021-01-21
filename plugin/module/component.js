@@ -40,7 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
+exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var names = require("./names");
 var app = require("photoshop").app;
@@ -301,9 +301,11 @@ function selectLayerByName(name, isGroup) {
                     _c.label = 6;
                 case 6:
                     layer = _a;
+                    // 2021/1/21
                     _b = layer;
-                    return [4 /*yield*/, "" + nameIndex + name];
+                    return [4 /*yield*/, "" + nameIndex];
                 case 7:
+                    // 2021/1/21
                     _b.name = _c.sent();
                     return [4 /*yield*/, batchPlay([
                             {
@@ -457,6 +459,30 @@ function mergeLayerNew() {
     });
 }
 exports.mergeLayerNew = mergeLayerNew;
+function mergeVisible() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "mergeVisible",
+                            _isCommand: true,
+                            _options: {
+                                dialogOptions: "dontDisplay",
+                            },
+                        },
+                    ], {
+                        synchronousExecution: false,
+                        modalBehavior: "fail",
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.mergeVisible = mergeVisible;
 /**
  * ctrl + e
  */
@@ -500,6 +526,42 @@ function setLayerName(name) {
     });
 }
 exports.setLayerName = setLayerName;
+function createLayer(layerName) {
+    return __awaiter(this, void 0, void 0, function () {
+        var name;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    name = layerName !== "" ? layerName : "";
+                    return [4 /*yield*/, batchPlay([
+                            {
+                                _obj: "make",
+                                _target: [
+                                    {
+                                        _ref: "layer",
+                                    },
+                                ],
+                                using: {
+                                    _obj: layerName,
+                                    name: "123",
+                                },
+                                _isCommand: true,
+                                _options: {
+                                    dialogOptions: "dontDisplay",
+                                },
+                            },
+                        ], {
+                            synchronousExecution: false,
+                            modalBehavior: "fail",
+                        })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.createLayer = createLayer;
 /**
  * create white background layer under bottom
  */
@@ -558,7 +620,7 @@ function hideLayers() {
                 case 0: return [4 /*yield*/, batchPlay([
                         {
                             _obj: "hide",
-                            null: [batchPlayConfig._targetSeletLayers],
+                            null: batchPlayConfig._targetSeletLayers,
                         },
                     ], batchPlayConfig.defaultOptions)];
                 case 1:
