@@ -12,7 +12,7 @@ const batchPlay = require("photoshop").action.batchPlay;
  * app.documents 0
  */
 export const activeDocument = () => {
-  return app.documents.filter(e => e._id === app.activeDocument._id)[0];
+  return app.documents.filter((e) => e._id === app.activeDocument._id)[0];
 };
 
 interface IBounds {
@@ -63,7 +63,9 @@ export async function getElementSize(layer: any): Promise<IELementSize> {
  * decide element is vertcal or horizontal
  * @param elementSize
  */
-export async function isVertical(elementSize: IELementSize): Promise<boolean | null> {
+export async function isVertical(
+  elementSize: IELementSize
+): Promise<boolean | null> {
   if (elementSize.height > elementSize.width) {
     return true;
   } else if (elementSize.height < elementSize.width) {
@@ -81,7 +83,7 @@ export async function deleteAllEmptyLayers() {
 
   let layers = activeDocument().layers;
 
-  layers.map(async layer => {
+  layers.map(async (layer) => {
     if (isEmptyLayer(layer.bounds)) {
       // if unuse selected,sometime it can't set false
       if (layer.locked) {
@@ -95,7 +97,10 @@ export async function deleteAllEmptyLayers() {
 }
 
 export async function deleteAllLayersExcludeTarget() {
-  let layer = activeDocument().activeLayers[0].name === names.__DO_ACTION__ ? activeDocument().activeLayers[0] : null;
+  let layer =
+    activeDocument().activeLayers[0].name === names.__DO_ACTION__
+      ? activeDocument().activeLayers[0]
+      : null;
   if (layer !== null) {
   }
 }
@@ -106,7 +111,9 @@ export async function deleteAllLayersExcludeTarget() {
  */
 export async function cropToMargin(margin: number) {
   let layerBounds: IBounds =
-    activeDocument().activeLayers.length === 1 ? activeDocument().activeLayers[0].bounds : null;
+    activeDocument().activeLayers.length === 1
+      ? activeDocument().activeLayers[0].bounds
+      : null;
 
   let cropBounds: IBounds = { left: 0, top: 0, right: 0, bottom: 0 };
 
@@ -127,7 +134,10 @@ export async function cropToMargin(margin: number) {
 export async function cropToSquare(margin: number) {
   //todo
   //something
-  let layer = activeDocument().activeLayers.length === 1 ? activeDocument().activeLayers[0] : null;
+  let layer =
+    activeDocument().activeLayers.length === 1
+      ? activeDocument().activeLayers[0]
+      : null;
   let layerBounds: IBounds = layer !== null ? layer.bounds : null;
   let layerSize: IELementSize = await getElementSize(layer);
 
@@ -162,7 +172,10 @@ export async function cropToSquare(margin: number) {
  * @param height
  */
 export async function cropToSize(width: number, height: number) {
-  let layer = activeDocument().activeLayers.length === 1 ? activeDocument().activeLayers[0] : null;
+  let layer =
+    activeDocument().activeLayers.length === 1
+      ? activeDocument().activeLayers[0]
+      : null;
   let layerBounds: IBounds = layer !== null ? layer.bounds : null;
   let layerSize: IELementSize = await getElementSize(layer);
 
@@ -184,13 +197,22 @@ export async function cropToSize(width: number, height: number) {
  * @param name
  * @param isGroup
  */
-export async function selectLayerByName(name: string, isGroup: boolean = false) {
+export async function selectLayerByName(
+  name: string,
+  isGroup: boolean = false
+) {
   let nameIndex: string = names.__DO_ACTION__;
   let layers = await activeDocument().layers;
   let layer =
     (await isGroup) === true
-      ? await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === true)
-      : await layers.find(async layer => (await layer.name) === name && layer.isGroupLayer === undefined);
+      ? await layers.find(
+          async (layer) =>
+            (await layer.name) === name && layer.isGroupLayer === true
+        )
+      : await layers.find(
+          async (layer) =>
+            (await layer.name) === name && layer.isGroupLayer === undefined
+        );
 
   layer.name = await `${nameIndex}${name}`;
 
@@ -212,21 +234,39 @@ export async function selectLayerByName(name: string, isGroup: boolean = false) 
  * @param excludeTarget
  * @param toBottom
  */
-export async function selectAllLayersOnTarget(excludeTarget: boolean = false, toBottom: boolean = false) {
+export async function selectAllLayersOnTarget(
+  excludeTarget: boolean = false,
+  toBottom: boolean = false
+) {
   let d = activeDocument().layers;
-  let topLayerName = toBottom === true ? await d[d.length - 1].name : await d[0].name;
-  if (excludeTarget === true) {
-  }
+  let a = activeDocument().activeLayers;
+  let topLayerName =
+    toBottom === true ? await d[d.length - 1].name : await d[0].name;
+
+  /**
+   * select layer
+   */
   await batchPlay(
     [
       {
         _obj: "select",
         _target: [{ _ref: "layer", _name: topLayerName }],
-        selectionModifier: batchPlayConfig.selectionModifier.addToSelectionContinuous,
+        selectionModifier:
+          batchPlayConfig.selectionModifier.addToSelectionContinuous,
       },
     ],
     batchPlayConfig.defaultOptions
   );
+
+  /**
+   * need fix
+   */
+  if (excludeTarget === true) {
+    console.log(a)
+    a.map(async (e) => {
+      e.selected = await false;
+    });
+  }
 }
 
 /**
@@ -307,7 +347,10 @@ export async function setLayerName(name: string) {
 export async function createBGLayer() {
   let backgroundLayer = activeDocument().backgroundLayer;
   if (backgroundLayer === null) {
-    await batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions);
+    await batchPlay(
+      [{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }],
+      batchPlayConfig.defaultOptions
+    );
   } else {
     backgroundLayer.selected = await true;
     await selectLayerByName(backgroundLayer.name);
@@ -323,6 +366,18 @@ export async function fillWhite() {
         color: { _obj: "RGBColor", red: 255, grain: 255, blue: 255 },
         opacity: { _unit: "percentUnit", _value: 100 },
         mode: { _enum: "blendMode", _value: "normal" },
+      },
+    ],
+    batchPlayConfig.defaultOptions
+  );
+}
+
+export async function hideLayers() {
+  await batchPlay(
+    [
+      {
+        _obj: "hide",
+        null: [batchPlayConfig._targetSeletLayers],
       },
     ],
     batchPlayConfig.defaultOptions

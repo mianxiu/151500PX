@@ -21,25 +21,30 @@ export async function mergeMainToSmartObject() {
   // select layer by name has problem
   await component.selectLayerByName(`MAIN`, true);
   await component.mergeLayerNew();
-  await component.selectAllLayersOnTarget();
-  await component.convertToSmartObject();
-  await component.rasterizeTargetLayer();
-  await component.mergeLayerNew();
-  await component.convertToSmartObject();
-  await component.setLayerName(names.__DO_ACTION__);
-  let layerSize = await component.getElementSize(await acitveDocumet.activeLayers[0]);
-  console.log(layerSize.width, layerSize.height);
-  if (layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize) {
-    await component.cropToSize(fuckingExportSize, fuckingExportSize);
-  } else {
-    await component.cropToSquare(fuckingMargin);
-    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
-  }
-  await component.createBGLayer();
-  await component.selectAllLayersOnTarget();
-  acitveDocumet.layers[0].selected = await false; // unselected --DO-ACTION--
-  await component.mergeLayerNew();
-  await component.fillWhite();
+  await component.selectAllLayersOnTarget(true,true);
+  await component.hideLayers()
+  await component.selectLayerByName(`MAIN`, true);
+  // await component.selectAllLayersOnTarget();
+  // await component.mergeLayerNew();
+  // await component.selectAllLayersOnTarget();
+  // await component.convertToSmartObject();
+  // await component.rasterizeTargetLayer();
+  // await component.mergeLayerNew();
+  // await component.convertToSmartObject();
+  // await component.setLayerName(names.__DO_ACTION__);
+  // let layerSize = await component.getElementSize(await acitveDocumet.activeLayers[0]);
+  // console.log(layerSize.width, layerSize.height);
+  // if (layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize) {
+  //   await component.cropToSize(fuckingExportSize, fuckingExportSize);
+  // } else {
+  //   await component.cropToSquare(fuckingMargin);
+  //   await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
+  // }
+  // await component.createBGLayer();
+  // await component.selectAllLayersOnTarget();
+  // acitveDocumet.layers[0].selected = await false; // unselected --DO-ACTION--
+  // await component.mergeLayerNew();
+  // await component.fillWhite();
 }
 
 export async function fuck() {

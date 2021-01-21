@@ -25,13 +25,16 @@ export async function pickFolder() {
   return await localFileSystem.getFolder();
 }
 
-export async function isExitSubFolder(parentFolderSymbol: any, folderName: string) {
+export async function isExitSubFolder(
+  parentFolderSymbol: any,
+  folderName: string
+) {
   return await parentFolderSymbol
     .getEntry(folderName)
-    .then(done => {
+    .then((done) => {
       return true;
     })
-    .catch(error => {
+    .catch((error) => {
       return false;
     });
 }
@@ -48,11 +51,19 @@ export async function getFolderName(folderSymbol: any): Promise<string> {
  * @param folderSymbol
  * @param filterFilenameExtension  PSD/TIFF... or other
  */
-export async function getFiles(folderSymbol, filterFilenameExtension: string = `.*`): Promise<any[]> {
+export async function getFiles(
+  folderSymbol,
+  filterFilenameExtension: string = `.*`
+): Promise<any[]> {
   const entries = await folderSymbol.getEntries();
-  const nameExtensionRegexp: RegExp = RegExp(`.*\\.${filterFilenameExtension}`, "i");
+  const nameExtensionRegexp: RegExp = RegExp(
+    `.*\\.${filterFilenameExtension}`,
+    "i"
+  );
 
-  return entries.filter(entry => nameExtensionRegexp.test(entry.name) && entry.isFile);
+  return entries.filter(
+    (entry) => nameExtensionRegexp.test(entry.name) && entry.isFile
+  );
 }
 
 /**
@@ -61,7 +72,7 @@ export async function getFiles(folderSymbol, filterFilenameExtension: string = `
  */
 export async function getSubFolders(folderSymbol): Promise<any[]> {
   const entries = await folderSymbol.getEntries();
-  return entries.filter(entry => entry.isFolder);
+  return entries.filter((entry) => entry.isFolder);
 }
 
 interface IFloderTreePath {
@@ -77,25 +88,26 @@ interface IFloderTreePath {
  * @param pickFolderSymbol
  */
 export async function getAllSubFoldersPath(pickFolderSymbol) {
-
-
-
   let subFolderTreePath: IFloderTreePath[] = [];
-  let pickFolderName = pickFolderSymbol.nativePath.replace(/.*[\\|\/](.*)/gm, "$1");
+  let pickFolderName = pickFolderSymbol.nativePath.replace(
+    /.*[\\|\/](.*)/gm,
+    "$1"
+  );
 
-  let isEmptySubFolder:boolean = await (await getSubFolders(pickFolderSymbol)).length < 1 ? true : false
-  if(isEmptySubFolder===true) return subFolderTreePath = [
-    {  
-      pickFloderSymbol: pickFolderSymbol,
-      pickFolderName: pickFolderName,
-      relativePath: '/',
-      folderName: pickFolderName,
-      folderSymbol: pickFolderSymbol,
-    }
-  ]
+  let isEmptySubFolder: boolean =
+    (await (await getSubFolders(pickFolderSymbol)).length) < 1 ? true : false;
+  if (isEmptySubFolder === true)
+    return (subFolderTreePath = [
+      {
+        pickFloderSymbol: pickFolderSymbol,
+        pickFolderName: pickFolderName,
+        relativePath: "/",
+        folderName: pickFolderName,
+        folderSymbol: pickFolderSymbol,
+      },
+    ]);
 
-
-  let loopFolder = async subFolders => {
+  let loopFolder = async (subFolders) => {
     /**
      * for loop is left-leftSub-right-rightSub
      * foreach loop is left-right-leftSub-rightSub
@@ -105,7 +117,9 @@ export async function getAllSubFoldersPath(pickFolderSymbol) {
 
       // relativepath is path string, like \a\b\c on pickfolder
       let relativePath: string = element.nativePath.replace(
-        new RegExp(`.*\\${await getFolderName(pickFolderSymbol)}([\\\\|\\/].*)`),
+        new RegExp(
+          `.*\\${await getFolderName(pickFolderSymbol)}([\\\\|\\/].*)`
+        ),
         "$1"
       );
       //.split(/\\|\//gm);
@@ -135,8 +149,11 @@ export async function getAllSubFoldersPath(pickFolderSymbol) {
  * @param parentSymbol
  * @param subFolderName
  */
-export async function createSubFolder(parentSymbol: any, subFolderName: string) {
-  return await parentSymbol.getEntry(subFolderName).catch(onRejected => {
+export async function createSubFolder(
+  parentSymbol: any,
+  subFolderName: string
+) {
+  return await parentSymbol.getEntry(subFolderName).catch((onRejected) => {
     return parentSymbol.createFolder(subFolderName);
   });
 }
@@ -149,7 +166,15 @@ export async function createSubFolder(parentSymbol: any, subFolderName: string) 
  */
 export async function createSubPathFolder(parentSymbol: any, path: string) {
   let paths: string[] = path
-    .replace(new RegExp(`.*${parentSymbol.nativePath.replace(/.*[\\|\/](.*)/gm, "$1")}[\\\\|\\/]`), "")
+    .replace(
+      new RegExp(
+        `.*${parentSymbol.nativePath.replace(
+          /.*[\\|\/](.*)/gm,
+          "$1"
+        )}[\\\\|\\/]`
+      ),
+      ""
+    )
     .split(/\\|\//gm);
 
   if (paths.length > 0) {
@@ -188,19 +213,20 @@ export async function createExportFolderOnRoot(
   ignoreEmptyFolder: boolean = false,
   doWithEntry?: (entry: IEntryPath) => void
 ) {
-  console.log(12346)
-  console.log(folderTreePaths)
+  console.log(12346);
+  console.log(folderTreePaths);
   /**
    *  create source folder and get root files and do something
    */
   let pickFolderSymbol = await folderTreePaths[0].pickFloderSymbol;
 
   let exportRootFolderName = await `${folderTreePaths[0].pickFolderName} ${names.__EXPORT__}`;
-  let exportRootFolder = await createSubFolder(pickFolderSymbol, exportRootFolderName);
+  let exportRootFolder = await createSubFolder(
+    pickFolderSymbol,
+    exportRootFolderName
+  );
 
   let sourceRootFiles = await getFiles(pickFolderSymbol, `PSD`);
-
-
 
   // for (let r = 0; r < sourceRootFiles.length; r++) {
   //   const rootEntry = sourceRootFiles[r];
@@ -217,7 +243,7 @@ export async function createExportFolderOnRoot(
   for (let i = 0; i < folderTreePaths.length; i++) {
     const element = folderTreePaths[i];
 
-    console.log(element)
+    console.log(element);
 
     let sourceFiles = await getFiles(element.folderSymbol, `PSD`);
     if (ignoreEmptyFolder === false) {

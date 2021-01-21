@@ -40,7 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fillWhite = exports.createBGLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
+exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var names = require("./names");
 var app = require("photoshop").app;
@@ -150,7 +150,9 @@ function deleteAllLayersExcludeTarget() {
     return __awaiter(this, void 0, void 0, function () {
         var layer;
         return __generator(this, function (_a) {
-            layer = exports.activeDocument().activeLayers[0].name === names.__DO_ACTION__ ? exports.activeDocument().activeLayers[0] : null;
+            layer = exports.activeDocument().activeLayers[0].name === names.__DO_ACTION__
+                ? exports.activeDocument().activeLayers[0]
+                : null;
             if (layer !== null) {
             }
             return [2 /*return*/];
@@ -166,7 +168,9 @@ function cropToMargin(margin) {
     return __awaiter(this, void 0, void 0, function () {
         var layerBounds, cropBounds;
         return __generator(this, function (_a) {
-            layerBounds = exports.activeDocument().activeLayers.length === 1 ? exports.activeDocument().activeLayers[0].bounds : null;
+            layerBounds = exports.activeDocument().activeLayers.length === 1
+                ? exports.activeDocument().activeLayers[0].bounds
+                : null;
             cropBounds = { left: 0, top: 0, right: 0, bottom: 0 };
             cropBounds = {
                 left: layerBounds.left - margin,
@@ -190,7 +194,9 @@ function cropToSquare(margin) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    layer = exports.activeDocument().activeLayers.length === 1 ? exports.activeDocument().activeLayers[0] : null;
+                    layer = exports.activeDocument().activeLayers.length === 1
+                        ? exports.activeDocument().activeLayers[0]
+                        : null;
                     layerBounds = layer !== null ? layer.bounds : null;
                     return [4 /*yield*/, getElementSize(layer)];
                 case 1:
@@ -233,7 +239,9 @@ function cropToSize(width, height) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    layer = exports.activeDocument().activeLayers.length === 1 ? exports.activeDocument().activeLayers[0] : null;
+                    layer = exports.activeDocument().activeLayers.length === 1
+                        ? exports.activeDocument().activeLayers[0]
+                        : null;
                     layerBounds = layer !== null ? layer.bounds : null;
                     return [4 /*yield*/, getElementSize(layer)];
                 case 1:
@@ -320,11 +328,13 @@ function selectAllLayersOnTarget(excludeTarget, toBottom) {
     if (excludeTarget === void 0) { excludeTarget = false; }
     if (toBottom === void 0) { toBottom = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var d, topLayerName, _a;
+        var d, a, topLayerName, _a;
+        var _this = this;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     d = exports.activeDocument().layers;
+                    a = exports.activeDocument().activeLayers;
                     if (!(toBottom === true)) return [3 /*break*/, 2];
                     return [4 /*yield*/, d[d.length - 1].name];
                 case 1:
@@ -336,8 +346,9 @@ function selectAllLayersOnTarget(excludeTarget, toBottom) {
                     _b.label = 4;
                 case 4:
                     topLayerName = _a;
-                    if (excludeTarget === true) {
-                    }
+                    /**
+                     * select layer
+                     */
                     return [4 /*yield*/, batchPlay([
                             {
                                 _obj: "select",
@@ -346,7 +357,29 @@ function selectAllLayersOnTarget(excludeTarget, toBottom) {
                             },
                         ], batchPlayConfig.defaultOptions)];
                 case 5:
+                    /**
+                     * select layer
+                     */
                     _b.sent();
+                    /**
+                     * need fix
+                     */
+                    if (excludeTarget === true) {
+                        console.log(a);
+                        a.map(function (e) { return __awaiter(_this, void 0, void 0, function () {
+                            var _a;
+                            return __generator(this, function (_b) {
+                                switch (_b.label) {
+                                    case 0:
+                                        _a = e;
+                                        return [4 /*yield*/, false];
+                                    case 1:
+                                        _a.selected = _b.sent();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }); });
+                    }
                     return [2 /*return*/];
             }
         });
@@ -518,3 +551,21 @@ function fillWhite() {
     });
 }
 exports.fillWhite = fillWhite;
+function hideLayers() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "hide",
+                            null: [batchPlayConfig._targetSeletLayers],
+                        },
+                    ], batchPlayConfig.defaultOptions)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.hideLayers = hideLayers;

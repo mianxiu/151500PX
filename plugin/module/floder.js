@@ -137,15 +137,15 @@ function getAllSubFoldersPath(pickFolderSymbol) {
                 case 2:
                     isEmptySubFolder = (_b.sent()) < 1 ? true : false;
                     if (isEmptySubFolder === true)
-                        return [2 /*return*/, subFolderTreePath = [
+                        return [2 /*return*/, (subFolderTreePath = [
                                 {
                                     pickFloderSymbol: pickFolderSymbol,
                                     pickFolderName: pickFolderName,
-                                    relativePath: '/',
+                                    relativePath: "/",
                                     folderName: pickFolderName,
                                     folderSymbol: pickFolderSymbol,
-                                }
-                            ]];
+                                },
+                            ])];
                     loopFolder = function (subFolders) { return __awaiter(_this, void 0, void 0, function () {
                         var i, element, relativePath, _a, _b, _c, _d, _e;
                         return __generator(this, function (_f) {
