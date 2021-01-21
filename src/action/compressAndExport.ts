@@ -18,37 +18,41 @@ const fuckingMargin: number = 20;
  */
 export async function mergeMainToSmartObject() {
   let acitveDocumet = component.activeDocument();
- // select layer by name has problem
+  // select layer by name has problem
   await component.selectLayerByName(`MAIN`, true);
-  await component.mergeLayerNew();
-  await component.selectAllLayersOnTarget(true,true);
-  await component.hideLayers()
+  await component.selectAllLayersOnTarget(true, true);
+  await component.hideLayers();
   await component.selectLayerByName(`MAIN`, true);
-  await component.selectAllLayersOnTarget();
-  await component.mergeLayerNew();
-  await component.createLayer('123');
-  await component.selectLayerByName(names.__DO_ACTION__);
-  await component.selectAllLayersOnTarget()
-  await component.mergeVisible()
-  await component.selectAllLayersOnTarget();
+  await component.selectAllLayersOnTarget(true, false, true);
+
+  await component.mergeVisible();
+  // await component.createLayer("123");
+  // await component.selectLayerByName(names.__DO_ACTION__);
+  // await component.selectAllLayersOnTarget();
+  // await component.mergeVisible();
+  // await component.selectAllLayersOnTarget();
   await component.convertToSmartObject();
   await component.rasterizeTargetLayer();
   await component.mergeLayerNew();
   await component.convertToSmartObject();
   await component.setLayerName(names.__DO_ACTION__);
   let layerSize = await component.getElementSize(await acitveDocumet.activeLayers[0]);
-  console.log(layerSize.width, layerSize.height);
+
   if (layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize) {
     await component.cropToSize(fuckingExportSize, fuckingExportSize);
   } else {
+    console.log(layerSize.width, layerSize.height);
     await component.cropToSquare(fuckingMargin);
-    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
+    //await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
   }
-  await component.createBGLayer();
-  await component.selectAllLayersOnTarget();
-  acitveDocumet.layers[0].selected = await false; // unselected --DO-ACTION--
-  await component.mergeLayerNew();
-  await component.fillWhite();
+
+  //
+  await component.deleteAllUnVisibleLayers();
+  // await component.createBGLayer();
+  // // await component.selectAllLayersOnTarget();
+  // // acitveDocumet.layers[0].selected = await false; // unselected --DO-ACTION--
+  // // await component.mergeLayerNew();
+  // await component.fillWhite();
 }
 
 export async function fuck() {
@@ -66,10 +70,10 @@ export async function fuck() {
 
   let pickFolder = app.documents.length === 1 ? await folder.pickFolder() : null;
 
-  console.log(pickFolder)
-  
+  console.log(pickFolder);
+
   if (pickFolder !== null) {
-    console.log(`do create`)
+    console.log(`do create`);
     await folder.createExportFolderOnRoot(await folder.getAllSubFoldersPath(pickFolder), true, async entryPath => {
       console.log(await folder.getAllSubFoldersPath(pickFolder));
       if (app.documents.length < 2) await app.open(entryPath.entrySymbol);

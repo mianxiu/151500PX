@@ -1,6 +1,7 @@
 "use strict";
 var compressAndExport = require("./action/compressAndExport");
 //todos
+// 删除不可见图层
 function doSomething() {
     //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
     //component.selectAllLayersOnTarget();
