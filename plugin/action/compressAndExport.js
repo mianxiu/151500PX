@@ -46,6 +46,8 @@ var fuckingExportSize = 1500;
 var fuckingMargin = 20;
 // 2021/1/18 解决，是app.activeDocument 获取错误
 /**
+ * TODO 2021/1/20
+ * 想要裁剪透明图层到主体和完美应用各种效果，需要拼合可见图层/图像
  *
  */
 function mergeMainToSmartObject() {
