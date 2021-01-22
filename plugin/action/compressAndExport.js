@@ -111,18 +111,33 @@ function mergeMainToSmartObject() {
                     return [4 /*yield*/, component.cropToSize(fuckingExportSize, fuckingExportSize)];
                 case 14:
                     _c.sent();
-                    return [3 /*break*/, 17];
+                    return [3 /*break*/, 18];
                 case 15:
                     console.log(layerSize.width, layerSize.height);
                     return [4 /*yield*/, component.cropToSquare(fuckingMargin)];
                 case 16:
                     _c.sent();
-                    _c.label = 17;
-                case 17: 
+                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
+                case 17:
+                    _c.sent();
+                    _c.label = 18;
+                case 18: 
                 //
                 return [4 /*yield*/, component.deleteAllUnVisibleLayers()];
-                case 18:
+                case 19:
                     //
+                    _c.sent();
+                    return [4 /*yield*/, component.createBGLayer()];
+                case 20:
+                    _c.sent();
+                    // await component.selectAllLayersOnTarget();
+                    // acitveDocumet.layers[0].selected = await false; // unselected --DO-ACTION--
+                    // await component.mergeLayerNew();
+                    return [4 /*yield*/, component.fillWhite()];
+                case 21:
+                    // await component.selectAllLayersOnTarget();
+                    // acitveDocumet.layers[0].selected = await false; // unselected --DO-ACTION--
+                    // await component.mergeLayerNew();
                     _c.sent();
                     return [2 /*return*/];
             }

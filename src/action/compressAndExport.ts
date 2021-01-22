@@ -43,16 +43,16 @@ export async function mergeMainToSmartObject() {
   } else {
     console.log(layerSize.width, layerSize.height);
     await component.cropToSquare(fuckingMargin);
-    //await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
+    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
   }
 
   //
   await component.deleteAllUnVisibleLayers();
-  // await component.createBGLayer();
-  // // await component.selectAllLayersOnTarget();
-  // // acitveDocumet.layers[0].selected = await false; // unselected --DO-ACTION--
-  // // await component.mergeLayerNew();
-  // await component.fillWhite();
+  await component.createBGLayer();
+  // await component.selectAllLayersOnTarget();
+  // acitveDocumet.layers[0].selected = await false; // unselected --DO-ACTION--
+  // await component.mergeLayerNew();
+  await component.fillWhite();
 }
 
 export async function fuck() {
