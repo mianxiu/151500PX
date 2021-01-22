@@ -174,7 +174,9 @@ function deleteAllLayersExcludeTarget() {
     return __awaiter(this, void 0, void 0, function () {
         var layer;
         return __generator(this, function (_a) {
-            layer = exports.activeDocument().activeLayers[0].name === names.__DO_ACTION__ ? exports.activeDocument().activeLayers[0] : null;
+            layer = exports.activeDocument().activeLayers[0].name === names.__DO_ACTION__
+                ? exports.activeDocument().activeLayers[0]
+                : null;
             if (layer !== null) {
             }
             return [2 /*return*/];
@@ -190,7 +192,9 @@ function cropToMargin(margin) {
     return __awaiter(this, void 0, void 0, function () {
         var layerBounds, cropBounds;
         return __generator(this, function (_a) {
-            layerBounds = exports.activeDocument().activeLayers.length === 1 ? exports.activeDocument().activeLayers[0].bounds : null;
+            layerBounds = exports.activeDocument().activeLayers.length === 1
+                ? exports.activeDocument().activeLayers[0].bounds
+                : null;
             cropBounds = { left: 0, top: 0, right: 0, bottom: 0 };
             cropBounds = {
                 left: layerBounds.left - margin,
@@ -214,7 +218,9 @@ function cropToSquare(margin) {
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    layer = exports.activeDocument().activeLayers.length === 1 ? exports.activeDocument().activeLayers[0] : null;
+                    layer = exports.activeDocument().activeLayers.length === 1
+                        ? exports.activeDocument().activeLayers[0]
+                        : null;
                     layerBounds = layer !== null ? layer.bounds : null;
                     return [4 /*yield*/, getElementSize(layer)];
                 case 1:
@@ -264,7 +270,9 @@ function cropToSize(width, height) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    layer = exports.activeDocument().activeLayers.length === 1 ? exports.activeDocument().activeLayers[0] : null;
+                    layer = exports.activeDocument().activeLayers.length === 1
+                        ? exports.activeDocument().activeLayers[0]
+                        : null;
                     layerBounds = layer !== null ? layer.bounds : null;
                     return [4 /*yield*/, getElementSize(layer)];
                 case 1:
@@ -301,39 +309,38 @@ function selectLayerByName(name, isGroup) {
                     return [4 /*yield*/, exports.activeDocument().layers];
                 case 1:
                     layers = _b.sent();
-                    return [4 /*yield*/, isGroup];
-                case 2:
-                    if (!((_b.sent()) === true)) return [3 /*break*/, 4];
+                    if (!(isGroup === true)) return [3 /*break*/, 3];
                     return [4 /*yield*/, layers.find(function (layer) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0: return [4 /*yield*/, layer.name];
                                 case 1: return [2 /*return*/, (_a.sent()) === name && layer.isGroupLayer === true];
                             }
                         }); }); })];
-                case 3:
+                case 2:
                     _a = _b.sent();
-                    return [3 /*break*/, 6];
-                case 4: return [4 /*yield*/, layers.find(function (layer) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+                    return [3 /*break*/, 5];
+                case 3: return [4 /*yield*/, layers.find(function (layer) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, layer.name];
                             case 1: return [2 /*return*/, (_a.sent()) === name && layer.isGroupLayer === undefined];
                         }
                     }); }); })];
-                case 5:
+                case 4:
                     _a = _b.sent();
-                    _b.label = 6;
-                case 6:
+                    _b.label = 5;
+                case 5:
                     layer = _a;
-                    // 2021/1/21
+                    // 2021/1/22 todo
+                    console.log(layer);
                     //layer.name = await `${nameIndex}`;
                     return [4 /*yield*/, batchPlay([
                             {
                                 _obj: "select",
-                                _target: [{ _ref: "layer", _name: "MAIN" }],
+                                _target: [{ _ref: "layer", _name: name }],
+                                makeVisible: false,
                             },
                         ], batchPlayConfig.defaultOptions)];
-                case 7:
-                    // 2021/1/21
+                case 6:
                     //layer.name = await `${nameIndex}`;
                     _b.sent();
                     return [2 /*return*/];
