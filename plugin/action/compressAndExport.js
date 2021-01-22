@@ -124,7 +124,16 @@ function mergeMainToSmartObject() {
                 case 19:
                     _c.sent();
                     _c.label = 20;
-                case 20: return [2 /*return*/];
+                case 20: return [4 /*yield*/, component.deleteAllUnVisibleLayers()];
+                case 21:
+                    _c.sent();
+                    return [4 /*yield*/, component.createBGLayer()];
+                case 22:
+                    _c.sent();
+                    return [4 /*yield*/, component.fillWhite()];
+                case 23:
+                    _c.sent();
+                    return [2 /*return*/];
             }
         });
     });

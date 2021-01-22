@@ -50,9 +50,9 @@ export async function mergeMainToSmartObject() {
     await component.cropToSize(fuckingExportSize, fuckingExportSize);
   }
 
-  // await component.deleteAllUnVisibleLayers();
-  // await component.createBGLayer();
-  // await component.fillWhite();
+  await component.deleteAllUnVisibleLayers();
+  await component.createBGLayer();
+  await component.fillWhite();
 }
 
 export async function fuck() {
