@@ -1,5 +1,5 @@
 import * as batchPlayConfig from "../module/batchplayconfig";
-import * as component from "../module/component";
+import * as layerComponent from "../module/layercomponent";
 import * as names from "../module/names";
 import * as folder from "../module/floder";
 import * as secureStorage from "../module/securestorage";
@@ -20,39 +20,39 @@ const fuckingMargin: number = 20;
  *
  */
 export async function mergeMainToSmartObject() {
-  let acitveDocumet = component.activeDocument();
+  let acitveDocumet = layerComponent.activeDocument();
   // select layer by name has problem
-  await component.selectLayerByName(`MAIN`, true);
-  await component.selectAllLayersOnTarget(true, true);
-  await component.hideLayers();
-  await component.selectLayerByName(`MAIN`, true);
-  await component.selectAllLayersOnTarget(true, false, true);
+  await layerComponent.selectLayerByName(`MAIN`, true);
+  await layerComponent.selectAllLayersOnTarget(true, true);
+  await layerComponent.hideLayers();
+  await layerComponent.selectLayerByName(`MAIN`, true);
+  await layerComponent.selectAllLayersOnTarget(true, false, true);
 
-  await component.mergeVisible();
+  await layerComponent.mergeVisible();
 
-  await component.convertToSmartObject();
-  await component.rasterizeTargetLayer();
-  await component.mergeLayerNew();
-  await component.convertToSmartObject();
-  await component.setLayerName(names.__DO_ACTION__);
+  await layerComponent.convertToSmartObject();
+  await layerComponent.rasterizeTargetLayer();
+  await layerComponent.mergeLayerNew();
+  await layerComponent.convertToSmartObject();
+  await layerComponent.setLayerName(names.__DO_ACTION__);
 
-  let layerSize = await component.getElementSize(await acitveDocumet.activeLayers[0]);
-  let layerBounds: component.IBounds = component.activeDocument().activeLayers[0].bounds;
+  let layerSize = await layerComponent.getElementSize(await acitveDocumet.activeLayers[0]);
+  let layerBounds: layerComponent.IBounds = layerComponent.activeDocument().activeLayers[0].bounds;
   if (layerBounds.bottom === 0 || layerBounds.left === 0 || layerBounds.right === 0 || layerBounds.top === 0) {
     console.log(`${names.__MAIN_DETAIL__} MODE`);
     await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
   } else if (layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize) {
     console.log(`${names.__MAIN__} SIZE > ${fuckingExportSize}`);
-    await component.cropToSquare(fuckingMargin);
+    await layerComponent.cropToSquare(fuckingMargin);
     await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
   } else if (layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize) {
     console.log(`${names.__MAIN__} SIZE < ${fuckingExportSize}`);
-    await component.cropToSize(fuckingExportSize, fuckingExportSize);
+    await layerComponent.cropToSize(fuckingExportSize, fuckingExportSize);
   }
 
-  await component.deleteAllUnVisibleLayers();
-  await component.createBGLayer();
-  await component.fillWhite();
+  await layerComponent.deleteAllUnVisibleLayers();
+  await layerComponent.createBGLayer();
+  await layerComponent.fillWhite();
 }
 
 export async function fuck() {

@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fuck = exports.mergeMainToSmartObject = void 0;
-var component = require("../module/component");
+var layerComponent = require("../module/layercomponent");
 var names = require("../module/names");
 var folder = require("../module/floder");
 var save = require("../module/save");
@@ -59,48 +59,48 @@ function mergeMainToSmartObject() {
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    acitveDocumet = component.activeDocument();
+                    acitveDocumet = layerComponent.activeDocument();
                     // select layer by name has problem
-                    return [4 /*yield*/, component.selectLayerByName("MAIN", true)];
+                    return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
                 case 1:
                     // select layer by name has problem
                     _c.sent();
-                    return [4 /*yield*/, component.selectAllLayersOnTarget(true, true)];
+                    return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(true, true)];
                 case 2:
                     _c.sent();
-                    return [4 /*yield*/, component.hideLayers()];
+                    return [4 /*yield*/, layerComponent.hideLayers()];
                 case 3:
                     _c.sent();
-                    return [4 /*yield*/, component.selectLayerByName("MAIN", true)];
+                    return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
                 case 4:
                     _c.sent();
-                    return [4 /*yield*/, component.selectAllLayersOnTarget(true, false, true)];
+                    return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(true, false, true)];
                 case 5:
                     _c.sent();
-                    return [4 /*yield*/, component.mergeVisible()];
+                    return [4 /*yield*/, layerComponent.mergeVisible()];
                 case 6:
                     _c.sent();
-                    return [4 /*yield*/, component.convertToSmartObject()];
+                    return [4 /*yield*/, layerComponent.convertToSmartObject()];
                 case 7:
                     _c.sent();
-                    return [4 /*yield*/, component.rasterizeTargetLayer()];
+                    return [4 /*yield*/, layerComponent.rasterizeTargetLayer()];
                 case 8:
                     _c.sent();
-                    return [4 /*yield*/, component.mergeLayerNew()];
+                    return [4 /*yield*/, layerComponent.mergeLayerNew()];
                 case 9:
                     _c.sent();
-                    return [4 /*yield*/, component.convertToSmartObject()];
+                    return [4 /*yield*/, layerComponent.convertToSmartObject()];
                 case 10:
                     _c.sent();
-                    return [4 /*yield*/, component.setLayerName(names.__DO_ACTION__)];
+                    return [4 /*yield*/, layerComponent.setLayerName(names.__DO_ACTION__)];
                 case 11:
                     _c.sent();
-                    _b = (_a = component).getElementSize;
+                    _b = (_a = layerComponent).getElementSize;
                     return [4 /*yield*/, acitveDocumet.activeLayers[0]];
                 case 12: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
                 case 13:
                     layerSize = _c.sent();
-                    layerBounds = component.activeDocument().activeLayers[0].bounds;
+                    layerBounds = layerComponent.activeDocument().activeLayers[0].bounds;
                     if (!(layerBounds.bottom === 0 || layerBounds.left === 0 || layerBounds.right === 0 || layerBounds.top === 0)) return [3 /*break*/, 15];
                     console.log(names.__MAIN_DETAIL__ + " MODE");
                     return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
@@ -110,7 +110,7 @@ function mergeMainToSmartObject() {
                 case 15:
                     if (!(layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize)) return [3 /*break*/, 18];
                     console.log(names.__MAIN__ + " SIZE > " + fuckingExportSize);
-                    return [4 /*yield*/, component.cropToSquare(fuckingMargin)];
+                    return [4 /*yield*/, layerComponent.cropToSquare(fuckingMargin)];
                 case 16:
                     _c.sent();
                     return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
@@ -120,17 +120,17 @@ function mergeMainToSmartObject() {
                 case 18:
                     if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 20];
                     console.log(names.__MAIN__ + " SIZE < " + fuckingExportSize);
-                    return [4 /*yield*/, component.cropToSize(fuckingExportSize, fuckingExportSize)];
+                    return [4 /*yield*/, layerComponent.cropToSize(fuckingExportSize, fuckingExportSize)];
                 case 19:
                     _c.sent();
                     _c.label = 20;
-                case 20: return [4 /*yield*/, component.deleteAllUnVisibleLayers()];
+                case 20: return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers()];
                 case 21:
                     _c.sent();
-                    return [4 /*yield*/, component.createBGLayer()];
+                    return [4 /*yield*/, layerComponent.createBGLayer()];
                 case 22:
                     _c.sent();
-                    return [4 /*yield*/, component.fillWhite()];
+                    return [4 /*yield*/, layerComponent.fillWhite()];
                 case 23:
                     _c.sent();
                     return [2 /*return*/];
