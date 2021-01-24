@@ -19,19 +19,19 @@
       },
       "minimumSize": {
         "width": 160,
-        "height": 55
+        "height": 320
       },
       "maximumSize": {
         "width": 160,
-        "height": 500
+        "height": 320
       },
       "preferredDockedSize": {
         "width": 160,
-        "height": 460
+        "height": 320
       },
       "preferredFloatingSize": {
         "width": 160,
-        "height": 460
+        "height": 320
       },
       "label": {
         "default": "151500PX"
