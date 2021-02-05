@@ -286,8 +286,9 @@ exports.cropToSize = cropToSize;
  * @param selectName
  * @param onlyGroup
  */
-function selectLayerByName(selectName, onlyGroup) {
+function selectLayerByName(selectName, onlyGroup, makeVisible) {
     if (onlyGroup === void 0) { onlyGroup = false; }
+    if (makeVisible === void 0) { makeVisible = false; }
     return __awaiter(this, void 0, void 0, function () {
         var select, layers, i, l, _a, _b, r;
         var _this = this;
@@ -301,9 +302,9 @@ function selectLayerByName(selectName, onlyGroup) {
                                         {
                                             _obj: "select",
                                             _target: [{ _ref: "layer", _name: selectName }],
-                                            makeVisible: false,
+                                            makeVisible: makeVisible,
                                         },
-                                    ], batchPlayConfig.defaultOptions)];
+                                    ], batchPlayConfig.defaultOptions())];
                                 case 1:
                                     _a.sent();
                                     return [2 /*return*/];
@@ -361,24 +362,14 @@ function selectAllLayersOnTarget(excludeTarget, toBottom, ignoreHideLayer) {
     if (toBottom === void 0) { toBottom = false; }
     if (ignoreHideLayer === void 0) { ignoreHideLayer = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var d, a, topLayerName, _a, b, i, element, _b, _c;
+        var d, a, topLayerName, b, i, element, _a, _b;
         var _this = this;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
                     d = exports.activeDocument().layers;
                     a = exports.activeDocument().activeLayers;
-                    if (!(toBottom === true)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, d[d.length - 1].name];
-                case 1:
-                    _a = _d.sent();
-                    return [3 /*break*/, 4];
-                case 2: return [4 /*yield*/, d[0].name];
-                case 3:
-                    _a = _d.sent();
-                    _d.label = 4;
-                case 4:
-                    topLayerName = _a;
+                    topLayerName = toBottom === true ? d[d.length - 1].name : d[0].name;
                     /**
                      * select layer
                      */
@@ -388,13 +379,13 @@ function selectAllLayersOnTarget(excludeTarget, toBottom, ignoreHideLayer) {
                                 _target: [{ _ref: "layer", _name: topLayerName }],
                                 selectionModifier: batchPlayConfig.selectionModifier.addToSelectionContinuous,
                             },
-                        ], batchPlayConfig.defaultOptions)];
-                case 5:
+                        ], batchPlayConfig.defaultOptions())];
+                case 1:
                     /**
                      * select layer
                      */
-                    _d.sent();
-                    if (!(excludeTarget === true)) return [3 /*break*/, 12];
+                    _c.sent();
+                    if (!(excludeTarget === true)) return [3 /*break*/, 8];
                     a.map(function (e) { return __awaiter(_this, void 0, void 0, function () {
                         var _a;
                         return __generator(this, function (_b) {
@@ -409,32 +400,32 @@ function selectAllLayersOnTarget(excludeTarget, toBottom, ignoreHideLayer) {
                         });
                     }); });
                     return [4 /*yield*/, exports.activeDocument().activeLayers];
-                case 6:
-                    b = _d.sent();
+                case 2:
+                    b = _c.sent();
                     i = b.length - a.length - 1;
-                    _d.label = 7;
-                case 7:
-                    if (!(i > 0)) return [3 /*break*/, 12];
+                    _c.label = 3;
+                case 3:
+                    if (!(i > 0)) return [3 /*break*/, 8];
                     element = b[i];
                     if (element.parent === null)
-                        return [3 /*break*/, 12];
-                    if (!(element.parent !== null)) return [3 /*break*/, 9];
-                    _b = element;
+                        return [3 /*break*/, 8];
+                    if (!(element.parent !== null)) return [3 /*break*/, 5];
+                    _a = element;
                     return [4 /*yield*/, false];
-                case 8:
-                    _b.selected = _d.sent();
-                    return [3 /*break*/, 11];
-                case 9:
-                    _c = element;
-                    return [4 /*yield*/, true];
-                case 10:
-                    _c.selected = _d.sent();
-                    _d.label = 11;
-                case 11:
-                    i--;
+                case 4:
+                    _a.selected = _c.sent();
                     return [3 /*break*/, 7];
-                case 12:
-                    if (!(ignoreHideLayer === true)) return [3 /*break*/, 14];
+                case 5:
+                    _b = element;
+                    return [4 /*yield*/, true];
+                case 6:
+                    _b.selected = _c.sent();
+                    _c.label = 7;
+                case 7:
+                    i--;
+                    return [3 /*break*/, 3];
+                case 8:
+                    if (!(ignoreHideLayer === true)) return [3 /*break*/, 10];
                     return [4 /*yield*/, exports.activeDocument().activeLayers.map(function (e) { return __awaiter(_this, void 0, void 0, function () {
                             var _a;
                             return __generator(this, function (_b) {
@@ -450,10 +441,10 @@ function selectAllLayersOnTarget(excludeTarget, toBottom, ignoreHideLayer) {
                                 }
                             });
                         }); })];
-                case 13:
-                    _d.sent();
-                    _d.label = 14;
-                case 14: return [2 /*return*/];
+                case 9:
+                    _c.sent();
+                    _c.label = 10;
+                case 10: return [2 /*return*/];
             }
         });
     });
@@ -473,7 +464,7 @@ function moveLayerToDocTop() {
                             to: { _ref: "layer", _index: exports.activeDocument().layers.length + 2 },
                             adjustment: false,
                         },
-                    ], batchPlayConfig.defaultOptions)];
+                    ], batchPlayConfig.defaultOptions())];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -502,7 +493,7 @@ function convertToSmartObject() {
                         {
                             _obj: "newPlacedLayer",
                         },
-                    ], batchPlayConfig.defaultOptions)];
+                    ], batchPlayConfig.defaultOptions())];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -521,7 +512,7 @@ function mergeLayerNew() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, batchPlay([{ _obj: "mergeLayersNew" }], batchPlayConfig.defaultOptions)];
+                case 0: return [4 /*yield*/, batchPlay([{ _obj: "mergeLayersNew" }], batchPlayConfig.defaultOptions())];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -542,10 +533,7 @@ function mergeVisible() {
                                 dialogOptions: "dontDisplay",
                             },
                         },
-                    ], {
-                        synchronousExecution: false,
-                        modalBehavior: "fail",
-                    })];
+                    ], batchPlayConfig.defaultOptions())];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -566,7 +554,7 @@ function rasterizeTargetLayer() {
                             _obj: "rasterizeLayer",
                             _target: batchPlayConfig._targetSeletLayers,
                         },
-                    ], batchPlayConfig.defaultOptions)];
+                    ], batchPlayConfig.defaultOptions(""))];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -578,7 +566,8 @@ exports.rasterizeTargetLayer = rasterizeTargetLayer;
 /**
  * set layers to a name
  */
-function setLayerName(name) {
+function setLayerName(name, histortyName) {
+    if (histortyName === void 0) { histortyName = ""; }
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -588,7 +577,7 @@ function setLayerName(name) {
                             _target: batchPlayConfig._targetSeletLayers,
                             to: { _obj: "layer", name: name },
                         },
-                    ], batchPlayConfig.defaultOptions)];
+                    ], batchPlayConfig.defaultOptions(histortyName))];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -644,7 +633,7 @@ function createBGLayer() {
                 case 0:
                     backgroundLayer = exports.activeDocument().backgroundLayer;
                     if (!(backgroundLayer === null)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions)];
+                    return [4 /*yield*/, batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions())];
                 case 1:
                     _b.sent();
                     return [3 /*break*/, 5];
@@ -675,7 +664,7 @@ function fillWhite() {
                             opacity: { _unit: "percentUnit", _value: 100 },
                             mode: { _enum: "blendMode", _value: "normal" },
                         },
-                    ], batchPlayConfig.defaultOptions)];
+                    ], batchPlayConfig.defaultOptions())];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -693,7 +682,7 @@ function hideLayers() {
                             _obj: "hide",
                             null: batchPlayConfig._targetSeletLayers,
                         },
-                    ], batchPlayConfig.defaultOptions)];
+                    ], batchPlayConfig.defaultOptions())];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];

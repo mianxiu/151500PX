@@ -55,84 +55,46 @@ var fuckingMargin = 20;
  */
 function mergeMainToSmartObject() {
     return __awaiter(this, void 0, void 0, function () {
-        var acitveDocumet, layerSize, _a, _b, layerBounds;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var acitveDocumet;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     acitveDocumet = layerComponent.activeDocument();
                     // select layer by name has problem
                     return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
                 case 1:
                     // select layer by name has problem
-                    _c.sent();
+                    _a.sent();
                     return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(true, true)];
                 case 2:
-                    _c.sent();
+                    _a.sent();
                     return [4 /*yield*/, layerComponent.hideLayers()];
                 case 3:
-                    _c.sent();
+                    _a.sent();
                     return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
                 case 4:
-                    _c.sent();
+                    _a.sent();
                     return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(true, false, true)];
                 case 5:
-                    _c.sent();
+                    _a.sent();
                     return [4 /*yield*/, layerComponent.mergeVisible()];
                 case 6:
-                    _c.sent();
+                    _a.sent();
                     return [4 /*yield*/, layerComponent.convertToSmartObject()];
                 case 7:
-                    _c.sent();
+                    _a.sent();
                     return [4 /*yield*/, layerComponent.rasterizeTargetLayer()];
                 case 8:
-                    _c.sent();
+                    _a.sent();
                     return [4 /*yield*/, layerComponent.mergeLayerNew()];
                 case 9:
-                    _c.sent();
+                    _a.sent();
                     return [4 /*yield*/, layerComponent.convertToSmartObject()];
                 case 10:
-                    _c.sent();
+                    _a.sent();
                     return [4 /*yield*/, layerComponent.setLayerName(names.__DO_ACTION__)];
                 case 11:
-                    _c.sent();
-                    _b = (_a = layerComponent).getElementSize;
-                    return [4 /*yield*/, acitveDocumet.activeLayers[0]];
-                case 12: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
-                case 13:
-                    layerSize = _c.sent();
-                    layerBounds = layerComponent.activeDocument().activeLayers[0].bounds;
-                    if (!(layerBounds.bottom === 0 || layerBounds.left === 0 || layerBounds.right === 0 || layerBounds.top === 0)) return [3 /*break*/, 15];
-                    console.log(names.__MAIN_DETAIL__ + " MODE");
-                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
-                case 14:
-                    _c.sent();
-                    return [3 /*break*/, 20];
-                case 15:
-                    if (!(layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize)) return [3 /*break*/, 18];
-                    console.log(names.__MAIN__ + " SIZE > " + fuckingExportSize);
-                    return [4 /*yield*/, layerComponent.cropToSquare(fuckingMargin)];
-                case 16:
-                    _c.sent();
-                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
-                case 17:
-                    _c.sent();
-                    return [3 /*break*/, 20];
-                case 18:
-                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 20];
-                    console.log(names.__MAIN__ + " SIZE < " + fuckingExportSize);
-                    return [4 /*yield*/, layerComponent.cropToSize(fuckingExportSize, fuckingExportSize)];
-                case 19:
-                    _c.sent();
-                    _c.label = 20;
-                case 20: return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers()];
-                case 21:
-                    _c.sent();
-                    return [4 /*yield*/, layerComponent.createBGLayer()];
-                case 22:
-                    _c.sent();
-                    return [4 /*yield*/, layerComponent.fillWhite()];
-                case 23:
-                    _c.sent();
+                    _a.sent();
                     return [2 /*return*/];
             }
         });

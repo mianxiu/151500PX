@@ -1,10 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TiffConfig = exports.selectionModifier = exports._targetSeletLayers = exports._ref = exports.defaultOptions = void 0;
-exports.defaultOptions = {
-    synchronousExecution: false,
-    modalBehavior: "fail",
-};
+/**
+ *
+ * @param histortyName set '' can suspend create history when use bathplay
+ */
+function defaultOptions(histortyName) {
+    if (histortyName === void 0) { histortyName = ""; }
+    return {
+        synchronousExecution: false,
+        modalBehavior: "fail",
+        historyStateInfo: {
+            name: histortyName,
+            target: {
+                _ref: "document",
+                _enum: "ordinal",
+                _value: "targetEnum",
+            },
+        },
+    };
+}
+exports.defaultOptions = defaultOptions;
 exports._ref = {
     layer: "layer",
     path: "path",

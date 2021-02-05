@@ -1,8 +1,21 @@
-export var defaultOptions = {
-  synchronousExecution: false,
-  modalBehavior: "fail",
-};
-
+/**
+ *
+ * @param histortyName set '' can suspend create history when use bathplay
+ */
+export function defaultOptions(histortyName: string = "") {
+  return {
+    synchronousExecution: false,
+    modalBehavior: "fail",
+    historyStateInfo: {
+      name: histortyName,
+      target: {
+        _ref: "document",
+        _enum: "ordinal",
+        _value: "targetEnum",
+      },
+    },
+  };
+}
 interface ITarget {
   _ref: string;
   _enum: string;

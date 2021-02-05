@@ -8,7 +8,7 @@ function doSomething() {
     //component.selectAllLayersOnTarget();
     //component.selectLayerByName("MAIN", true);
     //component.cropToSize(400, 400);
-    // compressAndExport.mergeMainToSmartObject();
-    compressAndExport.fuck();
+    compressAndExport.mergeMainToSmartObject();
+    //compressAndExport.fuck();
 }
 document.getElementById("btnPopulate").addEventListener("click", doSomething);

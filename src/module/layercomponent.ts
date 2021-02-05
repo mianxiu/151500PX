@@ -193,17 +193,21 @@ export async function cropToSize(width: number, height: number) {
  * @param selectName
  * @param onlyGroup
  */
-export async function selectLayerByName(selectName: string, onlyGroup: boolean = false): Promise<void | undefined> {
+export async function selectLayerByName(
+  selectName: string,
+  onlyGroup: boolean = false,
+  makeVisible: boolean = false
+): Promise<void | undefined> {
   let select = async () => {
     await batchPlay(
       [
         {
           _obj: "select",
           _target: [{ _ref: "layer", _name: selectName }],
-          makeVisible: false,
+          makeVisible: makeVisible,
         },
       ],
-      batchPlayConfig.defaultOptions
+      batchPlayConfig.defaultOptions()
     );
   };
 
@@ -221,6 +225,7 @@ export async function selectLayerByName(selectName: string, onlyGroup: boolean =
       } else if (l.name === selectName) {
         select();
         l.name = await `${l.name} ${i}`;
+        //await setLayerName(`${l.name} ${i}`, "");
       }
     } else {
       select();
@@ -245,7 +250,7 @@ export async function selectAllLayersOnTarget(
 ) {
   let d = activeDocument().layers;
   let a = activeDocument().activeLayers;
-  let topLayerName = toBottom === true ? await d[d.length - 1].name : await d[0].name;
+  let topLayerName = toBottom === true ? d[d.length - 1].name : d[0].name;
 
   /**
    * select layer
@@ -258,7 +263,7 @@ export async function selectAllLayersOnTarget(
         selectionModifier: batchPlayConfig.selectionModifier.addToSelectionContinuous,
       },
     ],
-    batchPlayConfig.defaultOptions
+    batchPlayConfig.defaultOptions()
   );
 
   /**
@@ -306,7 +311,7 @@ export async function moveLayerToDocTop() {
         adjustment: false,
       },
     ],
-    batchPlayConfig.defaultOptions
+    batchPlayConfig.defaultOptions()
   );
 }
 
@@ -325,14 +330,15 @@ export async function convertToSmartObject() {
         _obj: "newPlacedLayer",
       },
     ],
-    batchPlayConfig.defaultOptions
+    batchPlayConfig.defaultOptions()
   );
 }
 
 export async function mergeLayers() {}
 export async function mergeLayerNew() {
-  await batchPlay([{ _obj: "mergeLayersNew" }], batchPlayConfig.defaultOptions);
+  await batchPlay([{ _obj: "mergeLayersNew" }], batchPlayConfig.defaultOptions());
 }
+
 export async function mergeVisible() {
   await batchPlay(
     [
@@ -344,10 +350,7 @@ export async function mergeVisible() {
         },
       },
     ],
-    {
-      synchronousExecution: false,
-      modalBehavior: "fail",
-    }
+    batchPlayConfig.defaultOptions()
   );
 }
 
@@ -362,14 +365,14 @@ export async function rasterizeTargetLayer() {
         _target: batchPlayConfig._targetSeletLayers,
       },
     ],
-    batchPlayConfig.defaultOptions
+    batchPlayConfig.defaultOptions("")
   );
 }
 
 /**
  * set layers to a name
  */
-export async function setLayerName(name: string) {
+export async function setLayerName(name: string, histortyName: string = "") {
   await batchPlay(
     [
       {
@@ -378,7 +381,7 @@ export async function setLayerName(name: string) {
         to: { _obj: "layer", name: name },
       },
     ],
-    batchPlayConfig.defaultOptions
+    batchPlayConfig.defaultOptions(histortyName)
   );
 }
 
@@ -415,7 +418,7 @@ export async function createLayer(layerName?: string) {
 export async function createBGLayer() {
   let backgroundLayer = activeDocument().backgroundLayer;
   if (backgroundLayer === null) {
-    await batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions);
+    await batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions());
   } else {
     backgroundLayer.selected = await true;
     await selectLayerByName(backgroundLayer.name);
@@ -433,7 +436,7 @@ export async function fillWhite() {
         mode: { _enum: "blendMode", _value: "normal" },
       },
     ],
-    batchPlayConfig.defaultOptions
+    batchPlayConfig.defaultOptions()
   );
 }
 
@@ -445,6 +448,6 @@ export async function hideLayers() {
         null: batchPlayConfig._targetSeletLayers,
       },
     ],
-    batchPlayConfig.defaultOptions
+    batchPlayConfig.defaultOptions()
   );
 }

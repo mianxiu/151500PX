@@ -36,23 +36,23 @@ export async function mergeMainToSmartObject() {
   await layerComponent.convertToSmartObject();
   await layerComponent.setLayerName(names.__DO_ACTION__);
 
-  let layerSize = await layerComponent.getElementSize(await acitveDocumet.activeLayers[0]);
-  let layerBounds: layerComponent.IBounds = layerComponent.activeDocument().activeLayers[0].bounds;
-  if (layerBounds.bottom === 0 || layerBounds.left === 0 || layerBounds.right === 0 || layerBounds.top === 0) {
-    console.log(`${names.__MAIN_DETAIL__} MODE`);
-    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
-  } else if (layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize) {
-    console.log(`${names.__MAIN__} SIZE > ${fuckingExportSize}`);
-    await layerComponent.cropToSquare(fuckingMargin);
-    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
-  } else if (layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize) {
-    console.log(`${names.__MAIN__} SIZE < ${fuckingExportSize}`);
-    await layerComponent.cropToSize(fuckingExportSize, fuckingExportSize);
-  }
+  // let layerSize = await layerComponent.getElementSize(await acitveDocumet.activeLayers[0]);
+  // let layerBounds: layerComponent.IBounds = layerComponent.activeDocument().activeLayers[0].bounds;
+  // if (layerBounds.bottom === 0 || layerBounds.left === 0 || layerBounds.right === 0 || layerBounds.top === 0) {
+  //   console.log(`${names.__MAIN_DETAIL__} MODE`);
+  //   await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
+  // } else if (layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize) {
+  //   console.log(`${names.__MAIN__} SIZE > ${fuckingExportSize}`);
+  //   await layerComponent.cropToSquare(fuckingMargin);
+  //   await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
+  // } else if (layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize) {
+  //   console.log(`${names.__MAIN__} SIZE < ${fuckingExportSize}`);
+  //   await layerComponent.cropToSize(fuckingExportSize, fuckingExportSize);
+  // }
 
-  await layerComponent.deleteAllUnVisibleLayers();
-  await layerComponent.createBGLayer();
-  await layerComponent.fillWhite();
+  // await layerComponent.deleteAllUnVisibleLayers();
+  // await layerComponent.createBGLayer();
+  // await layerComponent.fillWhite();
 }
 
 export async function fuck() {
