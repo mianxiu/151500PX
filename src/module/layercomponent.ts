@@ -235,6 +235,8 @@ export async function selectLayerByName(
   }
 
   let r = activeDocument().activeLayers;
+
+  console.log(r);
   if (r[0].name !== selectName || r.length > 0) return undefined;
 }
 
@@ -306,7 +308,7 @@ export async function moveLayerToDocTop() {
     [
       {
         _obj: "move",
-        _target: batchPlayConfig._targetSeletLayers,
+        _target: batchPlayConfig._targetSelectLayers,
         to: { _ref: "layer", _index: activeDocument().layers.length + 2 },
         adjustment: false,
       },
@@ -339,6 +341,9 @@ export async function mergeLayerNew() {
   await batchPlay([{ _obj: "mergeLayersNew" }], batchPlayConfig.defaultOptions());
 }
 
+/**
+ * ctrl+shift+e
+ */
 export async function mergeVisible() {
   await batchPlay(
     [
@@ -362,7 +367,7 @@ export async function rasterizeTargetLayer() {
     [
       {
         _obj: "rasterizeLayer",
-        _target: batchPlayConfig._targetSeletLayers,
+        _target: batchPlayConfig._targetSelectLayers,
       },
     ],
     batchPlayConfig.defaultOptions("")
@@ -377,7 +382,7 @@ export async function setLayerName(name: string, histortyName: string = "") {
     [
       {
         _obj: "set",
-        _target: batchPlayConfig._targetSeletLayers,
+        _target: batchPlayConfig._targetSelectLayers,
         to: { _obj: "layer", name: name },
       },
     ],
@@ -385,6 +390,10 @@ export async function setLayerName(name: string, histortyName: string = "") {
   );
 }
 
+/**
+ * create layer
+ * @param layerName
+ */
 export async function createLayer(layerName?: string) {
   let name = layerName !== "" ? layerName : "";
   await batchPlay(
@@ -425,13 +434,19 @@ export async function createBGLayer() {
   }
 }
 
-export async function fillWhite() {
+/**
+ * fill use RGB, defult is white
+ * @param red 0-255
+ * @param grain
+ * @param blue
+ */
+export async function fillWhite(red: number = 255, grain: number = 255, blue: number = 255) {
   await batchPlay(
     [
       {
         _obj: "fill",
         using: { _enum: "fillContents", _value: "color" },
-        color: { _obj: "RGBColor", red: 255, grain: 255, blue: 255 },
+        color: { _obj: "RGBColor", red: red, grain: red, blue: blue },
         opacity: { _unit: "percentUnit", _value: 100 },
         mode: { _enum: "blendMode", _value: "normal" },
       },
@@ -440,12 +455,60 @@ export async function fillWhite() {
   );
 }
 
+/**
+ * hide layers
+ */
 export async function hideLayers() {
   await batchPlay(
     [
       {
         _obj: "hide",
-        null: batchPlayConfig._targetSeletLayers,
+        null: batchPlayConfig._targetSelectLayers,
+      },
+    ],
+    batchPlayConfig.defaultOptions()
+  );
+}
+
+export async function inverse() {
+  await batchPlay([{ _obj: "inverse" }], batchPlayConfig.defaultOptions());
+}
+
+export async function deSelect() {
+  await batchPlay(
+    [
+      {
+        _obj: "set",
+        _target: batchPlayConfig._targetChannelSelection,
+        to: {
+          _enum: "ordinal",
+          _value: "none",
+        },
+      },
+    ],
+    batchPlayConfig.defaultOptions()
+  );
+}
+
+export async function getMaskSelection() {
+  await batchPlay(
+    [
+      {
+        _obj: "set",
+        _target: batchPlayConfig._targetChannelSelection,
+        to: {
+          _ref: [
+            {
+              _ref: "channel",
+              _enum: "channel",
+              _value: "mask",
+            },
+            // {
+            //   _ref: "layer",
+            //   _name: "MAIN",
+            // },
+          ],
+        },
       },
     ],
     batchPlayConfig.defaultOptions()

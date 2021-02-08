@@ -65,7 +65,7 @@ function saveToTiff(parentFolderSymbol, fileName) {
                                 in: { _path: fileToken, _kind: "local" },
                                 saveStage: { _enum: "saveStageType", _value: "saveBegin" },
                             },
-                        ], batchPlayConfig.defaultOptions)];
+                        ], batchPlayConfig.defaultOptions())];
                 case 3:
                     _c.sent();
                     return [2 /*return*/];
@@ -107,7 +107,7 @@ function saveToJPEG(parentFolderSymbol, fileName, extendedQuality) {
                                 in: { _path: fileToken, _kind: "local" },
                                 saveStage: { _enum: "saveStageType", _value: "saveBegin" },
                             },
-                        ], batchPlayConfig.defaultOptions)];
+                        ], batchPlayConfig.defaultOptions())];
                 case 3:
                     _c.sent();
                     return [2 /*return*/];

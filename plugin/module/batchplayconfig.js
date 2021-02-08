@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TiffConfig = exports.selectionModifier = exports._targetSeletLayers = exports._ref = exports.defaultOptions = void 0;
+exports.TiffConfig = exports.selectionModifier = exports._targetChannelSelection = exports._targetSelectLayers = exports._ref = exports.defaultOptions = void 0;
 /**
  *
  * @param histortyName set '' can suspend create history when use bathplay
@@ -10,14 +10,6 @@ function defaultOptions(histortyName) {
     return {
         synchronousExecution: false,
         modalBehavior: "fail",
-        historyStateInfo: {
-            name: histortyName,
-            target: {
-                _ref: "document",
-                _enum: "ordinal",
-                _value: "targetEnum",
-            },
-        },
     };
 }
 exports.defaultOptions = defaultOptions;
@@ -28,11 +20,17 @@ exports._ref = {
 /**
  * target all seleted layers
  */
-exports._targetSeletLayers = [
+exports._targetSelectLayers = [
     {
         _ref: exports._ref.layer,
         _enum: "ordinal",
         _value: "targetEnum",
+    },
+];
+exports._targetChannelSelection = [
+    {
+        _ref: "channel",
+        _property: "selection",
     },
 ];
 /**

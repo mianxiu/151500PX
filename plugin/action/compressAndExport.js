@@ -55,46 +55,102 @@ var fuckingMargin = 20;
  */
 function mergeMainToSmartObject() {
     return __awaiter(this, void 0, void 0, function () {
-        var acitveDocumet;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var acitveDocumet, layerSize, _a, _b, layerBounds;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
                     acitveDocumet = layerComponent.activeDocument();
                     // select layer by name has problem
                     return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
                 case 1:
                     // select layer by name has problem
-                    _a.sent();
-                    return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(true, true)];
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.getMaskSelection()];
                 case 2:
-                    _a.sent();
-                    return [4 /*yield*/, layerComponent.hideLayers()];
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.inverse()];
                 case 3:
-                    _a.sent();
-                    return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.fillWhite(0, 0, 0)];
                 case 4:
-                    _a.sent();
-                    return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(true, false, true)];
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.fillWhite(0, 0, 0)];
                 case 5:
-                    _a.sent();
-                    return [4 /*yield*/, layerComponent.mergeVisible()];
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.fillWhite(0, 0, 0)];
                 case 6:
-                    _a.sent();
-                    return [4 /*yield*/, layerComponent.convertToSmartObject()];
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.deSelect()];
                 case 7:
-                    _a.sent();
-                    return [4 /*yield*/, layerComponent.rasterizeTargetLayer()];
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(true, true)];
                 case 8:
-                    _a.sent();
-                    return [4 /*yield*/, layerComponent.mergeLayerNew()];
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.hideLayers()];
                 case 9:
-                    _a.sent();
-                    return [4 /*yield*/, layerComponent.convertToSmartObject()];
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
                 case 10:
-                    _a.sent();
-                    return [4 /*yield*/, layerComponent.setLayerName(names.__DO_ACTION__)];
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(true, false, true)];
                 case 11:
-                    _a.sent();
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.mergeVisible()];
+                case 12:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.convertToSmartObject()];
+                case 13:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.rasterizeTargetLayer()];
+                case 14:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.mergeLayerNew()];
+                case 15:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.convertToSmartObject()];
+                case 16:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.setLayerName(names.__DO_ACTION__)];
+                case 17:
+                    _c.sent();
+                    _b = (_a = layerComponent).getElementSize;
+                    return [4 /*yield*/, acitveDocumet.activeLayers[0]];
+                case 18: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
+                case 19:
+                    layerSize = _c.sent();
+                    layerBounds = layerComponent.activeDocument().activeLayers[0].bounds;
+                    if (!(layerBounds.bottom === 0 || layerBounds.left === 0 || layerBounds.right === 0 || layerBounds.top === 0)) return [3 /*break*/, 21];
+                    console.log(names.__MAIN_DETAIL__ + " MODE");
+                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
+                case 20:
+                    _c.sent();
+                    return [3 /*break*/, 26];
+                case 21:
+                    if (!(layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize)) return [3 /*break*/, 24];
+                    console.log(names.__MAIN__ + " SIZE > " + fuckingExportSize);
+                    return [4 /*yield*/, layerComponent.cropToSquare(fuckingMargin)];
+                case 22:
+                    _c.sent();
+                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
+                case 23:
+                    _c.sent();
+                    return [3 /*break*/, 26];
+                case 24:
+                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 26];
+                    console.log(names.__MAIN__ + " SIZE < " + fuckingExportSize);
+                    return [4 /*yield*/, layerComponent.cropToSize(fuckingExportSize, fuckingExportSize)];
+                case 25:
+                    _c.sent();
+                    _c.label = 26;
+                case 26: return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers()];
+                case 27:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.createBGLayer()];
+                case 28:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.fillWhite()];
+                case 29:
+                    _c.sent();
                     return [2 /*return*/];
             }
         });
@@ -137,46 +193,40 @@ function fuck() {
                     _d.label = 5;
                 case 5:
                     pickFolder = _a;
-                    console.log(pickFolder);
                     if (!(pickFolder !== null)) return [3 /*break*/, 8];
-                    console.log("do create");
                     _c = (_b = folder).createExportFolderOnRoot;
                     return [4 /*yield*/, folder.getAllSubFoldersPath(pickFolder)];
                 case 6: return [4 /*yield*/, _c.apply(_b, [_d.sent(), true, function (entryPath) { return __awaiter(_this, void 0, void 0, function () {
-                            var _a, _b, jpegFolderSymbol, tiffFolderSymbol;
-                            return __generator(this, function (_c) {
-                                switch (_c.label) {
+                            var jpegFolderSymbol, tiffFolderSymbol;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _b = (_a = console).log;
-                                        return [4 /*yield*/, folder.getAllSubFoldersPath(pickFolder)];
-                                    case 1:
-                                        _b.apply(_a, [_c.sent()]);
-                                        if (!(app.documents.length < 2)) return [3 /*break*/, 3];
+                                        if (!(app.documents.length < 2)) return [3 /*break*/, 2];
                                         return [4 /*yield*/, app.open(entryPath.entrySymbol)];
-                                    case 2:
-                                        _c.sent();
-                                        _c.label = 3;
-                                    case 3: 
+                                    case 1:
+                                        _a.sent();
+                                        _a.label = 2;
+                                    case 2: 
                                     // do something
                                     return [4 /*yield*/, mergeMainToSmartObject()];
-                                    case 4:
+                                    case 3:
                                         // do something
-                                        _c.sent();
+                                        _a.sent();
                                         return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath)];
-                                    case 5:
-                                        jpegFolderSymbol = _c.sent();
+                                    case 4:
+                                        jpegFolderSymbol = _a.sent();
                                         return [4 /*yield*/, save.saveToJPEG(jpegFolderSymbol, entryPath.entrySymbol.name)];
-                                    case 6:
-                                        _c.sent();
+                                    case 5:
+                                        _a.sent();
                                         return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath + entryPath.relateivePath.replace(/.*([\\|\/]).*/gm, "$1TIFF"))];
-                                    case 7:
-                                        tiffFolderSymbol = _c.sent();
+                                    case 6:
+                                        tiffFolderSymbol = _a.sent();
                                         return [4 /*yield*/, save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name)];
-                                    case 8:
-                                        _c.sent();
+                                    case 7:
+                                        _a.sent();
                                         return [4 /*yield*/, app.activeDocument.close()];
-                                    case 9:
-                                        _c.sent();
+                                    case 8:
+                                        _a.sent();
                                         return [2 /*return*/];
                                 }
                             });

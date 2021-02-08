@@ -6,14 +6,14 @@ export function defaultOptions(histortyName: string = "") {
   return {
     synchronousExecution: false,
     modalBehavior: "fail",
-    historyStateInfo: {
-      name: histortyName,
-      target: {
-        _ref: "document",
-        _enum: "ordinal",
-        _value: "targetEnum",
-      },
-    },
+    // historyStateInfo: {
+    //   name: histortyName,
+    //   target: {
+    //     _ref: "document",
+    //     _enum: "ordinal",
+    //     _value: "targetEnum",
+    //   },
+    // },
   };
 }
 interface ITarget {
@@ -30,11 +30,18 @@ export var _ref = {
 /**
  * target all seleted layers
  */
-export var _targetSeletLayers: ITarget[] = [
+export var _targetSelectLayers: ITarget[] = [
   {
     _ref: _ref.layer,
     _enum: "ordinal",
     _value: "targetEnum",
+  },
+];
+
+export const _targetChannelSelection = [
+  {
+    _ref: "channel",
+    _property: "selection",
   },
 ];
 

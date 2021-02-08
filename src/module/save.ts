@@ -22,7 +22,7 @@ export async function saveToTiff(parentFolderSymbol: any, fileName: string) {
         saveStage: { _enum: "saveStageType", _value: "saveBegin" },
       },
     ],
-    batchPlayConfig.defaultOptions
+    batchPlayConfig.defaultOptions()
   );
 }
 
@@ -35,7 +35,6 @@ export async function saveToTiff(parentFolderSymbol: any, fileName: string) {
 export async function saveToJPEG(parentFolderSymbol: any, fileName: string, extendedQuality: number = 12) {
   let exportFileName = fileName.replace(/(.*)\..*/, "$1.jpg");
   let fileToken = await localFileSystem.createSessionToken(await parentFolderSymbol.createFile(exportFileName));
-
   await batchPlay(
     [
       {
@@ -52,6 +51,6 @@ export async function saveToJPEG(parentFolderSymbol: any, fileName: string, exte
         saveStage: { _enum: "saveStageType", _value: "saveBegin" },
       },
     ],
-    batchPlayConfig.defaultOptions
+    batchPlayConfig.defaultOptions()
   );
 }
