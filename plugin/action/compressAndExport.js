@@ -148,6 +148,10 @@ function mergeMainToSmartObject() {
     });
 }
 exports.mergeMainToSmartObject = mergeMainToSmartObject;
+/**
+ * todo
+ * pick folder and compress to 1500x1500, export jpg and tif
+ */
 function fuck() {
     return __awaiter(this, void 0, void 0, function () {
         var pickFolder, _a, _b, _c;
@@ -198,10 +202,14 @@ function fuck() {
                                         _a.sent();
                                         _a.label = 2;
                                     case 2: 
-                                    // do something
+                                    /**
+                                     * do something
+                                     */
                                     return [4 /*yield*/, mergeMainToSmartObject()];
                                     case 3:
-                                        // do something
+                                        /**
+                                         * do something
+                                         */
                                         _a.sent();
                                         return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath)];
                                     case 4:

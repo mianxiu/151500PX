@@ -196,17 +196,6 @@ export async function createExportFolderOnRoot(
   let exportRootFolderName = await `${folderTreePaths[0].pickFolderName} ${names.__EXPORT__}`;
   let exportRootFolder = await createSubFolder(pickFolderSymbol, exportRootFolderName);
 
-  let sourceRootFiles = await getFiles(pickFolderSymbol, `PSD`);
-
-  // for (let r = 0; r < sourceRootFiles.length; r++) {
-  //   const rootEntry = sourceRootFiles[r];
-  //   await doWithEntry({
-  //     entrySymbol: rootEntry,
-  //     exportRoot: exportRootFolderName,
-  //     relateivePath: "/",
-  //   });
-  // }
-
   /**
    * loop create sub folder files and do something
    */
@@ -233,4 +222,18 @@ export async function createExportFolderOnRoot(
         await doWithEntry(entryPath);
       }
   }
+}
+
+/**
+ * @todo set pen or other preset to program
+ */
+export async function getPluginFolder() {
+  console.log(await localFileSystem.getPluginFolder());
+}
+
+/**
+ * @ set data
+ */
+export async function getDataFolder() {
+  console.log(await localFileSystem.getDataFolder());
 }

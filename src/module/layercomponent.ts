@@ -115,6 +115,9 @@ export async function deleteAllUnVisibleLayers() {
   await deleteTarget();
 }
 
+/**
+ * todo
+ */
 export async function deleteAllLayersExcludeTarget() {
   let layer = activeDocument().activeLayers[0].name === names.__DO_ACTION__ ? activeDocument().activeLayers[0] : null;
   if (layer !== null) {

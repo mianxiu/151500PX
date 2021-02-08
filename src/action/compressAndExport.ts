@@ -1,8 +1,6 @@
-import * as batchPlayConfig from "../module/batchplayconfig";
 import * as layerComponent from "../module/layercomponent";
 import * as names from "../module/names";
 import * as folder from "../module/floder";
-import * as secureStorage from "../module/securestorage";
 import * as save from "../module/save";
 
 const app = require("photoshop").app;
@@ -57,6 +55,10 @@ export async function mergeMainToSmartObject() {
   await layerComponent.fillWhite();
 }
 
+/**
+ * todo
+ * pick folder and compress to 1500x1500, export jpg and tif
+ */
 export async function fuck() {
   app.documents.map(async d => await d.close());
   // 有文档的时候不会重复打开
@@ -75,12 +77,14 @@ export async function fuck() {
   if (pickFolder !== null) {
     await folder.createExportFolderOnRoot(await folder.getAllSubFoldersPath(pickFolder), true, async entryPath => {
       if (app.documents.length < 2) await app.open(entryPath.entrySymbol);
-      // do something
+      /**
+       * do something
+       */
       await mergeMainToSmartObject();
+
       /**
        * export jpeg
        */
-
       let jpegFolderSymbol = await folder.createSubPathFolder(
         pickFolder,
         `${entryPath.exportRoot}${entryPath.relateivePath}`

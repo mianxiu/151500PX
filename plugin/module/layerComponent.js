@@ -202,6 +202,9 @@ function deleteAllUnVisibleLayers() {
     });
 }
 exports.deleteAllUnVisibleLayers = deleteAllUnVisibleLayers;
+/**
+ * todo
+ */
 function deleteAllLayersExcludeTarget() {
     return __awaiter(this, void 0, void 0, function () {
         var layer;
