@@ -72,6 +72,10 @@ export async function isVertical(elementSize: IELementSize): Promise<boolean | n
   return null;
 }
 
+export async function deleteTarget() {
+  await batchPlay([{ _obj: "delete", _target: batchPlayConfig._targetSelectLayers }], batchPlayConfig.defaultOptions());
+}
+
 /**
  * delete all empty layer
  */
@@ -94,12 +98,21 @@ export async function deleteAllEmptyLayers() {
   });
 }
 
+/**
+ * deleteAllUnVisibleLayers
+ */
 export async function deleteAllUnVisibleLayers() {
   let layers = activeDocument().layers;
 
-  layers.map(async layer => {
-    if (layer.visible === false) await layer.delete();
+  await layers.map(async layer => {
+    if (layer.visible === false) {
+      layer.selected = await true;
+    } else {
+      layer.selected = await false;
+    }
   });
+
+  await deleteTarget();
 }
 
 export async function deleteAllLayersExcludeTarget() {
@@ -490,7 +503,7 @@ export async function deSelect() {
   );
 }
 
-export async function getMaskSelection() {
+export async function getChannalSelection() {
   await batchPlay(
     [
       {
@@ -503,12 +516,61 @@ export async function getMaskSelection() {
               _enum: "channel",
               _value: "mask",
             },
-            // {
-            //   _ref: "layer",
-            //   _name: "MAIN",
-            // },
           ],
         },
+      },
+    ],
+    batchPlayConfig.defaultOptions()
+  );
+}
+
+/**
+ * ctrl+\
+ */
+export async function selectChannel() {
+  await batchPlay(
+    [
+      {
+        _obj: "select",
+        _target: [
+          {
+            _ref: "channel",
+            _enum: "ordinal",
+            _value: "targetEnum",
+          },
+        ],
+      },
+    ],
+    batchPlayConfig.defaultOptions()
+  );
+}
+
+/**
+ * todo
+ * levels
+ * middle handle is gamma
+ * default change gamma to 0.01
+ */
+export async function levels() {
+  await batchPlay(
+    [
+      {
+        _obj: "levels",
+        presetKind: {
+          _enum: "presetKindType",
+          _value: "presetKindCustom",
+        },
+        adjustment: [
+          {
+            _obj: "levelsAdjustment",
+            channel: {
+              _ref: "channel",
+              _enum: "ordinal",
+              _value: "targetEnum",
+            },
+            gamma: 0.01,
+          },
+        ],
       },
     ],
     batchPlayConfig.defaultOptions()

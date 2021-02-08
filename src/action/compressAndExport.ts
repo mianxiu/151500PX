@@ -23,11 +23,8 @@ export async function mergeMainToSmartObject() {
   let acitveDocumet = layerComponent.activeDocument();
   // select layer by name has problem
   await layerComponent.selectLayerByName(`MAIN`, true);
-  await layerComponent.getMaskSelection();
-  await layerComponent.inverse();
-  await layerComponent.fillWhite(0, 0, 0);
-  await layerComponent.fillWhite(0, 0, 0);
-  await layerComponent.fillWhite(0, 0, 0);
+  await layerComponent.selectChannel();
+  await layerComponent.levels();
   await layerComponent.deSelect();
   await layerComponent.selectAllLayersOnTarget(true, true);
   await layerComponent.hideLayers();

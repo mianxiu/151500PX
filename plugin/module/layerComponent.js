@@ -40,7 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMaskSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
+exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var names = require("./names");
 var app = require("photoshop").app;
@@ -108,6 +108,19 @@ function isVertical(elementSize) {
     });
 }
 exports.isVertical = isVertical;
+function deleteTarget() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([{ _obj: "delete", _target: batchPlayConfig._targetSelectLayers }], batchPlayConfig.defaultOptions())];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.deleteTarget = deleteTarget;
 /**
  * delete all empty layer
  */
@@ -146,26 +159,45 @@ function deleteAllEmptyLayers() {
     });
 }
 exports.deleteAllEmptyLayers = deleteAllEmptyLayers;
+/**
+ * deleteAllUnVisibleLayers
+ */
 function deleteAllUnVisibleLayers() {
     return __awaiter(this, void 0, void 0, function () {
         var layers;
         var _this = this;
         return __generator(this, function (_a) {
-            layers = exports.activeDocument().layers;
-            layers.map(function (layer) { return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            if (!(layer.visible === false)) return [3 /*break*/, 2];
-                            return [4 /*yield*/, layer.delete()];
-                        case 1:
-                            _a.sent();
-                            _a.label = 2;
-                        case 2: return [2 /*return*/];
-                    }
-                });
-            }); });
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0:
+                    layers = exports.activeDocument().layers;
+                    return [4 /*yield*/, layers.map(function (layer) { return __awaiter(_this, void 0, void 0, function () {
+                            var _a, _b;
+                            return __generator(this, function (_c) {
+                                switch (_c.label) {
+                                    case 0:
+                                        if (!(layer.visible === false)) return [3 /*break*/, 2];
+                                        _a = layer;
+                                        return [4 /*yield*/, true];
+                                    case 1:
+                                        _a.selected = _c.sent();
+                                        return [3 /*break*/, 4];
+                                    case 2:
+                                        _b = layer;
+                                        return [4 /*yield*/, false];
+                                    case 3:
+                                        _b.selected = _c.sent();
+                                        _c.label = 4;
+                                    case 4: return [2 /*return*/];
+                                }
+                            });
+                        }); })];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, deleteTarget()];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
         });
     });
 }
@@ -746,7 +778,7 @@ function deSelect() {
     });
 }
 exports.deSelect = deSelect;
-function getMaskSelection() {
+function getChannalSelection() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -772,4 +804,69 @@ function getMaskSelection() {
         });
     });
 }
-exports.getMaskSelection = getMaskSelection;
+exports.getChannalSelection = getChannalSelection;
+/**
+ * ctrl+\
+ */
+function selectChannel() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "select",
+                            _target: [
+                                {
+                                    _ref: "channel",
+                                    _enum: "ordinal",
+                                    _value: "targetEnum",
+                                },
+                            ],
+                        },
+                    ], batchPlayConfig.defaultOptions())];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.selectChannel = selectChannel;
+/**
+ * todo
+ * levels
+ * middle handle is gamma
+ * default change gamma to 0.01
+ */
+function levels() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "levels",
+                            presetKind: {
+                                _enum: "presetKindType",
+                                _value: "presetKindCustom",
+                            },
+                            adjustment: [
+                                {
+                                    _obj: "levelsAdjustment",
+                                    channel: {
+                                        _ref: "channel",
+                                        _enum: "ordinal",
+                                        _value: "targetEnum",
+                                    },
+                                    gamma: 0.01,
+                                },
+                            ],
+                        },
+                    ], batchPlayConfig.defaultOptions())];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.levels = levels;
