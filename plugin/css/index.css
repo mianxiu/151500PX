@@ -1,18 +1,25 @@
-body {
-    color: white;
-    padding: 0 16px;
-  }
-  li:before {
-    content: '• ';
-    width: 3em;
-  }
+:root {
+  --zero-px: 0px;
+}
 
-  #layers {
-    border: 1px solid #808080;
-    border-radius: 4px;
-    padding: 16px;
-  }
-
-  #btnPopulate{
-
-  }
+#nav {
+  background-color: aquamarine;
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+  width: 100%;
+}
+#info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+}
+#menu {
+  background-color: blueviolet;
+  width: 30px;
+}
+#panel-name {
+  display: flex;
+  margin: var(--zero-px);
+}
