@@ -39,7 +39,10 @@ export async function mergeMainToSmartObject() {
   /**
    * todo detatil is `MIAN-DETAIL--`
    */
-  if (layerBounds.bottom === 0 || layerBounds.left === 0 || layerBounds.right === 0 || layerBounds.top === 0) {
+  if (
+    (layerBounds.bottom === 0 || layerBounds.left === 0 || layerBounds.right === 0 || layerBounds.top === 0) &&
+    acitveDocumet.height === acitveDocumet.width
+  ) {
     console.log(`${names.__MAIN_DETAIL__} MODE`);
     await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
   } else if (layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize) {
@@ -74,6 +77,9 @@ export async function fuck() {
 
   let pickFolder = app.documents.length === 1 ? await folder.pickFolder() : null;
 
+  /**
+   * @todo ignore empty folder has problem
+   */
   if (pickFolder !== null) {
     await folder.createExportFolderOnRoot(await folder.getAllSubFoldersPath(pickFolder), true, async entryPath => {
       if (app.documents.length < 2) await app.open(entryPath.entrySymbol);

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var compressAndExport = require("./action/compressAndExport");
 var floder_1 = require("./module/floder");
 //todos
 // 删除不可见图层
@@ -8,7 +9,7 @@ function doSomething() {
     //component.selectAllLayersOnTarget();
     //component.selectLayerByName("MAIN", true);
     //component.cropToSize(400, 400);
-    //compressAndExport.mergeMainToSmartObject();
+    compressAndExport.mergeMainToSmartObject();
     //compressAndExport.fuck();
     floder_1.getPluginFolder();
     floder_1.getDataFolder();
