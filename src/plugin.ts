@@ -1,7 +1,20 @@
 import * as compressAndExport from "./action/compressAndExport";
 import { getDataFolder, getPluginFolder } from "./module/floder";
-//todos
-// 删除不可见图层
+/**
+ * use obesever to listen event when fetch panel
+ */
+
+/**
+ * init main panel
+ */
+async function initPanel(path: string) {
+  let res = await fetch(path).then(response => {
+    return response.text();
+  });
+  document.querySelector(`#main`).innerHTML = res;
+}
+
+initPanel("./panel/main.html");
 
 function doSomething() {
   //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
@@ -15,4 +28,4 @@ function doSomething() {
   getDataFolder();
 }
 
-document.getElementById("btnPopulate").addEventListener("click", doSomething);
+//document.getElementById("btnPopulate").addEventListener("click", doSomething);
