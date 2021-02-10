@@ -38,10 +38,10 @@
 
 /* component */
 .panel-row {
+  overflow: hidden;
   width: fit-content;
   display: flex;
   flex-direction: row;
-  padding: 0 1px;
   border: 1px solid var(--split);
   border-radius: 4px;
   background-color: var(--bg-input-active);
