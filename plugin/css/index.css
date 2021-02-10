@@ -1,9 +1,49 @@
+/* color */
+:root {
+  --active-light: #e8e8e8;
+  --panel: #b8b8b8;
+  --split: #949494;
+  --gray: #808080;
+  --black: #252525;
+  /* point */
+  --point-blue: #1184d8;
+  --point-error: #bf7878;
+  /* background color */
+  --bg-no-content: #b2b2b2;
+  --bg-input: #c2c2c2;
+  --bg-input-active: #d1d1d1;
+  --bg-input-confim-false: #b2b2b2;
+  --bg-comfim-true: #a4b4c0;
+  --bg-pink: #c6a2a2;
+  --bg-switch-radio: #d1b680;
+  --bg-tab: #b0b0b0;
+}
+
+/* style */
+.p-right-4 {
+  padding-right: 4px;
+}
+.line-top {
+  border-top: 1px var(--split) solid;
+}
+.line-bottom {
+  border-bottom: 1px var(--split) solid;
+}
+.line-left {
+  border-left: 1px var(--split) solid;
+}
+.line-right {
+  border-right: 1px var(--split) solid;
+}
+
+/* component */
+
 .nav {
   display: flex;
   flex-direction: row;
   height: 30px;
   width: 100%;
-  background-color: red;
+  background-color: var(--bg-tab);
 }
 
 .sp-menu {
@@ -23,4 +63,16 @@
 }
 .info-document {
   display: flex;
+  margin-top: 4px;
+}
+
+.document-name,
+.init-info {
+  color: var(--black);
+  font-size: 9;
+  font-weight: bold;
+}
+.document-info {
+  font-size: 9;
+  margin-top: -2px;
 }
