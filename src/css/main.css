@@ -1,0 +1,49 @@
+/* flex something */
+.flex {
+  display: flex;
+}
+.f-c {
+  flex-direction: column;
+}
+.f-c-r {
+  flex-direction: column-reverse;
+}
+.f-r {
+  flex-direction: row;
+}
+.f-r-r {
+  flex-direction: row-reverse;
+}
+
+.j-left {
+  justify-content: left;
+  justify-items: left;
+}
+.j-right {
+  justify-content: right;
+  justify-items: right;
+}
+
+.a-right {
+  align-content: right;
+}
+.a-item-right {
+  align-items: right;
+}
+
+/* width */
+.w-full {
+  width: 100%;
+}
+
+.bg-red {
+  background-color: rgb(117, 180, 65);
+}
+.h-30 {
+  height: 30px;
+}
+
+.icon-30 {
+  height: 30px;
+  width: 30px;
+}

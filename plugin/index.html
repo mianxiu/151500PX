@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <script src="index.js"></script>
-    <link rel="stylesheet" href="./css/index.css">
-</head>
-<body>
-  <nav id="nav" class="flex bg-white h-px-30">
-    <sp-menu id="menu" class="flex bg-red-300 w-icon-30" ><sp-icon name="ui:Magnifier" ></sp-icon></sp-menu>
-    <div id="info" class="flex bg-gray-600 w-full">
-      <sp-heading size="XXS" panel="main" id="panel-name">021.psd[no init]</sp-heading>
-      <sp-detail>1500x1500x</sp-detail>
-    </div>
-  </nav>
-</body>
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <body>
+    <nav id="nav" class="nav" panel="main">
+      <sp-menu id="sp-menu" class="sp-menu"></sp-menu>
+      <div id="info" class="info">
+        <div id="info-document" class="info-document">
+          <span id="document-name" class="document-name">021.psd</span>
+          <span id="init-info" class="init-info">[no init]</span>
+        </div>
+        <div><span id="document-info" class="document-info">1500X1500</span></div>
+      </div>
+    </nav>
+  </body>
 </html>
