@@ -26,7 +26,15 @@
 .p-8 {
   padding: 8px;
 }
-
+.p-right-8 {
+  padding-right: 8px;
+}
+.p-justify-8 {
+  padding: 0 8px;
+}
+.p-align-8 {
+  padding: 8px 0;
+}
 .p-right-2 {
   padding-right: 2px;
 }
@@ -106,11 +114,17 @@
   display: flex;
 }
 
+.switch-active {
+  background-color: var(--bg-switch-radio);
+}
+
 /* panel */
 body {
   background-color: var(--panel);
 }
-
+#main {
+  padding: 8px 0;
+}
 .nav {
   display: flex;
   flex-direction: row;

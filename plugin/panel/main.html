@@ -1,6 +1,6 @@
 <div id="main-template">
-  <div id="top-panel" class="flex-row justify-content-between">
-    <div id="init" class="panel-row">
+  <div id="top-panel" class="flex-row justify-content-between p-justify-8">
+    <div id="init" class="panel-row border-radius-4">
       <div id="init-tip" class="tip-main"><span>init</span></div>
       <div id="init-black-metal" class="button">
         <img src="../icons/svg/top panel/icon_top-panel-init-black-meterial.svg" />
@@ -10,7 +10,7 @@
       </div>
       <div id="init-detail" class="button"><img src="../icons/svg/top panel/icon_top-panel-init-detail.svg" /></div>
     </div>
-    <div id="export-panel" class="panel-row">
+    <div id="export-panel" class="panel-row border-radius-4">
       <div id="compress-export" class=".big-button">
         <img src="../icons/svg/top panel/icon_top-panel-main-export.svg " />
       </div>
@@ -19,25 +19,50 @@
   <div id="quick-panel">
     <div class="panel-row">todo</div>
   </div>
-  <div id="layer-panel">
+  <div id="layer-panel" class="flex-row justify-content-between p-right-8">
     <div id="panel-general-observe" class="panel-row border-radius-right-4">
-      <div id="general-observe" acitive="true">
-        <img src="../icons/svg/quick panel/general observe/isHide=true.svg" />
+      <div id="general-observe" acitive="true" class="switch-active">
+        <img src="../icons/svg/layer panel/general observe/isHide=true.svg" />
       </div>
       <div id="general-observe-add">
-        <img src="../icons/svg/quick panel/general observe/general_observe-add.svg" />
+        <img src="../icons/svg/layer panel/general observe/general_observe-add.svg" />
       </div>
     </div>
-    <div id="panel-layer-move">
+    <div id="panel-layer-move" class="panel-row border-radius-4 padding">
       <div id="layer-up2parent-top">
-        <img src="../icons/svg/quick panel/layer move/icon_layer-up2parent-top.svg" />
+        <img src="../icons/svg/layer panel/layer move/icon_layer-up2parent-top.svg" />
       </div>
-      <div id="layer-down2parent-bottom"></div>
-      <div id="layer-up-out2parent"></div>
-      <div id="layer-down-out2parent"></div>
-      <div id="layer-up2doc"></div>
-      <div id="layer-down2doc"></div>
+      <div id="layer-down2parent-bottom">
+        <img src="../icons/svg/layer panel/layer move/icon_layer-down2parent-bottom.svg" />
+      </div>
+      <div id="layer-up-out2parent">
+        <img src="../icons/svg/layer panel/layer move/icon_layer-up-out-2parent-on-top.svg" />
+      </div>
+      <div id="layer-down-out2parent">
+        <img src="../icons/svg/layer panel/layer move/icon_layer-down-out-2parent.svg" />
+      </div>
+      <div id="layer-up2doc">
+        <img src="../icons/svg/layer panel/layer move/icon_layer-up2doc-top.svg" />
+      </div>
+      <div id="layer-down2doc">
+        <img src="../icons/svg/layer panel/layer move/icon_layer-down2doc-bottom.svg" />
+      </div>
     </div>
   </div>
-  <div id="tool-panel"></div>
+  <div id="tool-panel">
+    <div id="tool-quick-panel">
+      <div id="pen-path"></div>
+      <div id="pen-vector"></div>
+      <div id="dodge"></div>
+      <div id="burn"></div>
+      <div id="healing"></div>
+    </div>
+    <div id="tool-quick-setting">
+      <div id="panel-pen-path"></div>
+      <div id="panel-pen-vector"></div>
+      <div id="panel-dodge"></div>
+      <div id="panel-burn"></div>
+      <div id="panel-healing"></div>
+    </div>
+  </div>
 </div>
