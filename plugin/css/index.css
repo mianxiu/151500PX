@@ -18,8 +18,15 @@
   --bg-switch-radio: #d1b680;
   --bg-tab: #b0b0b0;
 }
+:root {
+  --border-radius-min: 4px;
+}
 
 /* style */
+.p-8 {
+  padding: 8px;
+}
+
 .p-right-2 {
   padding-right: 2px;
 }
@@ -36,6 +43,32 @@
   border-right: 1px var(--split) solid;
 }
 
+.border-radius-4 {
+  border-radius: var(--border-radius-min);
+}
+.border-radius-top-4 {
+  border-radius: var(--border-radius-min) var(--border-radius-min) 0 0;
+}
+.border-radius-left-4 {
+  border-radius: var(--border-radius-min) 0 0 var(--border-radius-min);
+}
+.border-radius-right-4 {
+  border-radius: 0 var(--border-radius-min) var(--border-radius-min) 0;
+}
+.border-radius-bottom-4 {
+  border-radius: 0 0 var(--border-radius-min) var(--border-radius-min);
+}
+
+/* flex */
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
 /* component */
 .panel-row {
   overflow: hidden;
@@ -43,7 +76,6 @@
   display: flex;
   flex-direction: row;
   border: 1px solid var(--split);
-  border-radius: 4px;
   background-color: var(--bg-input-active);
 }
 .tip-main {
@@ -57,6 +89,14 @@
 .tip-main > span {
   color: var(--gray);
 }
+.big-button {
+  margin: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 0px;
+  border: none;
+  display: flex;
+}
 .button {
   margin: 0;
   width: 18px;
@@ -69,9 +109,6 @@
 /* panel */
 body {
   background-color: var(--panel);
-}
-#main {
-  padding: 8px;
 }
 
 .nav {
