@@ -1,5 +1,5 @@
 <div id="main-template">
-  <div id="top-panel" class="flex-row justify-content-between p-justify-8">
+  <div id="top-panel" class="flex-row justify-content-between p-justify-8 m-bottom-8">
     <div id="init" class="panel-row border-radius-4">
       <div id="init-tip" class="tip-main"><span>init</span></div>
       <div id="init-black-metal" class="button">
@@ -16,53 +16,126 @@
       </div>
     </div>
   </div>
-  <div id="quick-panel">
+  <div id="quick-panel" class="m-bottom-8">
     <div class="panel-row">todo</div>
   </div>
-  <div id="layer-panel" class="flex-row justify-content-between p-right-8">
+  <div id="layer-panel" class="flex-row justify-content-between p-right-8 m-bottom-8">
     <div id="panel-general-observe" class="panel-row border-radius-right-4">
       <div id="general-observe" acitive="true" class="switch-active">
         <img src="../icons/svg/layer panel/general observe/isHide=true.svg" />
       </div>
-      <div id="general-observe-add">
+      <div id="general-observe-add" class="button">
         <img src="../icons/svg/layer panel/general observe/general_observe-add.svg" />
       </div>
     </div>
-    <div id="panel-layer-move" class="panel-row border-radius-4 padding">
-      <div id="layer-up2parent-top">
+    <div id="panel-layer-move" class="panel-row border-radius-4">
+      <div id="layer-up2parent-top" class="button">
         <img src="../icons/svg/layer panel/layer move/icon_layer-up2parent-top.svg" />
       </div>
-      <div id="layer-down2parent-bottom">
+      <div id="layer-down2parent-bottom" class="button">
         <img src="../icons/svg/layer panel/layer move/icon_layer-down2parent-bottom.svg" />
       </div>
-      <div id="layer-up-out2parent">
+      <div id="layer-up-out2parent" class="button">
         <img src="../icons/svg/layer panel/layer move/icon_layer-up-out-2parent-on-top.svg" />
       </div>
-      <div id="layer-down-out2parent">
+      <div id="layer-down-out2parent" class="button">
         <img src="../icons/svg/layer panel/layer move/icon_layer-down-out-2parent.svg" />
       </div>
-      <div id="layer-up2doc">
+      <div id="layer-up2doc" class="button">
         <img src="../icons/svg/layer panel/layer move/icon_layer-up2doc-top.svg" />
       </div>
-      <div id="layer-down2doc">
+      <div id="layer-down2doc" class="button">
         <img src="../icons/svg/layer panel/layer move/icon_layer-down2doc-bottom.svg" />
       </div>
     </div>
   </div>
-  <div id="tool-panel">
-    <div id="tool-quick-panel">
-      <div id="pen-path"></div>
-      <div id="pen-vector"></div>
-      <div id="dodge"></div>
-      <div id="burn"></div>
-      <div id="healing"></div>
+  <div id="tool-panel" class="flex-row">
+    <div id="tool-quick-panel" class="panel-column border-radius-right-4 m-right-4">
+      <div id="pen-path" class="m-bottom-4">
+        <img src="../icons/svg/tool panel/tool/icon_pen-path.svg" />
+      </div>
+      <div id="pen-vector" class="m-bottom-4">
+        <img src="../icons/svg/tool panel/tool/icon_pen-vector.svg" />
+      </div>
+      <div id="dodge" class="m-bottom-4">
+        <img src="../icons/svg/tool panel/tool/icon_pen-dodge.svg" />
+      </div>
+      <div id="burn" class="m-bottom-4">
+        <img src="../icons/svg/tool panel/tool/icon_pen-burn.svg" />
+      </div>
+      <div id="healing">
+        <img src="../icons/svg/tool panel/tool/icon_healing-tool.svg" />
+      </div>
     </div>
     <div id="tool-quick-setting">
-      <div id="panel-pen-path"></div>
-      <div id="panel-pen-vector"></div>
-      <div id="panel-dodge"></div>
-      <div id="panel-burn"></div>
-      <div id="panel-healing"></div>
+      <div id="panel-pen-path" class="panel-row border-radius-4 m-bottom-4">
+        <div id="selcetion" class="button">
+          <img src="../icons/svg/tool panel/panel-pen-path/icon_pen-path-select.svg" />
+        </div>
+        <div id="fill-white" class="button">
+          <img src="../icons/svg/tool panel/panel-pen-path/icon_pen-path-fill-white.svg" />
+        </div>
+        <div id="fill-black" class="button">
+          <img src="../icons/svg/tool panel/panel-pen-path/icon_pen-path-fill-black.svg" />
+        </div>
+        <div id="path-clip" class="button">
+          <img src="../icons/svg/tool panel/panel-pen-path/icon_pen-path-new-for-select-clip.svg" />
+        </div>
+        <div id="new-path" class="button">
+          <img src="../icons/svg/tool panel/panel-pen-path/icon_pen-path-new-for-select.svg" />
+        </div>
+      </div>
+      <div id="panel-pen-vector" class="panel-row border-radius-4 m-bottom-4">
+        <div id="white-20" class="button">
+          <img src="../icons/svg/tool panel/panel-pen-vector/icon_pen-vector-20%.svg" />
+        </div>
+        <div id="black-40" class="button">
+          <img src="../icons/svg/tool panel/panel-pen-vector/icon_pen-vector-44%.svg" />
+        </div>
+        <div id="white-60" class="button">
+          <img src="../icons/svg/tool panel/panel-pen-vector/icon_pen-vector-60%.svg" />
+        </div>
+        <div id="noise" class="button">
+          <div class="overlap">
+            <img src="../icons/svg/general_more.svg" />
+          </div>
+          <img src="../icons/svg/tool panel/panel-pen-vector/isFillBlackNoise=false.svg" />
+        </div>
+        <div id="fill-color" class="button">
+          <img src="../icons/svg/tool panel/panel-pen-vector/icon_pen-vector-color.svg" />
+        </div>
+        <div id="duplice-vector" class="button">
+          <img src="../icons/svg/tool panel/panel-pen-vector/icon_pen-vector-copy.svg" />
+        </div>
+      </div>
+      <div id="panel-dodge" class="panel-row border-radius-4 m-bottom-4">
+        <div id="panel-exposure">
+          <div id="exposure" class="button" per="2">
+            <div class="overlap">
+              <img src="../icons/svg/general_more.svg" />
+            </div>
+            <div id="exposure-scroll" class="button">
+              <img src="../icons/svg/tool panel/panel-exposure/per=2.svg" />
+            </div>
+          </div>
+        </div>
+        <div id="panel-range" class="button">
+          <div class="overlap">
+            <img src="../icons/svg/general-scroll.svg" />
+          </div>
+          <div class="text button" number="10">
+            <span>10</span>
+          </div>
+        </div>
+      </div>
+      <div id="panel-burn" class="panel-row border-radius-4 m-bottom-4">
+        <div id="panel-exposure" class="button"></div>
+        <div id="panel-range" class="button"></div>
+      </div>
+      <div id="panel-healing" class="panel-row border-radius-4">
+        <div id="content-Aware" class="button">q</div>
+        <div id="proximity-Match" class="button"></div>
+      </div>
     </div>
   </div>
 </div>

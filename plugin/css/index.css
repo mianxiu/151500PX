@@ -29,6 +29,32 @@
 .p-right-8 {
   padding-right: 8px;
 }
+/* margin 8px */
+.m-top-8 {
+  margin-top: 8px;
+}
+.m-bottom-8 {
+  margin-bottom: 8px;
+}
+.m-left-8 {
+  margin-left: 8px;
+}
+.m-right-8 {
+  margin-right: 8px;
+}
+/* margin 4px */
+.m-top-4 {
+  margin-top: 4px;
+}
+.m-bottom-4 {
+  margin-bottom: 4px;
+}
+.m-left-4 {
+  margin-left: 4px;
+}
+.m-right-4 {
+  margin-right: 4px;
+}
 .p-justify-8 {
   padding: 0 8px;
 }
@@ -86,6 +112,15 @@
   border: 1px solid var(--split);
   background-color: var(--bg-input-active);
 }
+.panel-column {
+  overflow: hidden;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--split);
+  background-color: var(--bg-input-active);
+}
+
 .tip-main {
   background-color: var(--panel);
   width: 24px;
@@ -114,8 +149,20 @@
   display: flex;
 }
 
+.overlap {
+  display: flex;
+  position: absolute;
+}
+
 .switch-active {
   background-color: var(--bg-switch-radio);
+}
+
+.text {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  justify-content: center;
 }
 
 /* panel */
