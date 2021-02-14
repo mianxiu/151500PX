@@ -11,7 +11,7 @@
       <div id="init-detail" class="button"><img src="../icons/svg/top panel/icon_top-panel-init-detail.svg" /></div>
     </div>
     <div id="export-panel" class="panel-row border-radius-4">
-      <div id="compress-export" class=".big-button">
+      <div id="compress-export" class="big-button">
         <img src="../icons/svg/top panel/icon_top-panel-main-export.svg " />
       </div>
     </div>
@@ -51,16 +51,16 @@
   </div>
   <div id="tool-panel" class="flex-row">
     <div id="tool-quick-panel" class="panel-column border-radius-right-4 m-right-4">
-      <div id="pen-path" class="m-bottom-4">
+      <div id="pen-path" class="tool tool-active">
         <img src="../icons/svg/tool panel/tool/icon_pen-path.svg" />
       </div>
-      <div id="pen-vector" class="m-bottom-4">
+      <div id="pen-vector" class="tool">
         <img src="../icons/svg/tool panel/tool/icon_pen-vector.svg" />
       </div>
-      <div id="dodge" class="m-bottom-4">
+      <div id="dodge" class="tool">
         <img src="../icons/svg/tool panel/tool/icon_pen-dodge.svg" />
       </div>
-      <div id="burn" class="m-bottom-4">
+      <div id="burn" class="tool">
         <img src="../icons/svg/tool panel/tool/icon_pen-burn.svg" />
       </div>
       <div id="healing">
@@ -104,37 +104,79 @@
         <div id="fill-color" class="button">
           <img src="../icons/svg/tool panel/panel-pen-vector/icon_pen-vector-color.svg" />
         </div>
-        <div id="duplice-vector" class="button">
+        <div id="duplice-vector" class="button line-left">
           <img src="../icons/svg/tool panel/panel-pen-vector/icon_pen-vector-copy.svg" />
         </div>
       </div>
-      <div id="panel-dodge" class="panel-row border-radius-4 m-bottom-4">
-        <div id="panel-exposure">
-          <div id="exposure" class="button" per="2">
+      <div id="panel-dodge" class="flex-row">
+        <div id="panel-dodge-exposure" class="panel-row border-radius-4 m-bottom-4 m-right-4">
+          <div id="dodge-exposure-quick" class="button" per="2">
             <div class="overlap">
               <img src="../icons/svg/general_more.svg" />
             </div>
-            <div id="exposure-scroll" class="button">
+            <div id="dodge-exposure" class="button">
               <img src="../icons/svg/tool panel/panel-exposure/per=2.svg" />
             </div>
           </div>
-        </div>
-        <div id="panel-range" class="button">
-          <div class="overlap">
-            <img src="../icons/svg/general-scroll.svg" />
+          <div id="dodge-exposure-scroll" class="button">
+            <div class="overlap">
+              <img src="../icons/svg/general-scroll.svg" />
+            </div>
+            <div class="text button" number="10">
+              <span>10</span>
+            </div>
           </div>
-          <div class="text button" number="10">
-            <span>10</span>
+        </div>
+        <div id="panel-dodge-range" class="panel-row border-radius-4 m-bottom-4" type="highlight">
+          <div id="dodge-highlight" class="button button-active">
+            <img src="../icons/svg/tool panel/panel-exposure/type/range mode=highlight, isActive=false.svg" />
+          </div>
+          <div id="dodge-midtones" class="button">
+            <img src="../icons/svg/tool panel/panel-exposure/type/range mode=midtones, isActive=false.svg" />
+          </div>
+          <div id="dodge-shadow" class="button">
+            <img src="../icons/svg/tool panel/panel-exposure/type/range mode=shadow, isActive=false.svg" />
           </div>
         </div>
       </div>
-      <div id="panel-burn" class="panel-row border-radius-4 m-bottom-4">
-        <div id="panel-exposure" class="button"></div>
-        <div id="panel-range" class="button"></div>
+      <div id="panel-burn" class="flex-row">
+        <div id="panel-burn-exposure" class="panel-row border-radius-4 m-bottom-4 m-right-4">
+          <div id="burn-exposure-quick" class="button" per="2">
+            <div class="overlap">
+              <img src="../icons/svg/general_more.svg" />
+            </div>
+            <div id="burn-exposure" class="button">
+              <img src="../icons/svg/tool panel/panel-exposure/per=2.svg" />
+            </div>
+          </div>
+          <div id="burn-exposure-scroll" class="button">
+            <div class="overlap">
+              <img src="../icons/svg/general-scroll.svg" />
+            </div>
+            <div class="text button" number="10">
+              <span>10</span>
+            </div>
+          </div>
+        </div>
+        <div id="panel-burn-range" class="panel-row border-radius-4 m-bottom-4" type="highlight">
+          <div id="burn-highlight" class="button button-active">
+            <img src="../icons/svg/tool panel/panel-exposure/type/range mode=highlight, isActive=false.svg" />
+          </div>
+          <div id="burn-midtones" class="button">
+            <img src="../icons/svg/tool panel/panel-exposure/type/range mode=midtones, isActive=false.svg" />
+          </div>
+          <div id="burn-shadow" class="button">
+            <img src="../icons/svg/tool panel/panel-exposure/type/range mode=shadow, isActive=false.svg" />
+          </div>
+        </div>
       </div>
-      <div id="panel-healing" class="panel-row border-radius-4">
-        <div id="content-Aware" class="button">q</div>
-        <div id="proximity-Match" class="button"></div>
+      <div id="panel-healing" class="panel-row border-radius-4" type="content-Aware">
+        <div id="content-Aware" class="button button-active">
+          <img src="../icons/svg/tool panel/panel-healing-brush/type=content-aware, acitve=false.svg" />
+        </div>
+        <div id="proximity-Match" class="button">
+          <img src="../icons/svg/tool panel/panel-healing-brush/type=proximity-match, acitve=false.svg" />
+        </div>
       </div>
     </div>
   </div>

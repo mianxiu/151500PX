@@ -13,7 +13,8 @@
   --bg-input: #c2c2c2;
   --bg-input-active: #d1d1d1;
   --bg-input-confim-false: #b2b2b2;
-  --bg-comfim-true: #a4b4c0;
+  --bg-confim-true: #a6b0b8;
+  --bg-confim-true-hover: #b7bdc2;
   --bg-pink: #c6a2a2;
   --bg-switch-radio: #d1b680;
   --bg-tab: #b0b0b0;
@@ -23,12 +24,7 @@
 }
 
 /* style */
-.p-8 {
-  padding: 8px;
-}
-.p-right-8 {
-  padding-right: 8px;
-}
+
 /* margin 8px */
 .m-top-8 {
   margin-top: 8px;
@@ -55,6 +51,32 @@
 .m-right-4 {
   margin-right: 4px;
 }
+/* margin 1px */
+.m-top-1 {
+  margin-top: 1px;
+}
+.m-bottom-1 {
+  margin-bottom: 1px;
+}
+.m-left-1 {
+  margin-left: 1px;
+}
+.m-right-1 {
+  margin-right: 14px;
+}
+/* padding */
+.p-8 {
+  padding: 8px;
+}
+.p-right-8 {
+  padding-right: 8px;
+}
+.p-left-8 {
+  padding-left: 8px;
+}
+.p-justify-4 {
+  padding: 0 4px;
+}
 .p-justify-8 {
   padding: 0 8px;
 }
@@ -64,6 +86,8 @@
 .p-right-2 {
   padding-right: 2px;
 }
+
+/* line 1px */
 .line-top {
   border-top: 1px var(--split) solid;
 }
@@ -132,6 +156,16 @@
 .tip-main > span {
   color: var(--gray);
 }
+
+.tool {
+  display: flex;
+  margin-bottom: 6px;
+}
+.tool-active {
+  background-color: var(--bg-confim-true);
+  border-bottom: 1px var(--split) solid;
+}
+
 .big-button {
   margin: 0;
   width: 24px;
@@ -139,16 +173,27 @@
   border-radius: 0px;
   border: none;
   display: flex;
+  cursor: pointer;
 }
+
 .button {
   margin: 0;
   width: 18px;
   height: 24px;
   border-radius: 0px;
-  border: none;
   display: flex;
+  cursor: pointer;
 }
-
+.button:hover,
+.big-button:hover {
+  background-color: var(--active-light);
+}
+.button-active {
+  background-color: var(--bg-confim-true);
+}
+.button-active:hover {
+  background-color: var(--bg-confim-true-hover);
+}
 .overlap {
   display: flex;
   position: absolute;
