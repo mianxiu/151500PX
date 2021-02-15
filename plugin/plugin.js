@@ -37,7 +37,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var compressAndExport = require("./action/compressAndExport");
+var initMain = require("./action/initMain");
 var floder_1 = require("./module/floder");
+var app = require("photoshop").app;
 /**
  * use obesever to listen event when fetch panel
  */
@@ -55,12 +57,17 @@ function initPanel(path) {
                 case 1:
                     res = _a.sent();
                     document.querySelector("#main").innerHTML = res;
+                    // app.eventNotifier = (event, descriptor) => {
+                    //   console.log(event, JSON.stringify(descriptor, null, " "));
+                    // };
+                    console.log(app.currentTool);
                     return [2 /*return*/];
             }
         });
     });
 }
 initPanel("./panel/main.html");
+initMain.jk();
 function doSomething() {
     //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
     //component.selectAllLayersOnTarget();
