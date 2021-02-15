@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.jk = void 0;
-function jk() {
+exports.initMain = void 0;
+function initMain() {
     console.log("jk");
 }
-exports.jk = jk;
+exports.initMain = initMain;

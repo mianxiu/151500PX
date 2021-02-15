@@ -233,7 +233,7 @@
 body {
   background-color: var(--panel);
 }
-#main {
+#uxp-panel {
   padding: 8px 0;
 }
 .nav {
