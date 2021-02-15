@@ -39,6 +39,19 @@
   margin-right: 8px;
 }
 /* margin 4px */
+.m-top-6 {
+  margin-top: 6px;
+}
+.m-bottom-6 {
+  margin-bottom: 6px;
+}
+.m-left-6 {
+  margin-left: 6px;
+}
+.m-right-6 {
+  margin-right: 6px;
+}
+/* margin 4px */
 .m-top-4 {
   margin-top: 4px;
 }
@@ -157,15 +170,6 @@
   color: var(--gray);
 }
 
-.tool {
-  display: flex;
-  margin-bottom: 6px;
-}
-.tool-active {
-  background-color: var(--bg-confim-true);
-  border-bottom: 1px var(--split) solid;
-}
-
 .big-button {
   margin: 0;
   width: 24px;
@@ -184,16 +188,30 @@
   display: flex;
   cursor: pointer;
 }
-.button:hover,
-.big-button:hover {
-  background-color: var(--active-light);
+
+.tool {
+  display: flex;
 }
+.tool-active {
+  background-color: var(--bg-confim-true);
+  border-bottom: 1px var(--split) solid;
+}
+
 .button-active {
   background-color: var(--bg-confim-true);
 }
-.button-active:hover {
+
+.button:hover,
+.big-button:hover,
+.tool:hover {
+  background-color: var(--active-light);
+}
+
+.button-active:hover,
+.tool-active:hover {
   background-color: var(--bg-confim-true-hover);
 }
+
 .overlap {
   display: flex;
   position: absolute;
