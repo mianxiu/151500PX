@@ -15,7 +15,7 @@ async function insertHtmlFromPath(path: string) {
 /**
  * init main panel and addEventListener
  */
-export function initPanel() {
+export async function initPanel() {
   // app.eventNotifier = (event, descriptor) => {
   //   console.log(event, JSON.stringify(descriptor, null, " "));
   // };
@@ -26,11 +26,11 @@ export function initPanel() {
 
   switch (panel) {
     case `main`:
-      insertHtmlFromPath("./panel/main.html");
+      initMain();
       break;
 
     case `compress-export`:
-      insertHtmlFromPath("./panel/compressAndexport.html");
+      initCompressExport();
       break;
 
     case `duplice-vector`:
@@ -41,5 +41,32 @@ export function initPanel() {
 }
 
 /**
- * add listener for top panel
+ * add listener for main panel
  */
+async function initMain() {
+  insertHtmlFromPath("./panel/main.html");
+
+  /**
+   * init top panel
+   */
+  let initTip = `init-tip`;
+  let initBlackMetal = `init-black-metal`;
+  let initWhiteMetal = `init-white-metal`;
+  let compressExport = `compress-export`;
+
+  let initTipFunc = () => {};
+  let initBlackMetalFunc = () => {};
+  let initWhiteMetalFunc = () => {};
+  let compressExportFunc = () => {
+    initPanel();
+  };
+
+  document.addEventListener(`click`, compressExportFunc);
+}
+
+/**
+ *
+ */
+async function initCompressExport() {
+  insertHtmlFromPath("./panel/compressAndexport.html");
+}

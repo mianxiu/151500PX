@@ -62,26 +62,63 @@ function insertHtmlFromPath(path) {
  * init main panel and addEventListener
  */
 function initPanel() {
-    // app.eventNotifier = (event, descriptor) => {
-    //   console.log(event, JSON.stringify(descriptor, null, " "));
-    // };
-    console.log("jk");
-    console.log(app.currentTool);
-    var panel = document.querySelector(uxpPanel).getAttribute("panel");
-    switch (panel) {
-        case "main":
-            insertHtmlFromPath("./panel/main.html");
-            break;
-        case "compress-export":
-            insertHtmlFromPath("./panel/compressAndexport.html");
-            break;
-        case "duplice-vector":
-            break;
-        default:
-            break;
-    }
+    return __awaiter(this, void 0, void 0, function () {
+        var panel;
+        return __generator(this, function (_a) {
+            // app.eventNotifier = (event, descriptor) => {
+            //   console.log(event, JSON.stringify(descriptor, null, " "));
+            // };
+            console.log("jk");
+            console.log(app.currentTool);
+            panel = document.querySelector(uxpPanel).getAttribute("panel");
+            switch (panel) {
+                case "main":
+                    initMain();
+                    break;
+                case "compress-export":
+                    initCompressExport();
+                    break;
+                case "duplice-vector":
+                    break;
+                default:
+                    break;
+            }
+            return [2 /*return*/];
+        });
+    });
 }
 exports.initPanel = initPanel;
 /**
- * add listener for top panel
+ * add listener for main panel
  */
+function initMain() {
+    return __awaiter(this, void 0, void 0, function () {
+        var initTip, initBlackMetal, initWhiteMetal, compressExport, initTipFunc, initBlackMetalFunc, initWhiteMetalFunc, compressExportFunc;
+        return __generator(this, function (_a) {
+            insertHtmlFromPath("./panel/main.html");
+            initTip = "init-tip";
+            initBlackMetal = "init-black-metal";
+            initWhiteMetal = "init-white-metal";
+            compressExport = "compress-export";
+            initTipFunc = function () { };
+            initBlackMetalFunc = function () { };
+            initWhiteMetalFunc = function () { };
+            compressExportFunc = function () {
+                initPanel();
+            };
+            document.addEventListener("click", compressExportFunc);
+            return [2 /*return*/];
+        });
+    });
+}
+/**
+ *
+ */
+function initCompressExport() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            insertHtmlFromPath("./panel/compressAndexport.html");
+            return [2 /*return*/];
+        });
+    });
+}
