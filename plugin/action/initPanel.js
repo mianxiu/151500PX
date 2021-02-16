@@ -45,25 +45,33 @@ var panelMode = {
     dupliceVector: "duplice-vector",
 };
 /**
- * obesever
- */
-// let uxpPanelNode = document.querySelector(uxpPanel);
-// let obeseverPanel = new MutationObserver(initPanel);
-// obeseverPanel.observe(uxpPanelNode, {
-//   attributes: true,
-// });
-/**
  * if node Attribute initEvent === `false`
+ * add listener fo nodes
  * @param selector
  * @param listener
  */
-function initEvent(selector, listener) {
-    var initEventAttr = document.querySelector(selector);
-    if (initEventAttr.getAttribute("initEvent") === "false") {
-        document.querySelector(selector).addEventListener("click", listener);
-        initEventAttr.setAttribute("initEvent", "true");
-    }
+function initEventListeners(initEventListener) {
+    var listener = [].concat(initEventListener);
+    var intervalEvent = setInterval(function () {
+        for (var i = 0; i < listener.length; i++) {
+            var element = listener[i];
+            var node = document.querySelector(element.selector);
+            var initAttr = node !== null ? node.getAttribute("initEvent") : null;
+            if (initAttr === "false") {
+                console.log(element.selector, true);
+                document.querySelector(element.selector).addEventListener("click", element.listener);
+                node.setAttribute("initEvent", "true");
+            }
+            if (i >= listener.length) {
+                clearInterval(intervalEvent);
+            }
+        }
+    }, 1);
 }
+/**
+ * init tab menu
+ */
+function initTab() { }
 /**
  * init main panel
  */
@@ -84,7 +92,7 @@ function insertHtmlFromPath(path) {
     });
 }
 /**
- * init main panel and addEventListener
+ * init panel and addEventListener
  */
 function initPanel() {
     return __awaiter(this, void 0, void 0, function () {
@@ -101,6 +109,7 @@ function initPanel() {
                     initCompressExport();
                     break;
                 case panelMode.dupliceVector:
+                    initDupliceVector();
                     break;
                 default:
                     break;
@@ -115,7 +124,7 @@ exports.initPanel = initPanel;
  */
 function initMain() {
     return __awaiter(this, void 0, void 0, function () {
-        var initTip, initBlackMetal, initWhiteMetal, compressExport, initTipFunc, initBlackMetalFunc, initWhiteMetalFunc, compressExportFunc, intervalEvent;
+        var initTip, initBlackMetal, initWhiteMetal, compressExport, initTipFunc, initBlackMetalFunc, initWhiteMetalFunc, compressExportFunc, events;
         return __generator(this, function (_a) {
             insertHtmlFromPath("./panel/main.html");
             initTip = "#init-tip";
@@ -130,10 +139,13 @@ function initMain() {
                 document.querySelector(uxpPanel).setAttribute("panel", panelMode.compressExport);
                 initPanel();
             };
-            intervalEvent = setInterval(function () {
-                initEvent(compressExport, compressExportFunc);
-                clearInterval(intervalEvent);
-            }, 1);
+            events = [
+                { selector: initTip, listener: initTipFunc },
+                { selector: initBlackMetal, listener: initBlackMetalFunc },
+                { selector: initWhiteMetal, listener: initWhiteMetalFunc },
+                { selector: compressExport, listener: compressExportFunc },
+            ];
+            initEventListeners(events);
             return [2 /*return*/];
         });
     });
@@ -148,4 +160,9 @@ function initCompressExport() {
             return [2 /*return*/];
         });
     });
+}
+function initDupliceVector() {
+    return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+        return [2 /*return*/];
+    }); });
 }

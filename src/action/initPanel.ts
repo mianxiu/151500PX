@@ -19,17 +19,45 @@ const panelMode = {
 // });
 
 /**
+ *  @selector node-string;
+ *  @listener EventListenerOrEventListenerObject
+ */
+interface InitEventListener {
+  selector: string;
+  listener: EventListenerOrEventListenerObject;
+}
+/**
  * if node Attribute initEvent === `false`
+ * add listener fo nodes
  * @param selector
  * @param listener
  */
-function initEvent(selector: string, listener: EventListenerOrEventListenerObject) {
-  let initEventAttr = document.querySelector(selector);
-  if (initEventAttr.getAttribute(`initEvent`) === `false`) {
-    document.querySelector(selector).addEventListener(`click`, listener);
-    initEventAttr.setAttribute(`initEvent`, `true`);
-  }
+function initEventListeners(initEventListener: InitEventListener | InitEventListener[]) {
+  let listener = [].concat(initEventListener);
+
+  let intervalEvent = setInterval(() => {
+    for (let i = 0; i < listener.length; i++) {
+      const element = listener[i];
+      let node = document.querySelector(element.selector);
+      let initAttr = node !== null ? node.getAttribute(`initEvent`) : null;
+
+      if (initAttr === `false`) {
+        console.log(element.selector, true);
+        document.querySelector(element.selector).addEventListener(`click`, element.listener);
+        node.setAttribute(`initEvent`, `true`);
+      }
+
+      if (i >= listener.length) {
+        clearInterval(intervalEvent);
+      }
+    }
+  }, 1);
 }
+
+/**
+ * init tab menu
+ */
+function initTab() {}
 
 /**
  * init main panel
@@ -42,7 +70,7 @@ async function insertHtmlFromPath(path: string) {
 }
 
 /**
- * init main panel and addEventListener
+ * init panel and addEventListener
  */
 export async function initPanel() {
   console.log(app.currentTool);
@@ -59,6 +87,7 @@ export async function initPanel() {
       break;
 
     case panelMode.dupliceVector:
+      initDupliceVector();
       break;
     default:
       break;
@@ -88,10 +117,16 @@ async function initMain() {
     initPanel();
   };
 
-  let intervalEvent = setInterval(() => {
-    initEvent(compressExport, compressExportFunc);
-    clearInterval(intervalEvent);
-  }, 1);
+  /**
+   *
+   */
+  let events: InitEventListener[] = [
+    { selector: initTip, listener: initTipFunc },
+    { selector: initBlackMetal, listener: initBlackMetalFunc },
+    { selector: initWhiteMetal, listener: initWhiteMetalFunc },
+    { selector: compressExport, listener: compressExportFunc },
+  ];
+  initEventListeners(events);
 }
 
 /**
@@ -100,3 +135,5 @@ async function initMain() {
 async function initCompressExport() {
   insertHtmlFromPath("./panel/compressAndexport.html");
 }
+
+async function initDupliceVector() {}
