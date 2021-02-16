@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.initPanel = void 0;
+exports.init = void 0;
 var app = require("photoshop").app;
 var uxpPanel = "#uxp-panel";
 var panelMode = {
@@ -45,11 +45,19 @@ var panelMode = {
     dupliceVector: "duplice-vector",
 };
 /**
+ * inin when plugin load
+ */
+function init() {
+    initNav();
+    initPanel();
+}
+exports.init = init;
+/**
  * if node Attribute initEvent === `false`
  * add listener for nodes
  * @param initEventListener
  */
-function initEventListeners(initEventListener) {
+function initClikcListeners(initEventListener) {
     var listener = [].concat(initEventListener);
     var intervalEvent = setInterval(function () {
         for (var i = 0; i < listener.length; i++) {
@@ -70,7 +78,48 @@ function initEventListeners(initEventListener) {
 /**
  * init tab menu
  */
-function initTab() { }
+function initNav() {
+    var navNode = document.querySelector("#nav");
+    var menu = document.querySelector("#sp-menu");
+    var menuImg = document.querySelector("#sp-menu>img");
+    var navTypeAttr = navNode !== null ? navNode.getAttribute("type") : null;
+    console.log(navTypeAttr);
+    var menuFunc = function () {
+        console.log(1234);
+        var navTypeAttr = navNode !== null ? navNode.getAttribute("type") : null;
+        /**
+         * upgrade icon
+         */
+        switch (navTypeAttr) {
+            case "back":
+                menuImg.src = "./icons/svg/general_menu.svg";
+                navNode.setAttribute("type", "menu");
+                initMain();
+                break;
+            default:
+                break;
+        }
+    };
+    if (navNode.getAttribute("init") === "false") {
+        menu.addEventListener("click", menuFunc);
+        navNode.setAttribute("init", "true");
+    }
+    /**
+     * upgrade icon
+     */
+    var upgradeIcons = function () {
+        switch (navTypeAttr) {
+            case "menu":
+                break;
+            case "back":
+                menuImg.src = "./icons/svg/general_back.svg";
+                break;
+            default:
+                break;
+        }
+    };
+    upgradeIcons();
+}
 /**
  * init main panel
  */
@@ -115,7 +164,6 @@ function initPanel() {
         });
     });
 }
-exports.initPanel = initPanel;
 /**
  * add listener for main panel
  */
@@ -132,7 +180,9 @@ function initMain() {
             initBlackMetalFunc = function () { };
             initWhiteMetalFunc = function () { };
             compressExportFunc = function () {
+                document.querySelector("#nav").setAttribute("type", "back");
                 document.querySelector(uxpPanel).setAttribute("panel", panelMode.compressExport);
+                initNav();
                 initPanel();
             };
             events = [
@@ -141,7 +191,7 @@ function initMain() {
                 { selector: initWhiteMetal, listener: initWhiteMetalFunc },
                 { selector: compressExport, listener: compressExportFunc },
             ];
-            initEventListeners(events);
+            initClikcListeners(events);
             return [2 /*return*/];
         });
     });
@@ -152,6 +202,7 @@ function initMain() {
 function initCompressExport() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
+            initNav();
             insertHtmlFromPath("./panel/compressAndexport.html");
             return [2 /*return*/];
         });

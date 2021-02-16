@@ -5,7 +5,7 @@ var floder_1 = require("./module/floder");
 /**
  * use obesever to listen event when fetch panel
  */
-initPanel.initPanel();
+initPanel.init();
 function doSomething() {
     //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
     //component.selectAllLayersOnTarget();

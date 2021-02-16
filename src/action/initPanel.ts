@@ -1,5 +1,3 @@
-import { compileFunction } from "vm";
-
 const app = require("photoshop").app;
 
 const uxpPanel = `#uxp-panel`;
@@ -9,6 +7,13 @@ const panelMode = {
   dupliceVector: `duplice-vector`,
 };
 
+/**
+ * inin when plugin load
+ */
+export function init() {
+  initNav();
+  initPanel();
+}
 /**
  * obesever
  */
@@ -32,7 +37,7 @@ interface InitEventListener {
  * add listener for nodes
  * @param initEventListener
  */
-function initEventListeners(initEventListener: InitEventListener | InitEventListener[]) {
+function initClikcListeners(initEventListener: InitEventListener | InitEventListener[]) {
   let listener = [].concat(initEventListener);
 
   let intervalEvent = setInterval(() => {
@@ -57,7 +62,53 @@ function initEventListeners(initEventListener: InitEventListener | InitEventList
 /**
  * init tab menu
  */
-function initTab() {}
+function initNav() {
+  let navNode = document.querySelector(`#nav`);
+  let menu = document.querySelector(`#sp-menu`);
+  let menuImg: HTMLImageElement = document.querySelector(`#sp-menu>img`);
+  let navTypeAttr: string = navNode !== null ? navNode.getAttribute(`type`) : null;
+
+  console.log(navTypeAttr);
+
+  let menuFunc = () => {
+    console.log(1234);
+    let navTypeAttr: string = navNode !== null ? navNode.getAttribute(`type`) : null;
+    /**
+     * upgrade icon
+     */
+    switch (navTypeAttr) {
+      case `back`:
+        menuImg.src = `./icons/svg/general_menu.svg`;
+        navNode.setAttribute(`type`, `menu`);
+        initMain();
+        break;
+      default:
+        break;
+    }
+  };
+
+  if (navNode.getAttribute(`init`) === `false`) {
+    menu.addEventListener(`click`, menuFunc);
+    navNode.setAttribute(`init`, `true`);
+  }
+
+  /**
+   * upgrade icon
+   */
+  let upgradeIcons = () => {
+    switch (navTypeAttr) {
+      case `menu`:
+        break;
+      case `back`:
+        menuImg.src = `./icons/svg/general_back.svg`;
+        break;
+      default:
+        break;
+    }
+  };
+
+  upgradeIcons();
+}
 
 /**
  * init main panel
@@ -72,7 +123,7 @@ async function insertHtmlFromPath(path: string) {
 /**
  * init panel and addEventListener
  */
-export async function initPanel() {
+async function initPanel() {
   let panel: string = document.querySelector(uxpPanel).getAttribute(`panel`);
 
   switch (panel) {
@@ -109,8 +160,14 @@ async function initMain() {
   let initTipFunc = () => {};
   let initBlackMetalFunc = () => {};
   let initWhiteMetalFunc = () => {};
+
+  /**
+   * change panel
+   */
   let compressExportFunc = () => {
+    document.querySelector(`#nav`).setAttribute(`type`, `back`);
     document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.compressExport);
+    initNav();
     initPanel();
   };
 
@@ -123,13 +180,14 @@ async function initMain() {
     { selector: initWhiteMetal, listener: initWhiteMetalFunc },
     { selector: compressExport, listener: compressExportFunc },
   ];
-  initEventListeners(events);
+  initClikcListeners(events);
 }
 
 /**
  *
  */
 async function initCompressExport() {
+  initNav();
   insertHtmlFromPath("./panel/compressAndexport.html");
 }
 

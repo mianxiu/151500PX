@@ -5,8 +5,7 @@ import { getDataFolder, getPluginFolder } from "./module/floder";
 /**
  * use obesever to listen event when fetch panel
  */
-
-initPanel.initPanel();
+initPanel.init();
 
 function doSomething() {
   //  document.getElementById("layers").innerHTML = `${showLayerNames()}`
