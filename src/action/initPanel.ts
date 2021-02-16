@@ -26,24 +26,24 @@ interface InitEventListener {
   selector: string;
   listener: EventListenerOrEventListenerObject;
 }
+
 /**
  * if node Attribute initEvent === `false`
- * add listener fo nodes
- * @param selector
- * @param listener
+ * add listener for nodes
+ * @param initEventListener
  */
 function initEventListeners(initEventListener: InitEventListener | InitEventListener[]) {
   let listener = [].concat(initEventListener);
 
   let intervalEvent = setInterval(() => {
     for (let i = 0; i < listener.length; i++) {
-      const element = listener[i];
-      let node = document.querySelector(element.selector);
+      const el = listener[i];
+      let node = document.querySelector(el.selector);
       let initAttr = node !== null ? node.getAttribute(`initEvent`) : null;
 
       if (initAttr === `false`) {
-        console.log(element.selector, true);
-        document.querySelector(element.selector).addEventListener(`click`, element.listener);
+        console.log(el.selector, `initEventListener`, true);
+        document.querySelector(el.selector).addEventListener(`click`, el.listener);
         node.setAttribute(`initEvent`, `true`);
       }
 
@@ -73,10 +73,8 @@ async function insertHtmlFromPath(path: string) {
  * init panel and addEventListener
  */
 export async function initPanel() {
-  console.log(app.currentTool);
-
   let panel: string = document.querySelector(uxpPanel).getAttribute(`panel`);
-  console.log(panel);
+
   switch (panel) {
     case panelMode.main:
       initMain();
@@ -112,7 +110,6 @@ async function initMain() {
   let initBlackMetalFunc = () => {};
   let initWhiteMetalFunc = () => {};
   let compressExportFunc = () => {
-    console.log(123);
     document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.compressExport);
     initPanel();
   };

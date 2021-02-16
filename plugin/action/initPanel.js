@@ -46,20 +46,19 @@ var panelMode = {
 };
 /**
  * if node Attribute initEvent === `false`
- * add listener fo nodes
- * @param selector
- * @param listener
+ * add listener for nodes
+ * @param initEventListener
  */
 function initEventListeners(initEventListener) {
     var listener = [].concat(initEventListener);
     var intervalEvent = setInterval(function () {
         for (var i = 0; i < listener.length; i++) {
-            var element = listener[i];
-            var node = document.querySelector(element.selector);
+            var el = listener[i];
+            var node = document.querySelector(el.selector);
             var initAttr = node !== null ? node.getAttribute("initEvent") : null;
             if (initAttr === "false") {
-                console.log(element.selector, true);
-                document.querySelector(element.selector).addEventListener("click", element.listener);
+                console.log(el.selector, "initEventListener", true);
+                document.querySelector(el.selector).addEventListener("click", el.listener);
                 node.setAttribute("initEvent", "true");
             }
             if (i >= listener.length) {
@@ -98,9 +97,7 @@ function initPanel() {
     return __awaiter(this, void 0, void 0, function () {
         var panel;
         return __generator(this, function (_a) {
-            console.log(app.currentTool);
             panel = document.querySelector(uxpPanel).getAttribute("panel");
-            console.log(panel);
             switch (panel) {
                 case panelMode.main:
                     initMain();
@@ -135,7 +132,6 @@ function initMain() {
             initBlackMetalFunc = function () { };
             initWhiteMetalFunc = function () { };
             compressExportFunc = function () {
-                console.log(123);
                 document.querySelector(uxpPanel).setAttribute("panel", panelMode.compressExport);
                 initPanel();
             };
