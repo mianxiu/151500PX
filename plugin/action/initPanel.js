@@ -39,6 +39,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.initPanel = void 0;
 var app = require("photoshop").app;
 var uxpPanel = "#uxp-panel";
+var panelMode = {
+    main: "main",
+    compressExport: "compress-export",
+    dupliceVector: "duplice-vector",
+};
+/**
+ * obesever
+ */
+// let uxpPanelNode = document.querySelector(uxpPanel);
+// let obeseverPanel = new MutationObserver(initPanel);
+// obeseverPanel.observe(uxpPanelNode, {
+//   attributes: true,
+// });
+/**
+ * if node Attribute initEvent === `false`
+ * @param selector
+ * @param listener
+ */
+function initEvent(selector, listener) {
+    var initEventAttr = document.querySelector(selector);
+    if (initEventAttr.getAttribute("initEvent") === "false") {
+        document.querySelector(selector).addEventListener("click", listener);
+        initEventAttr.setAttribute("initEvent", "true");
+    }
+}
 /**
  * init main panel
  */
@@ -65,20 +90,17 @@ function initPanel() {
     return __awaiter(this, void 0, void 0, function () {
         var panel;
         return __generator(this, function (_a) {
-            // app.eventNotifier = (event, descriptor) => {
-            //   console.log(event, JSON.stringify(descriptor, null, " "));
-            // };
-            console.log("jk");
             console.log(app.currentTool);
             panel = document.querySelector(uxpPanel).getAttribute("panel");
+            console.log(panel);
             switch (panel) {
-                case "main":
+                case panelMode.main:
                     initMain();
                     break;
-                case "compress-export":
+                case panelMode.compressExport:
                     initCompressExport();
                     break;
-                case "duplice-vector":
+                case panelMode.dupliceVector:
                     break;
                 default:
                     break;
@@ -93,20 +115,25 @@ exports.initPanel = initPanel;
  */
 function initMain() {
     return __awaiter(this, void 0, void 0, function () {
-        var initTip, initBlackMetal, initWhiteMetal, compressExport, initTipFunc, initBlackMetalFunc, initWhiteMetalFunc, compressExportFunc;
+        var initTip, initBlackMetal, initWhiteMetal, compressExport, initTipFunc, initBlackMetalFunc, initWhiteMetalFunc, compressExportFunc, intervalEvent;
         return __generator(this, function (_a) {
             insertHtmlFromPath("./panel/main.html");
-            initTip = "init-tip";
-            initBlackMetal = "init-black-metal";
-            initWhiteMetal = "init-white-metal";
-            compressExport = "compress-export";
+            initTip = "#init-tip";
+            initBlackMetal = "#init-black-metal";
+            initWhiteMetal = "#init-white-metal";
+            compressExport = "#compress-export";
             initTipFunc = function () { };
             initBlackMetalFunc = function () { };
             initWhiteMetalFunc = function () { };
             compressExportFunc = function () {
+                console.log(123);
+                document.querySelector(uxpPanel).setAttribute("panel", panelMode.compressExport);
                 initPanel();
             };
-            document.addEventListener("click", compressExportFunc);
+            intervalEvent = setInterval(function () {
+                initEvent(compressExport, compressExportFunc);
+                clearInterval(intervalEvent);
+            }, 1);
             return [2 /*return*/];
         });
     });

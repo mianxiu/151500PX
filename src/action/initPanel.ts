@@ -1,6 +1,35 @@
+import { compileFunction } from "vm";
+
 const app = require("photoshop").app;
 
 const uxpPanel = `#uxp-panel`;
+const panelMode = {
+  main: `main`,
+  compressExport: `compress-export`,
+  dupliceVector: `duplice-vector`,
+};
+
+/**
+ * obesever
+ */
+// let uxpPanelNode = document.querySelector(uxpPanel);
+// let obeseverPanel = new MutationObserver(initPanel);
+// obeseverPanel.observe(uxpPanelNode, {
+//   attributes: true,
+// });
+
+/**
+ * if node Attribute initEvent === `false`
+ * @param selector
+ * @param listener
+ */
+function initEvent(selector: string, listener: EventListenerOrEventListenerObject) {
+  let initEventAttr = document.querySelector(selector);
+  if (initEventAttr.getAttribute(`initEvent`) === `false`) {
+    document.querySelector(selector).addEventListener(`click`, listener);
+    initEventAttr.setAttribute(`initEvent`, `true`);
+  }
+}
 
 /**
  * init main panel
@@ -16,24 +45,20 @@ async function insertHtmlFromPath(path: string) {
  * init main panel and addEventListener
  */
 export async function initPanel() {
-  // app.eventNotifier = (event, descriptor) => {
-  //   console.log(event, JSON.stringify(descriptor, null, " "));
-  // };
-  console.log("jk");
   console.log(app.currentTool);
 
   let panel: string = document.querySelector(uxpPanel).getAttribute(`panel`);
-
+  console.log(panel);
   switch (panel) {
-    case `main`:
+    case panelMode.main:
       initMain();
       break;
 
-    case `compress-export`:
+    case panelMode.compressExport:
       initCompressExport();
       break;
 
-    case `duplice-vector`:
+    case panelMode.dupliceVector:
       break;
     default:
       break;
@@ -49,19 +74,24 @@ async function initMain() {
   /**
    * init top panel
    */
-  let initTip = `init-tip`;
-  let initBlackMetal = `init-black-metal`;
-  let initWhiteMetal = `init-white-metal`;
-  let compressExport = `compress-export`;
+  let initTip = `#init-tip`;
+  let initBlackMetal = `#init-black-metal`;
+  let initWhiteMetal = `#init-white-metal`;
+  let compressExport = `#compress-export`;
 
   let initTipFunc = () => {};
   let initBlackMetalFunc = () => {};
   let initWhiteMetalFunc = () => {};
   let compressExportFunc = () => {
+    console.log(123);
+    document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.compressExport);
     initPanel();
   };
 
-  document.addEventListener(`click`, compressExportFunc);
+  let intervalEvent = setInterval(() => {
+    initEvent(compressExport, compressExportFunc);
+    clearInterval(intervalEvent);
+  }, 1);
 }
 
 /**
