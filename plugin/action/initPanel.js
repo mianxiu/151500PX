@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.init = void 0;
+exports.Ttest = exports.init = void 0;
 var app = require("photoshop").app;
 var uxpPanel = "#uxp-panel";
 var panelMode = {
@@ -60,18 +60,18 @@ exports.init = init;
 function initClikcListeners(initEventListener) {
     var listener = [].concat(initEventListener);
     var intervalEvent = setInterval(function () {
-        for (var i = 0; i < listener.length; i++) {
-            var el = listener[i];
-            var node = document.querySelector(el.selector);
-            var initAttr = node !== null ? node.getAttribute("initEvent") : null;
-            if (initAttr === "false") {
-                console.log(el.selector, "initEventListener", true);
-                document.querySelector(el.selector).addEventListener("click", el.listener);
-                node.setAttribute("initEvent", "true");
+        if (document.querySelector("#uxp-panel").innerHTML !== "") {
+            for (var i = 0; i < listener.length; i++) {
+                var el = listener[i];
+                var node = document.querySelector(el.selector);
+                var initAttr = node !== null ? node.getAttribute("initEvent") : null;
+                if (initAttr === "false") {
+                    console.log(el.selector, "initEventListener", true);
+                    document.querySelector(el.selector).addEventListener("click", el.listener);
+                    node.setAttribute("initEvent", "true");
+                }
             }
-            if (i >= listener.length) {
-                clearInterval(intervalEvent);
-            }
+            clearInterval(intervalEvent);
         }
     }, 1);
 }
@@ -213,3 +213,7 @@ function initDupliceVector() {
         return [2 /*return*/];
     }); });
 }
+var Ttest = function () {
+    console.log("onclick");
+};
+exports.Ttest = Ttest;

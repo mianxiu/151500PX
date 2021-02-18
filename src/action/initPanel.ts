@@ -41,20 +41,20 @@ function initClikcListeners(initEventListener: InitEventListener | InitEventList
   let listener = [].concat(initEventListener);
 
   let intervalEvent = setInterval(() => {
-    for (let i = 0; i < listener.length; i++) {
-      const el = listener[i];
-      let node = document.querySelector(el.selector);
-      let initAttr = node !== null ? node.getAttribute(`initEvent`) : null;
+    if (document.querySelector(`#uxp-panel`).innerHTML !== "") {
+      for (let i = 0; i < listener.length; i++) {
+        const el = listener[i];
+        let node = document.querySelector(el.selector);
+        let initAttr = node !== null ? node.getAttribute(`initEvent`) : null;
 
-      if (initAttr === `false`) {
-        console.log(el.selector, `initEventListener`, true);
-        document.querySelector(el.selector).addEventListener(`click`, el.listener);
-        node.setAttribute(`initEvent`, `true`);
+        if (initAttr === `false`) {
+          console.log(el.selector, `initEventListener`, true);
+          document.querySelector(el.selector).addEventListener(`click`, el.listener);
+          node.setAttribute(`initEvent`, `true`);
+        }
       }
 
-      if (i >= listener.length) {
-        clearInterval(intervalEvent);
-      }
+      clearInterval(intervalEvent);
     }
   }, 1);
 }
@@ -192,3 +192,7 @@ async function initCompressExport() {
 }
 
 async function initDupliceVector() {}
+
+export let Ttest = () => {
+  console.log(`onclick`);
+};
