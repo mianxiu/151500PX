@@ -1,3 +1,5 @@
+import * as compressAndExport from "./compressAndExport";
+
 const app = require("photoshop").app;
 
 const uxpPanel = `#uxp-panel`;
@@ -165,10 +167,11 @@ async function initMain() {
    * change panel
    */
   let compressExportFunc = () => {
-    document.querySelector(`#nav`).setAttribute(`type`, `back`);
-    document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.compressExport);
-    initNav();
-    initPanel();
+    // document.querySelector(`#nav`).setAttribute(`type`, `back`);
+    // document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.compressExport);
+    // initNav();
+    // initPanel();
+    compressAndExport.fuck();
   };
 
   /**

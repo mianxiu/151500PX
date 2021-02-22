@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ttest = exports.init = void 0;
+var compressAndExport = require("./compressAndExport");
 var app = require("photoshop").app;
 var uxpPanel = "#uxp-panel";
 var panelMode = {
@@ -180,10 +181,11 @@ function initMain() {
             initBlackMetalFunc = function () { };
             initWhiteMetalFunc = function () { };
             compressExportFunc = function () {
-                document.querySelector("#nav").setAttribute("type", "back");
-                document.querySelector(uxpPanel).setAttribute("panel", panelMode.compressExport);
-                initNav();
-                initPanel();
+                // document.querySelector(`#nav`).setAttribute(`type`, `back`);
+                // document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.compressExport);
+                // initNav();
+                // initPanel();
+                compressAndExport.fuck();
             };
             events = [
                 { selector: initTip, listener: initTipFunc },
