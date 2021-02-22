@@ -143,6 +143,21 @@ function mergeMainToSmartObject() {
                     return [4 /*yield*/, layerComponent.fillWhite()];
                 case 26:
                     _c.sent();
+                    /**
+                     * re reasterize smart layer can zip file
+                     */
+                    return [4 /*yield*/, layerComponent.selectLayerByName(names.__DO_ACTION__)];
+                case 27:
+                    /**
+                     * re reasterize smart layer can zip file
+                     */
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.rasterizeTargetLayer()];
+                case 28:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.convertToSmartObject()];
+                case 29:
+                    _c.sent();
                     return [2 /*return*/];
             }
         });

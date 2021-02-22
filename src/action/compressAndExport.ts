@@ -56,6 +56,13 @@ export async function mergeMainToSmartObject() {
   await layerComponent.deleteAllUnVisibleLayers();
   await layerComponent.createBGLayer();
   await layerComponent.fillWhite();
+
+  /**
+   * re reasterize smart layer can zip file
+   */
+  await layerComponent.selectLayerByName(names.__DO_ACTION__);
+  await layerComponent.rasterizeTargetLayer();
+  await layerComponent.convertToSmartObject();
 }
 
 /**
