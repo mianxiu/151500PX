@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ttest = exports.init = void 0;
 var compressAndExport = require("./compressAndExport");
+var mainPanel = require("./mainpanel");
 var app = require("photoshop").app;
 var uxpPanel = "#uxp-panel";
 var panelMode = {
@@ -54,8 +55,9 @@ function init() {
 }
 exports.init = init;
 /**
- * if node Attribute initEvent === `false`
- * add listener for nodes
+ * @summary initEvent = "false"
+ * need add attribute for node
+ *
  * @param initEventListener
  */
 function initClikcListeners(initEventListener) {
@@ -170,15 +172,16 @@ function initPanel() {
  */
 function initMain() {
     return __awaiter(this, void 0, void 0, function () {
-        var initTip, initBlackMetal, initWhiteMetal, compressExport, initTipFunc, initBlackMetalFunc, initWhiteMetalFunc, compressExportFunc, events;
+        var initBlackMetal, initWhiteMetal, compressExport, initBlackMetalFunc, initWhiteMetalFunc, compressExportFunc, events;
         return __generator(this, function (_a) {
             insertHtmlFromPath("./panel/main.html");
-            initTip = "#init-tip";
             initBlackMetal = "#init-black-metal";
             initWhiteMetal = "#init-white-metal";
             compressExport = "#compress-export";
-            initTipFunc = function () { };
-            initBlackMetalFunc = function () { };
+            initBlackMetalFunc = function () {
+                mainPanel.fff();
+                console.log("initblackmetal");
+            };
             initWhiteMetalFunc = function () { };
             compressExportFunc = function () {
                 // document.querySelector(`#nav`).setAttribute(`type`, `back`);
@@ -188,7 +191,6 @@ function initMain() {
                 compressAndExport.fuck();
             };
             events = [
-                { selector: initTip, listener: initTipFunc },
                 { selector: initBlackMetal, listener: initBlackMetalFunc },
                 { selector: initWhiteMetal, listener: initWhiteMetalFunc },
                 { selector: compressExport, listener: compressExportFunc },

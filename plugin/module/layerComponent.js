@@ -40,7 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
+exports.transform = exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var names = require("./names");
 var app = require("photoshop").app;
@@ -848,10 +848,7 @@ function levels() {
                 case 0: return [4 /*yield*/, batchPlay([
                         {
                             _obj: "levels",
-                            presetKind: {
-                                _enum: "presetKindType",
-                                _value: "presetKindCustom",
-                            },
+                            presetKind: { _enum: "presetKindType", _value: "presetKindCustom" },
                             adjustment: [
                                 {
                                     _obj: "levelsAdjustment",
@@ -873,3 +870,85 @@ function levels() {
     });
 }
 exports.levels = levels;
+/**
+ * @summary this is transform function
+ *
+ */
+function transform() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "transform",
+                            _target: [
+                                {
+                                    _ref: "path",
+                                    _enum: "ordinal",
+                                    _value: "targetEnum",
+                                },
+                            ],
+                            freeTransformCenterState: {
+                                _enum: "quadCenterState",
+                                _value: "QCSAverage",
+                            },
+                            offset: {
+                                _obj: "offset",
+                                horizontal: {
+                                    _unit: "pixelsUnit",
+                                    _value: 6.5,
+                                },
+                                vertical: {
+                                    _unit: "pixelsUnit",
+                                    _value: 0,
+                                },
+                            },
+                            width: {
+                                _unit: "percentUnit",
+                                _value: 100,
+                            },
+                            height: {
+                                _unit: "percentUnit",
+                                _value: 100,
+                            },
+                            warp: {
+                                _obj: "warp",
+                                warpStyle: {
+                                    _enum: "warpStyle",
+                                    _value: "warpNone",
+                                },
+                                warpValue: 0,
+                                warpPerspective: 0,
+                                warpPerspectiveOther: 0,
+                                warpRotate: {
+                                    _enum: "orientation",
+                                    _value: "horizontal",
+                                },
+                                bounds: {
+                                    _obj: "classFloatRect",
+                                    top: 0,
+                                    left: 0,
+                                    bottom: 0,
+                                    right: 0,
+                                },
+                                uOrder: 4,
+                                vOrder: 4,
+                            },
+                            transformOnlyLineEnds: true,
+                            _isCommand: true,
+                            _options: {
+                                dialogOptions: "dontDisplay",
+                            },
+                        },
+                    ], {
+                        synchronousExecution: false,
+                        modalBehavior: "fail",
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.transform = transform;

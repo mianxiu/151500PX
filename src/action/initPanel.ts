@@ -1,4 +1,5 @@
 import * as compressAndExport from "./compressAndExport";
+import * as mainPanel from "./mainpanel";
 
 const app = require("photoshop").app;
 
@@ -35,8 +36,9 @@ interface InitEventListener {
 }
 
 /**
- * if node Attribute initEvent === `false`
- * add listener for nodes
+ * @summary initEvent = "false"
+ * need add attribute for node
+ *
  * @param initEventListener
  */
 function initClikcListeners(initEventListener: InitEventListener | InitEventListener[]) {
@@ -154,13 +156,14 @@ async function initMain() {
   /**
    * init top panel
    */
-  let initTip = `#init-tip`;
   let initBlackMetal = `#init-black-metal`;
   let initWhiteMetal = `#init-white-metal`;
   let compressExport = `#compress-export`;
 
-  let initTipFunc = () => {};
-  let initBlackMetalFunc = () => {};
+  let initBlackMetalFunc = () => {
+    mainPanel.fff();
+    console.log(`initblackmetal`);
+  };
   let initWhiteMetalFunc = () => {};
 
   /**
@@ -178,7 +181,6 @@ async function initMain() {
    *
    */
   let events: InitEventListener[] = [
-    { selector: initTip, listener: initTipFunc },
     { selector: initBlackMetal, listener: initBlackMetalFunc },
     { selector: initWhiteMetal, listener: initWhiteMetalFunc },
     { selector: compressExport, listener: compressExportFunc },

@@ -559,10 +559,7 @@ export async function levels() {
     [
       {
         _obj: "levels",
-        presetKind: {
-          _enum: "presetKindType",
-          _value: "presetKindCustom",
-        },
+        presetKind: { _enum: "presetKindType", _value: "presetKindCustom" },
         adjustment: [
           {
             _obj: "levelsAdjustment",
@@ -577,5 +574,82 @@ export async function levels() {
       },
     ],
     batchPlayConfig.defaultOptions()
+  );
+}
+
+/**
+ * @summary this is transform function
+ *
+ */
+
+export async function transform() {
+  await batchPlay(
+    [
+      {
+        _obj: "transform",
+        _target: [
+          {
+            _ref: "path",
+            _enum: "ordinal",
+            _value: "targetEnum",
+          },
+        ],
+        freeTransformCenterState: {
+          _enum: "quadCenterState",
+          _value: "QCSAverage",
+        },
+        offset: {
+          _obj: "offset",
+          horizontal: {
+            _unit: "pixelsUnit",
+            _value: 6.5,
+          },
+          vertical: {
+            _unit: "pixelsUnit",
+            _value: 0,
+          },
+        },
+        width: {
+          _unit: "percentUnit",
+          _value: 100,
+        },
+        height: {
+          _unit: "percentUnit",
+          _value: 100,
+        },
+        warp: {
+          _obj: "warp",
+          warpStyle: {
+            _enum: "warpStyle",
+            _value: "warpNone",
+          },
+          warpValue: 0,
+          warpPerspective: 0,
+          warpPerspectiveOther: 0,
+          warpRotate: {
+            _enum: "orientation",
+            _value: "horizontal",
+          },
+          bounds: {
+            _obj: "classFloatRect",
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+          },
+          uOrder: 4,
+          vOrder: 4,
+        },
+        transformOnlyLineEnds: true,
+        _isCommand: true,
+        _options: {
+          dialogOptions: "dontDisplay",
+        },
+      },
+    ],
+    {
+      synchronousExecution: false,
+      modalBehavior: "fail",
+    }
   );
 }
