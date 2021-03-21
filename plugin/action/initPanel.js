@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Ttest = exports.init = void 0;
+exports.Ttest = exports.shortcutsListener = exports.initPanel = void 0;
 var compressAndExport = require("./compressAndExport");
 var mainPanel = require("./mainpanel");
 var app = require("photoshop").app;
@@ -49,11 +49,15 @@ var panelMode = {
 /**
  * inin when plugin load
  */
-function init() {
-    initNav();
-    initPanel();
+function initPanel() {
+    upgradeNav();
+    upGradePanel();
 }
-exports.init = init;
+exports.initPanel = initPanel;
+function shortcutsListener() {
+    /** not support */
+}
+exports.shortcutsListener = shortcutsListener;
 /**
  * @summary initEvent = "false"
  * need add attribute for node
@@ -81,7 +85,7 @@ function initClikcListeners(initEventListener) {
 /**
  * init tab menu
  */
-function initNav() {
+function upgradeNav() {
     var navNode = document.querySelector("#nav");
     var menu = document.querySelector("#sp-menu");
     var menuImg = document.querySelector("#sp-menu>img");
@@ -97,7 +101,7 @@ function initNav() {
             case "back":
                 menuImg.src = "./icons/svg/general_menu.svg";
                 navNode.setAttribute("type", "menu");
-                initMain();
+                upgradeMain();
                 break;
             default:
                 break;
@@ -124,7 +128,7 @@ function initNav() {
     upgradeIcons();
 }
 /**
- * init main panel
+ * insertHtmlFromPath
  */
 function insertHtmlFromPath(path) {
     return __awaiter(this, void 0, void 0, function () {
@@ -145,20 +149,20 @@ function insertHtmlFromPath(path) {
 /**
  * init panel and addEventListener
  */
-function initPanel() {
+function upGradePanel() {
     return __awaiter(this, void 0, void 0, function () {
         var panel;
         return __generator(this, function (_a) {
             panel = document.querySelector(uxpPanel).getAttribute("panel");
             switch (panel) {
                 case panelMode.main:
-                    initMain();
+                    upgradeMain();
                     break;
                 case panelMode.compressExport:
-                    initCompressExport();
+                    upgradeCompressExport();
                     break;
                 case panelMode.dupliceVector:
-                    initDupliceVector();
+                    upgradeDupliceVector();
                     break;
                 default:
                     break;
@@ -170,32 +174,34 @@ function initPanel() {
 /**
  * add listener for main panel
  */
-function initMain() {
+function upgradeMain() {
     return __awaiter(this, void 0, void 0, function () {
-        var initBlackMetal, initWhiteMetal, compressExport, initBlackMetalFunc, initWhiteMetalFunc, compressExportFunc, events;
+        var initBlackMetal, initBlackMetalFunc, initWhiteMetal, initWhiteMetalFunc, compressExport, compressExportFunc;
         return __generator(this, function (_a) {
             insertHtmlFromPath("./panel/main.html");
             initBlackMetal = "#init-black-metal";
-            initWhiteMetal = "#init-white-metal";
-            compressExport = "#compress-export";
             initBlackMetalFunc = function () {
                 mainPanel.fff();
                 console.log("initblackmetal");
             };
+            initWhiteMetal = "#init-white-metal";
             initWhiteMetalFunc = function () { };
+            compressExport = "#compress-export";
             compressExportFunc = function () {
-                // document.querySelector(`#nav`).setAttribute(`type`, `back`);
-                // document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.compressExport);
-                // initNav();
-                // initPanel();
+                document.querySelector("#nav").setAttribute("type", "back");
+                document.querySelector(uxpPanel).setAttribute("panel", panelMode.compressExport);
+                upgradeNav();
+                upGradePanel();
                 compressAndExport.fuck();
             };
-            events = [
+            /**
+             *
+             */
+            initClikcListeners([
                 { selector: initBlackMetal, listener: initBlackMetalFunc },
                 { selector: initWhiteMetal, listener: initWhiteMetalFunc },
                 { selector: compressExport, listener: compressExportFunc },
-            ];
-            initClikcListeners(events);
+            ]);
             return [2 /*return*/];
         });
     });
@@ -203,16 +209,16 @@ function initMain() {
 /**
  *
  */
-function initCompressExport() {
+function upgradeCompressExport() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            initNav();
+            upgradeNav();
             insertHtmlFromPath("./panel/compressAndexport.html");
             return [2 /*return*/];
         });
     });
 }
-function initDupliceVector() {
+function upgradeDupliceVector() {
     return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
         return [2 /*return*/];
     }); });

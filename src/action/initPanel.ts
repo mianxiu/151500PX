@@ -13,9 +13,13 @@ const panelMode = {
 /**
  * inin when plugin load
  */
-export function init() {
-  initNav();
-  initPanel();
+export function initPanel() {
+  upgradeNav();
+  upGradePanel();
+}
+
+export function shortcutsListener() {
+  /** not support */
 }
 /**
  * obesever
@@ -66,7 +70,7 @@ function initClikcListeners(initEventListener: InitEventListener | InitEventList
 /**
  * init tab menu
  */
-function initNav() {
+function upgradeNav() {
   let navNode = document.querySelector(`#nav`);
   let menu = document.querySelector(`#sp-menu`);
   let menuImg: HTMLImageElement = document.querySelector(`#sp-menu>img`);
@@ -84,7 +88,7 @@ function initNav() {
       case `back`:
         menuImg.src = `./icons/svg/general_menu.svg`;
         navNode.setAttribute(`type`, `menu`);
-        initMain();
+        upgradeMain();
         break;
       default:
         break;
@@ -115,7 +119,7 @@ function initNav() {
 }
 
 /**
- * init main panel
+ * insertHtmlFromPath
  */
 async function insertHtmlFromPath(path: string) {
   let res = await fetch(path).then(response => {
@@ -127,20 +131,20 @@ async function insertHtmlFromPath(path: string) {
 /**
  * init panel and addEventListener
  */
-async function initPanel() {
+async function upGradePanel() {
   let panel: string = document.querySelector(uxpPanel).getAttribute(`panel`);
 
   switch (panel) {
     case panelMode.main:
-      initMain();
+      upgradeMain();
       break;
 
     case panelMode.compressExport:
-      initCompressExport();
+      upgradeCompressExport();
       break;
 
     case panelMode.dupliceVector:
-      initDupliceVector();
+      upgradeDupliceVector();
       break;
     default:
       break;
@@ -150,53 +154,51 @@ async function initPanel() {
 /**
  * add listener for main panel
  */
-async function initMain() {
+async function upgradeMain() {
   insertHtmlFromPath("./panel/main.html");
 
   /**
    * init top panel
    */
-  let initBlackMetal = `#init-black-metal`;
-  let initWhiteMetal = `#init-white-metal`;
-  let compressExport = `#compress-export`;
 
+  let initBlackMetal = `#init-black-metal`;
   let initBlackMetalFunc = () => {
     mainPanel.fff();
     console.log(`initblackmetal`);
   };
+
+  let initWhiteMetal = `#init-white-metal`;
   let initWhiteMetalFunc = () => {};
 
-  /**
-   * change panel
-   */
+  let compressExport = `#compress-export`;
   let compressExportFunc = () => {
-    // document.querySelector(`#nav`).setAttribute(`type`, `back`);
-    // document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.compressExport);
-    // initNav();
-    // initPanel();
+    document.querySelector(`#nav`).setAttribute(`type`, `back`);
+    document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.compressExport);
+    upgradeNav();
+    upGradePanel();
     compressAndExport.fuck();
   };
 
   /**
    *
    */
-  let events: InitEventListener[] = [
+
+  initClikcListeners([
     { selector: initBlackMetal, listener: initBlackMetalFunc },
     { selector: initWhiteMetal, listener: initWhiteMetalFunc },
     { selector: compressExport, listener: compressExportFunc },
-  ];
-  initClikcListeners(events);
+  ]);
 }
 
 /**
  *
  */
-async function initCompressExport() {
-  initNav();
+async function upgradeCompressExport() {
+  upgradeNav();
   insertHtmlFromPath("./panel/compressAndexport.html");
 }
 
-async function initDupliceVector() {}
+async function upgradeDupliceVector() {}
 
 export let Ttest = () => {
   console.log(`onclick`);
