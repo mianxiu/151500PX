@@ -22,7 +22,8 @@ export async function mergeMainToSmartObject() {
   // select layer by name has problem
   await layerComponent.selectLayerByName(`MAIN`, true);
   await layerComponent.selectChannel();
-  await layerComponent.levels();
+  /**对于正常的mask会有锯齿 */
+  //await layerComponent.levels();
   await layerComponent.deSelect();
   await layerComponent.selectAllLayersOnTarget(true, true);
   await layerComponent.hideLayers();
