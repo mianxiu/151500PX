@@ -179,6 +179,13 @@ async function upgradeMain() {
     compressAndExport.fuck();
   };
 
+  let dupliceVector = `#duplice-vector`;
+  let dupliceVectorFunc = () => {
+    document.querySelector(`#nav`).setAttribute(`type`, `back`);
+    document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.dupliceVector);
+    upgradeNav();
+    upGradePanel();
+  };
   /**
    *
    */
@@ -187,6 +194,7 @@ async function upgradeMain() {
     { selector: initBlackMetal, listener: initBlackMetalFunc },
     { selector: initWhiteMetal, listener: initWhiteMetalFunc },
     { selector: compressExport, listener: compressExportFunc },
+    { selector: dupliceVector, listener: dupliceVectorFunc },
   ]);
 }
 
@@ -198,7 +206,10 @@ async function upgradeCompressExport() {
   insertHtmlFromPath("./panel/compressAndexport.html");
 }
 
-async function upgradeDupliceVector() {}
+async function upgradeDupliceVector() {
+  upgradeNav();
+  insertHtmlFromPath("./panel/dupliceVector.html");
+}
 
 export let Ttest = () => {
   console.log(`onclick`);

@@ -176,7 +176,7 @@ function upGradePanel() {
  */
 function upgradeMain() {
     return __awaiter(this, void 0, void 0, function () {
-        var initBlackMetal, initBlackMetalFunc, initWhiteMetal, initWhiteMetalFunc, compressExport, compressExportFunc;
+        var initBlackMetal, initBlackMetalFunc, initWhiteMetal, initWhiteMetalFunc, compressExport, compressExportFunc, dupliceVector, dupliceVectorFunc;
         return __generator(this, function (_a) {
             insertHtmlFromPath("./panel/main.html");
             initBlackMetal = "#init-black-metal";
@@ -194,6 +194,13 @@ function upgradeMain() {
                 upGradePanel();
                 compressAndExport.fuck();
             };
+            dupliceVector = "#duplice-vector";
+            dupliceVectorFunc = function () {
+                document.querySelector("#nav").setAttribute("type", "back");
+                document.querySelector(uxpPanel).setAttribute("panel", panelMode.dupliceVector);
+                upgradeNav();
+                upGradePanel();
+            };
             /**
              *
              */
@@ -201,6 +208,7 @@ function upgradeMain() {
                 { selector: initBlackMetal, listener: initBlackMetalFunc },
                 { selector: initWhiteMetal, listener: initWhiteMetalFunc },
                 { selector: compressExport, listener: compressExportFunc },
+                { selector: dupliceVector, listener: dupliceVectorFunc },
             ]);
             return [2 /*return*/];
         });
@@ -219,9 +227,13 @@ function upgradeCompressExport() {
     });
 }
 function upgradeDupliceVector() {
-    return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
-        return [2 /*return*/];
-    }); });
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            upgradeNav();
+            insertHtmlFromPath("./panel/dupliceVector.html");
+            return [2 /*return*/];
+        });
+    });
 }
 var Ttest = function () {
     console.log("onclick");
