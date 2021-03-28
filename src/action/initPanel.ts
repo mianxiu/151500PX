@@ -1,4 +1,5 @@
 import * as compressAndExport from "./compressAndExport";
+import * as dupliceVector from "./dupliceVector";
 import * as mainPanel from "./mainpanel";
 
 const app = require("photoshop").app;
@@ -151,8 +152,8 @@ async function upGradePanel() {
   }
 }
 
-/**
- * add listener for main panel
+/** todo
+ * add listener for all button
  */
 async function upgradeMain() {
   insertHtmlFromPath("./panel/main.html");
@@ -161,16 +162,16 @@ async function upgradeMain() {
    * init top panel
    */
 
-  let initBlackMetal = `#init-black-metal`;
+  let initBlackMetalId = `#init-black-metal`;
   let initBlackMetalFunc = () => {
     mainPanel.fff();
     console.log(`initblackmetal`);
   };
 
-  let initWhiteMetal = `#init-white-metal`;
+  let initWhiteMetalId = `#init-white-metal`;
   let initWhiteMetalFunc = () => {};
 
-  let compressExport = `#compress-export`;
+  let compressExportId = `#compress-export`;
   let compressExportFunc = () => {
     document.querySelector(`#nav`).setAttribute(`type`, `back`);
     document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.compressExport);
@@ -179,22 +180,23 @@ async function upgradeMain() {
     compressAndExport.fuck();
   };
 
-  let dupliceVector = `#duplice-vector`;
+  let dupliceVectorId = `#duplice-vector`;
   let dupliceVectorFunc = () => {
     document.querySelector(`#nav`).setAttribute(`type`, `back`);
     document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.dupliceVector);
     upgradeNav();
     upGradePanel();
+    dupliceVector.dupliceBaseSpacing(0, 0, 10);
   };
   /**
    *
    */
 
   initClikcListeners([
-    { selector: initBlackMetal, listener: initBlackMetalFunc },
-    { selector: initWhiteMetal, listener: initWhiteMetalFunc },
-    { selector: compressExport, listener: compressExportFunc },
-    { selector: dupliceVector, listener: dupliceVectorFunc },
+    { selector: initBlackMetalId, listener: initBlackMetalFunc },
+    { selector: initWhiteMetalId, listener: initWhiteMetalFunc },
+    { selector: compressExportId, listener: compressExportFunc },
+    { selector: dupliceVectorId, listener: dupliceVectorFunc },
   ]);
 }
 

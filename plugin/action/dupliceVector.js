@@ -36,10 +36,49 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fff = void 0;
-function fff() {
-    return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
-        return [2 /*return*/];
-    }); });
+exports.dupliceBaseSpacing = void 0;
+var layerComponent = require("../module/layercomponent");
+var app = require("photoshop").app;
+function isSameLayerKind(layerA, layerB) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, layerA.kind === layerB ? true : false];
+        });
+    });
 }
-exports.fff = fff;
+function dupliceBaseSpacing(pickA, pickB, spacing, scale, step, degree) {
+    if (spacing === void 0) { spacing = 3; }
+    if (scale === void 0) { scale = 100; }
+    if (step === void 0) { step = 3; }
+    if (degree === void 0) { degree = 3; }
+    return __awaiter(this, void 0, void 0, function () {
+        var activeLayer, boundsA, boundsB, index, rad, x, y;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    activeLayer = layerComponent.activeDocument().layer;
+                    boundsA = pickA.boundsNoEffects;
+                    boundsB = pickB.boundsNoEffects;
+                    index = 0;
+                    _a.label = 1;
+                case 1:
+                    if (!(index < step)) return [3 /*break*/, 4];
+                    console.log("duplice vector begin loop", index);
+                    rad = (degree * Math.PI) / 180;
+                    x = Math.cos(rad) * spacing;
+                    y = Math.sin(rad) * spacing;
+                    console.log(x, y);
+                    return [4 /*yield*/, layerComponent.copyToLayer()];
+                case 2:
+                    _a.sent();
+                    return [4 /*yield*/, layerComponent.transform(x, y, 100, 100, degree)];
+                case 3:
+                    _a.sent();
+                    index++;
+                    return [3 /*break*/, 1];
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.dupliceBaseSpacing = dupliceBaseSpacing;

@@ -125,6 +125,27 @@ export async function deleteAllLayersExcludeTarget() {
 }
 
 /**
+ * ctrl + j
+ */
+export async function copyToLayer() {
+  await batchPlay(
+    [
+      {
+        _obj: "copyToLayer",
+        _isCommand: true,
+        _options: {
+          dialogOptions: "dontDisplay",
+        },
+      },
+    ],
+    {
+      synchronousExecution: false,
+      modalBehavior: "fail",
+    }
+  );
+}
+
+/**
  * crop document size to active layer bounds, now only for a layer
  * @param margin maring to document boundary
  */

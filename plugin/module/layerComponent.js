@@ -40,7 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.transform = exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
+exports.transform = exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.copyToLayer = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var names = require("./names");
 var app = require("photoshop").app;
@@ -217,6 +217,33 @@ function deleteAllLayersExcludeTarget() {
     });
 }
 exports.deleteAllLayersExcludeTarget = deleteAllLayersExcludeTarget;
+/**
+ * ctrl + j
+ */
+function copyToLayer() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "copyToLayer",
+                            _isCommand: true,
+                            _options: {
+                                dialogOptions: "dontDisplay",
+                            },
+                        },
+                    ], {
+                        synchronousExecution: false,
+                        modalBehavior: "fail",
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.copyToLayer = copyToLayer;
 /**
  * crop document size to active layer bounds, now only for a layer
  * @param margin maring to document boundary
@@ -871,10 +898,14 @@ function levels() {
 }
 exports.levels = levels;
 /**
- * @summary this is transform function
- *
+ * transform
+ * @param horizontal 0 / -0
+ * @param vertical 0 / -0
+ * @param width
+ * @param height
+ * @param angle
  */
-function transform() {
+function transform(horizontal, vertical, width, height, angle) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -896,45 +927,26 @@ function transform() {
                                 _obj: "offset",
                                 horizontal: {
                                     _unit: "pixelsUnit",
-                                    _value: 6.5,
+                                    _value: horizontal,
                                 },
                                 vertical: {
                                     _unit: "pixelsUnit",
-                                    _value: 0,
+                                    _value: vertical,
                                 },
                             },
                             width: {
                                 _unit: "percentUnit",
-                                _value: 100,
+                                _value: width,
                             },
                             height: {
                                 _unit: "percentUnit",
-                                _value: 100,
+                                _value: height,
                             },
-                            warp: {
-                                _obj: "warp",
-                                warpStyle: {
-                                    _enum: "warpStyle",
-                                    _value: "warpNone",
-                                },
-                                warpValue: 0,
-                                warpPerspective: 0,
-                                warpPerspectiveOther: 0,
-                                warpRotate: {
-                                    _enum: "orientation",
-                                    _value: "horizontal",
-                                },
-                                bounds: {
-                                    _obj: "classFloatRect",
-                                    top: 0,
-                                    left: 0,
-                                    bottom: 0,
-                                    right: 0,
-                                },
-                                uOrder: 4,
-                                vOrder: 4,
+                            angle: {
+                                _unit: "angleUnit",
+                                _value: angle,
                             },
-                            transformOnlyLineEnds: true,
+                            linked: true,
                             _isCommand: true,
                             _options: {
                                 dialogOptions: "dontDisplay",
