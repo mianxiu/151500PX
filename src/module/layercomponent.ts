@@ -578,11 +578,14 @@ export async function levels() {
 }
 
 /**
- * @summary this is transform function
- *
+ * transform
+ * @param horizontal 0 / -0
+ * @param vertical 0 / -0
+ * @param width
+ * @param height
+ * @param angle
  */
-
-export async function transform() {
+export async function transform(horizontal: number, vertical: number, width: number, height: number, angle: number) {
   await batchPlay(
     [
       {
@@ -602,45 +605,26 @@ export async function transform() {
           _obj: "offset",
           horizontal: {
             _unit: "pixelsUnit",
-            _value: 6.5,
+            _value: horizontal,
           },
           vertical: {
             _unit: "pixelsUnit",
-            _value: 0,
+            _value: vertical,
           },
         },
         width: {
           _unit: "percentUnit",
-          _value: 100,
+          _value: width,
         },
         height: {
           _unit: "percentUnit",
-          _value: 100,
+          _value: height,
         },
-        warp: {
-          _obj: "warp",
-          warpStyle: {
-            _enum: "warpStyle",
-            _value: "warpNone",
-          },
-          warpValue: 0,
-          warpPerspective: 0,
-          warpPerspectiveOther: 0,
-          warpRotate: {
-            _enum: "orientation",
-            _value: "horizontal",
-          },
-          bounds: {
-            _obj: "classFloatRect",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-          },
-          uOrder: 4,
-          vOrder: 4,
+        angle: {
+          _unit: "angleUnit",
+          _value: angle,
         },
-        transformOnlyLineEnds: true,
+        linked: true,
         _isCommand: true,
         _options: {
           dialogOptions: "dontDisplay",
