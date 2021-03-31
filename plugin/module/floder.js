@@ -286,7 +286,7 @@ function createExportFolderOnRoot(folderTreePaths, ignoreEmptyFolder, doWithEntr
                     if (!(i < folderTreePaths.length)) return [3 /*break*/, 14];
                     element = folderTreePaths[i];
                     console.log(element);
-                    return [4 /*yield*/, getFiles(element.folderSymbol, "PSD")];
+                    return [4 /*yield*/, getFiles(element.folderSymbol, "PSB")];
                 case 5:
                     sourceFiles = _a.sent();
                     if (!(ignoreEmptyFolder === false)) return [3 /*break*/, 7];

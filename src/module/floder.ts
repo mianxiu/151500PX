@@ -204,7 +204,7 @@ export async function createExportFolderOnRoot(
 
     console.log(element);
 
-    let sourceFiles = await getFiles(element.folderSymbol, `PSD`);
+    let sourceFiles = await getFiles(element.folderSymbol, `PSB`);
 
     if (ignoreEmptyFolder === false) {
       await createSubPathFolder(exportRootFolder, element.relativePath);

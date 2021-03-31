@@ -173,10 +173,7 @@ async function upgradeMain() {
 
   let compressExportId = `#compress-export`;
   let compressExportFunc = () => {
-    document.querySelector(`#nav`).setAttribute(`type`, `back`);
-    document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.compressExport);
-    upgradeNav();
-    upGradePanel();
+
     compressAndExport.fuck();
   };
 
