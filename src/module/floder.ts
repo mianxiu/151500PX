@@ -46,11 +46,12 @@ export async function getFolderName(folderSymbol: any): Promise<string> {
 /**
  *  return files obj array
  * @param folderSymbol
- * @param filterFilenameExtension  PSD/TIFF... or other
+ * @param filterFilenameExtension user [matchName|...] likes PSD|TIFF... or other Regex text,RegExp(`.*\\.\(${filterFilenameExtension}\)`, "i");
+ *
  */
 export async function getFiles(folderSymbol, filterFilenameExtension: string = `.*`): Promise<any[]> {
   const entries = await folderSymbol.getEntries();
-  const nameExtensionRegexp: RegExp = RegExp(`.*\\.${filterFilenameExtension}`, "i");
+  const nameExtensionRegexp: RegExp = RegExp(`.*\\.\(${filterFilenameExtension}\)`, "i");
 
   return entries.filter(entry => nameExtensionRegexp.test(entry.name) && entry.isFile);
 }
@@ -204,7 +205,7 @@ export async function createExportFolderOnRoot(
 
     console.log(element);
 
-    let sourceFiles = await getFiles(element.folderSymbol, `PSB`);
+    let sourceFiles = await getFiles(element.folderSymbol, `PSD|PSB`);
 
     if (ignoreEmptyFolder === false) {
       await createSubPathFolder(exportRootFolder, element.relativePath);

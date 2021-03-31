@@ -189,6 +189,10 @@ function upgradeMain() {
             initWhiteMetalFunc = function () { };
             compressExportId = "#compress-export";
             compressExportFunc = function () {
+                document.querySelector("#nav").setAttribute("type", "back");
+                document.querySelector(uxpPanel).setAttribute("panel", panelMode.compressExport);
+                upgradeNav();
+                upGradePanel();
                 compressAndExport.fuck();
             };
             dupliceVectorId = "#duplice-vector";

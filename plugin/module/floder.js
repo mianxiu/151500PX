@@ -83,7 +83,8 @@ exports.getFolderName = getFolderName;
 /**
  *  return files obj array
  * @param folderSymbol
- * @param filterFilenameExtension  PSD/TIFF... or other
+ * @param filterFilenameExtension user [matchName|...] likes PSD|TIFF... or other Regex text,RegExp(`.*\\.\(${filterFilenameExtension}\)`, "i");
+ *
  */
 function getFiles(folderSymbol, filterFilenameExtension) {
     if (filterFilenameExtension === void 0) { filterFilenameExtension = ".*"; }
@@ -94,7 +95,7 @@ function getFiles(folderSymbol, filterFilenameExtension) {
                 case 0: return [4 /*yield*/, folderSymbol.getEntries()];
                 case 1:
                     entries = _a.sent();
-                    nameExtensionRegexp = RegExp(".*\\." + filterFilenameExtension, "i");
+                    nameExtensionRegexp = RegExp(".*\\.(" + filterFilenameExtension + ")", "i");
                     return [2 /*return*/, entries.filter(function (entry) { return nameExtensionRegexp.test(entry.name) && entry.isFile; })];
             }
         });
@@ -286,7 +287,7 @@ function createExportFolderOnRoot(folderTreePaths, ignoreEmptyFolder, doWithEntr
                     if (!(i < folderTreePaths.length)) return [3 /*break*/, 14];
                     element = folderTreePaths[i];
                     console.log(element);
-                    return [4 /*yield*/, getFiles(element.folderSymbol, "PSB")];
+                    return [4 /*yield*/, getFiles(element.folderSymbol, "PSD|PSB")];
                 case 5:
                     sourceFiles = _a.sent();
                     if (!(ignoreEmptyFolder === false)) return [3 /*break*/, 7];
