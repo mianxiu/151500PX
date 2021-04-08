@@ -21,7 +21,7 @@ export async function mergeMainToSmartObject() {
   let acitveDocumet = layerComponent.activeDocument();
   // select layer by name has problem
   await layerComponent.selectLayerByName(`MAIN`, true);
-  await layerComponent.selectChannel();
+  //await layerComponent.selectChannel();
   /**对于正常的mask会有锯齿 */
   //await layerComponent.levels();
   await layerComponent.deSelect();
@@ -29,41 +29,41 @@ export async function mergeMainToSmartObject() {
   await layerComponent.hideLayers();
   await layerComponent.selectLayerByName(`MAIN`, true);
   await layerComponent.selectAllLayersOnTarget(true, false, true);
-  await layerComponent.mergeVisible();
-  await layerComponent.convertToSmartObject();
-  await layerComponent.rasterizeTargetLayer();
-  await layerComponent.mergeLayerNew();
-  await layerComponent.convertToSmartObject();
-  await layerComponent.setLayerName(names.__DO_ACTION__);
-  let layerSize = await layerComponent.getElementSize(await acitveDocumet.activeLayers[0]);
-  let layerBounds: layerComponent.IBounds = layerComponent.activeDocument().activeLayers[0].bounds;
-  /**
-   * todo detatil is `MIAN-DETAIL--`
-   */
-  if (
-    (layerBounds.bottom === 0 || layerBounds.left === 0 || layerBounds.right === 0 || layerBounds.top === 0) &&
-    acitveDocumet.height === acitveDocumet.width
-  ) {
-    console.log(`${names.__MAIN_DETAIL__} MODE`);
-    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
-  } else if (layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize) {
-    console.log(`${names.__MAIN__} SIZE > ${fuckingExportSize}`);
-    await layerComponent.cropToSquare(fuckingMargin);
-    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
-  } else if (layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize) {
-    console.log(`${names.__MAIN__} SIZE < ${fuckingExportSize}`);
-    await layerComponent.cropToSize(fuckingExportSize, fuckingExportSize);
-  }
-  await layerComponent.deleteAllUnVisibleLayers();
-  await layerComponent.createBGLayer();
-  await layerComponent.fillWhite();
+  // await layerComponent.mergeVisible();
+  // await layerComponent.convertToSmartObject();
+  // await layerComponent.rasterizeTargetLayer();
+  // await layerComponent.mergeLayerNew();
+  // await layerComponent.convertToSmartObject();
+  // await layerComponent.setLayerName(names.__DO_ACTION__);
+  // let layerSize = await layerComponent.getElementSize(await acitveDocumet.activeLayers[0]);
+  // let layerBounds: layerComponent.IBounds = layerComponent.activeDocument().activeLayers[0].bounds;
+  // /**
+  //  * todo detatil is `MIAN-DETAIL--`
+  //  */
+  // if (
+  //   (layerBounds.bottom === 0 || layerBounds.left === 0 || layerBounds.right === 0 || layerBounds.top === 0) &&
+  //   acitveDocumet.height === acitveDocumet.width
+  // ) {
+  //   console.log(`${names.__MAIN_DETAIL__} MODE`);
+  //   await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
+  // } else if (layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize) {
+  //   console.log(`${names.__MAIN__} SIZE > ${fuckingExportSize}`);
+  //   await layerComponent.cropToSquare(fuckingMargin);
+  //   await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
+  // } else if (layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize) {
+  //   console.log(`${names.__MAIN__} SIZE < ${fuckingExportSize}`);
+  //   await layerComponent.cropToSize(fuckingExportSize, fuckingExportSize);
+  // }
+  // await layerComponent.deleteAllUnVisibleLayers();
+  // await layerComponent.createBGLayer();
+  // await layerComponent.fillWhite();
 
-  /**
-   * re reasterize smart layer can zip file
-   */
-  await layerComponent.selectLayerByName(names.__DO_ACTION__);
-  await layerComponent.rasterizeTargetLayer();
-  await layerComponent.convertToSmartObject();
+  // /**
+  //  * re reasterize smart layer can zip file
+  //  */
+  // await layerComponent.selectLayerByName(names.__DO_ACTION__);
+  // await layerComponent.rasterizeTargetLayer();
+  // await layerComponent.convertToSmartObject();
 }
 
 /**
