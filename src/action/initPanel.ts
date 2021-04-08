@@ -178,8 +178,7 @@ async function upgradeMain() {
     upgradeNav();
     upGradePanel();
 
-    //compressAndExport.fuck();
-    compressAndExport.mergeMainToSmartObject()
+    compressAndExport.fuck();
   };
 
   let dupliceVectorId = `#duplice-vector`;
