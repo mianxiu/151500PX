@@ -193,7 +193,6 @@ function upgradeMain() {
                 document.querySelector(uxpPanel).setAttribute("panel", panelMode.compressExport);
                 upgradeNav();
                 upGradePanel();
-                //compressAndExport.fuck();
                 compressAndExport.mergeMainToSmartObject();
             };
             dupliceVectorId = "#duplice-vector";
