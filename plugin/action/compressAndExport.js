@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fuck = exports.mergeMainToSmartObject = void 0;
+exports.fuck = exports.drawRuler = exports.mergeMainToSmartObject = void 0;
 var layerComponent = require("../module/layercomponent");
 var names = require("../module/names");
 var folder = require("../module/floder");
@@ -164,6 +164,25 @@ function mergeMainToSmartObject() {
     });
 }
 exports.mergeMainToSmartObject = mergeMainToSmartObject;
+function drawRuler() {
+    return __awaiter(this, void 0, void 0, function () {
+        var acitveDocumet;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    acitveDocumet = layerComponent.activeDocument();
+                    return [4 /*yield*/, layerComponent.selectLayerByName("--DO-ACTION-", true)];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, layerComponent.createSizeRuleer(1, 2, 3, "in")];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.drawRuler = drawRuler;
 /**
  * todo
  * pick folder and compress to 1500x1500, export jpg and tif

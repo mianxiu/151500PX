@@ -66,6 +66,12 @@ export async function mergeMainToSmartObject() {
   await layerComponent.convertToSmartObject();
 }
 
+export async function drawRuler() {
+  let acitveDocumet = layerComponent.activeDocument();
+  await layerComponent.selectLayerByName(`--DO-ACTION-`, true);
+  await layerComponent.createSizeRuleer(1, 2, 3, `in`);
+}
+
 /**
  * todo
  * pick folder and compress to 1500x1500, export jpg and tif
