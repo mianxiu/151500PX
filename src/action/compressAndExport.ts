@@ -28,7 +28,7 @@ export async function mergeMainToSmartObject() {
   await layerComponent.selectAllLayersOnTarget(true, true);
   await layerComponent.hideLayers();
   await layerComponent.selectLayerByName(`MAIN`, true);
-  await layerComponent.selectAllLayersOnTarget(true, false, true);
+  await layerComponent.selectAllLayersOnTarget(false, false, true);
   await layerComponent.mergeVisible();
   await layerComponent.convertToSmartObject();
   await layerComponent.rasterizeTargetLayer();

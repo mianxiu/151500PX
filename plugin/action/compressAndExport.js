@@ -84,7 +84,7 @@ function mergeMainToSmartObject() {
                     return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
                 case 6:
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(true, false, true)];
+                    return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(false, false, true)];
                 case 7:
                     _c.sent();
                     return [4 /*yield*/, layerComponent.mergeVisible()];
