@@ -195,6 +195,7 @@ function upgradeMain() {
                 upGradePanel();
                 //compressAndExport.fuck();
                 compressAndExport.mergeMainToSmartObject();
+                //compressAndExport.drawRuler();
             };
             dupliceVectorId = "#duplice-vector";
             dupliceVectorFunc = function () {

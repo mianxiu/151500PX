@@ -100,9 +100,10 @@ export async function deleteAllEmptyLayers() {
 }
 
 /**
- * deleteAllUnVisibleLayers
+ *
+ * @param excludeLayer
  */
-export async function deleteAllUnVisibleLayers() {
+export async function deleteAllUnVisibleLayers(excludeLayer?: string[]) {
   let layers = activeDocument().layers;
 
   await layers.map(async layer => {
@@ -112,6 +113,18 @@ export async function deleteAllUnVisibleLayers() {
       layer.selected = await false;
     }
   });
+
+  for (let i = 0; i < excludeLayer.length; i++) {
+    const name = excludeLayer[i];
+    let j = 0;
+    while (j < layers.length) {
+      if (layers[j].name === name && layers[j].selected === true) {
+        layers[j].selected = false;
+        break;
+      }
+      j++;
+    }
+  }
 
   await deleteTarget();
 }

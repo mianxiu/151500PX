@@ -135,7 +135,7 @@ function mergeMainToSmartObject() {
                 case 21:
                     _c.sent();
                     _c.label = 22;
-                case 22: return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers()];
+                case 22: return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers([names.__SIZE__, "12345"])];
                 case 23:
                     _c.sent();
                     return [4 /*yield*/, layerComponent.createBGLayer()];

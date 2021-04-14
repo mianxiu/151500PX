@@ -54,7 +54,7 @@ export async function mergeMainToSmartObject() {
     console.log(`${names.__MAIN__} SIZE < ${fuckingExportSize}`);
     await layerComponent.cropToSize(fuckingExportSize, fuckingExportSize);
   }
-  await layerComponent.deleteAllUnVisibleLayers();
+  await layerComponent.deleteAllUnVisibleLayers([names.__SIZE__, `12345`]);
   await layerComponent.createBGLayer();
   await layerComponent.fillWhite();
 

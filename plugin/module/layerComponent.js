@@ -161,11 +161,12 @@ function deleteAllEmptyLayers() {
 }
 exports.deleteAllEmptyLayers = deleteAllEmptyLayers;
 /**
- * deleteAllUnVisibleLayers
+ *
+ * @param excludeLayer
  */
-function deleteAllUnVisibleLayers() {
+function deleteAllUnVisibleLayers(excludeLayer) {
     return __awaiter(this, void 0, void 0, function () {
-        var layers;
+        var layers, i, name_1, j;
         var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -194,6 +195,17 @@ function deleteAllUnVisibleLayers() {
                         }); })];
                 case 1:
                     _a.sent();
+                    for (i = 0; i < excludeLayer.length; i++) {
+                        name_1 = excludeLayer[i];
+                        j = 0;
+                        while (j < layers.length) {
+                            if (layers[j].name === name_1 && layers[j].selected === true) {
+                                layers[j].selected = false;
+                                break;
+                            }
+                            j++;
+                        }
+                    }
                     return [4 /*yield*/, deleteTarget()];
                 case 2:
                     _a.sent();
