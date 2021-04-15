@@ -161,8 +161,8 @@ function deleteAllEmptyLayers() {
 }
 exports.deleteAllEmptyLayers = deleteAllEmptyLayers;
 /**
- *
- * @param excludeLayer
+ * deleteAllUnVisibleLayers
+ * @param excludeLayer string[name,...]
  */
 function deleteAllUnVisibleLayers(excludeLayer) {
     return __awaiter(this, void 0, void 0, function () {

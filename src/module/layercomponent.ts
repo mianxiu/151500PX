@@ -100,8 +100,8 @@ export async function deleteAllEmptyLayers() {
 }
 
 /**
- *
- * @param excludeLayer
+ * deleteAllUnVisibleLayers
+ * @param excludeLayer string[name,...]
  */
 export async function deleteAllUnVisibleLayers(excludeLayer?: string[]) {
   let layers = activeDocument().layers;

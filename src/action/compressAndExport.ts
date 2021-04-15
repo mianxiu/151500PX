@@ -54,6 +54,9 @@ export async function mergeMainToSmartObject() {
     console.log(`${names.__MAIN__} SIZE < ${fuckingExportSize}`);
     await layerComponent.cropToSize(fuckingExportSize, fuckingExportSize);
   }
+  /**
+   * save SIZE layer, if it has, drawRuler
+   */
   await layerComponent.deleteAllUnVisibleLayers([names.__SIZE__, `12345`]);
   await layerComponent.createBGLayer();
   await layerComponent.fillWhite();
@@ -68,6 +71,7 @@ export async function mergeMainToSmartObject() {
 
 export async function drawRuler() {
   let acitveDocumet = layerComponent.activeDocument();
+  let s = layerComponent.selectLayerByName(names.__SIZE__);
   await layerComponent.selectLayerByName(`--DO-ACTION-`, true);
   await layerComponent.createSizeRuleer(1, 2, 3, `in`);
 }

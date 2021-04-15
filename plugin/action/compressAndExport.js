@@ -135,8 +135,15 @@ function mergeMainToSmartObject() {
                 case 21:
                     _c.sent();
                     _c.label = 22;
-                case 22: return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers([names.__SIZE__, "12345"])];
+                case 22: 
+                /**
+                 * save SIZE layer, if it has, drawRuler
+                 */
+                return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers([names.__SIZE__, "12345"])];
                 case 23:
+                    /**
+                     * save SIZE layer, if it has, drawRuler
+                     */
                     _c.sent();
                     return [4 /*yield*/, layerComponent.createBGLayer()];
                 case 24:
@@ -167,11 +174,12 @@ function mergeMainToSmartObject() {
 exports.mergeMainToSmartObject = mergeMainToSmartObject;
 function drawRuler() {
     return __awaiter(this, void 0, void 0, function () {
-        var acitveDocumet;
+        var acitveDocumet, s;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     acitveDocumet = layerComponent.activeDocument();
+                    s = layerComponent.selectLayerByName(names.__SIZE__);
                     return [4 /*yield*/, layerComponent.selectLayerByName("--DO-ACTION-", true)];
                 case 1:
                     _a.sent();
