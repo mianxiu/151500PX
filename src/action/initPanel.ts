@@ -178,8 +178,8 @@ async function upgradeMain() {
     upgradeNav();
     upGradePanel();
 
-    //compressAndExport.fuck();
-    compressAndExport.mergeMainToSmartObject();
+    compressAndExport.fuck();
+    //compressAndExport.mergeMainToSmartObject();
     //compressAndExport.drawRuler();
   };
 
