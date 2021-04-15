@@ -111,7 +111,7 @@ function mergeMainToSmartObject() {
                 case 15:
                     layerSize = _c.sent();
                     layerBounds = layerComponent.activeDocument().activeLayers[0].bounds;
-                    if (!((layerBounds.bottom === 0 || layerBounds.left === 0 || layerBounds.right === 0 || layerBounds.top === 0) &&
+                    if (!((layerBounds.bottom >= 0 || layerBounds.left >= 0 || layerBounds.right >= 0 || layerBounds.top >= 0) &&
                         acitveDocumet.height === acitveDocumet.width)) return [3 /*break*/, 17];
                     console.log(names.__MAIN_DETAIL__ + " MODE");
                     return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];

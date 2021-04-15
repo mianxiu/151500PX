@@ -41,7 +41,7 @@ export async function mergeMainToSmartObject() {
    * todo detatil is `MIAN-DETAIL--`
    */
   if (
-    (layerBounds.bottom === 0 || layerBounds.left === 0 || layerBounds.right === 0 || layerBounds.top === 0) &&
+    (layerBounds.bottom >= 0 || layerBounds.left >= 0 || layerBounds.right >= 0 || layerBounds.top >= 0) &&
     acitveDocumet.height === acitveDocumet.width
   ) {
     console.log(`${names.__MAIN_DETAIL__} MODE`);
