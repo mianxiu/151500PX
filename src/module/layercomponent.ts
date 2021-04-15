@@ -5,6 +5,7 @@
 
 import * as batchPlayConfig from "./batchplayconfig";
 import * as names from "./names";
+import { createText } from "./text";
 const app = require("photoshop").app;
 const batchPlay = require("photoshop").action.batchPlay;
 
@@ -99,9 +100,10 @@ export async function deleteAllEmptyLayers() {
 }
 
 /**
- * deleteAllUnVisibleLayers
+ *
+ * @param excludeLayer
  */
-export async function deleteAllUnVisibleLayers() {
+export async function deleteAllUnVisibleLayers(excludeLayer?: string[]) {
   let layers = activeDocument().layers;
 
   await layers.map(async layer => {
@@ -111,6 +113,18 @@ export async function deleteAllUnVisibleLayers() {
       layer.selected = await false;
     }
   });
+
+  for (let i = 0; i < excludeLayer.length; i++) {
+    const name = excludeLayer[i];
+    let j = 0;
+    while (j < layers.length) {
+      if (layers[j].name === name && layers[j].selected === true) {
+        layers[j].selected = false;
+        break;
+      }
+      j++;
+    }
+  }
 
   await deleteTarget();
 }
@@ -444,7 +458,7 @@ export async function createLayer(layerName?: string) {
         ],
         using: {
           _obj: layerName,
-          name: "123",
+          name: layerName,
         },
         _isCommand: true,
         _options: {
@@ -657,4 +671,16 @@ export async function transform(horizontal: number, vertical: number, width: num
       modalBehavior: "fail",
     }
   );
+}
+
+/**
+ *
+ * @param length
+ * @param width
+ * @param height
+ * @param unit in|cm|mm
+ */
+export async function createSizeRuleer(length: number, width: number, height: number, unit: string) {
+  createLayer(`RULER`);
+  createText(`${length}in`, 32);
 }

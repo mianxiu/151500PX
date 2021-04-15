@@ -40,9 +40,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.transform = exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.copyToLayer = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
+exports.createSizeRuleer = exports.transform = exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.copyToLayer = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var names = require("./names");
+var text_1 = require("./text");
 var app = require("photoshop").app;
 var batchPlay = require("photoshop").action.batchPlay;
 /**
@@ -160,11 +161,12 @@ function deleteAllEmptyLayers() {
 }
 exports.deleteAllEmptyLayers = deleteAllEmptyLayers;
 /**
- * deleteAllUnVisibleLayers
+ *
+ * @param excludeLayer
  */
-function deleteAllUnVisibleLayers() {
+function deleteAllUnVisibleLayers(excludeLayer) {
     return __awaiter(this, void 0, void 0, function () {
-        var layers;
+        var layers, i, name_1, j;
         var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -193,6 +195,17 @@ function deleteAllUnVisibleLayers() {
                         }); })];
                 case 1:
                     _a.sent();
+                    for (i = 0; i < excludeLayer.length; i++) {
+                        name_1 = excludeLayer[i];
+                        j = 0;
+                        while (j < layers.length) {
+                            if (layers[j].name === name_1 && layers[j].selected === true) {
+                                layers[j].selected = false;
+                                break;
+                            }
+                            j++;
+                        }
+                    }
                     return [4 /*yield*/, deleteTarget()];
                 case 2:
                     _a.sent();
@@ -673,7 +686,7 @@ function createLayer(layerName) {
                                 ],
                                 using: {
                                     _obj: layerName,
-                                    name: "123",
+                                    name: layerName,
                                 },
                                 _isCommand: true,
                                 _options: {
@@ -964,3 +977,20 @@ function transform(horizontal, vertical, width, height, angle) {
     });
 }
 exports.transform = transform;
+/**
+ *
+ * @param length
+ * @param width
+ * @param height
+ * @param unit in|cm|mm
+ */
+function createSizeRuleer(length, width, height, unit) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            createLayer("RULER");
+            text_1.createText(length + "in", 32);
+            return [2 /*return*/];
+        });
+    });
+}
+exports.createSizeRuleer = createSizeRuleer;
