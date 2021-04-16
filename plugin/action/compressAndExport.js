@@ -139,7 +139,7 @@ function mergeMainToSmartObject() {
                 /**
                  * save SIZE layer, if it has, drawRuler
                  */
-                return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers([names.__SIZE__, "12345"])];
+                return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers(["^" + names.__SIZE__])];
                 case 23:
                     /**
                      * save SIZE layer, if it has, drawRuler

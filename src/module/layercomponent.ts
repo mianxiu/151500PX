@@ -115,10 +115,11 @@ export async function deleteAllUnVisibleLayers(excludeLayer?: string[]) {
   });
 
   for (let i = 0; i < excludeLayer.length; i++) {
-    const name = excludeLayer[i];
+    const nameRegxp = new RegExp(excludeLayer[i], "g");
+
     let j = 0;
     while (j < layers.length) {
-      if (layers[j].name === name && layers[j].selected === true) {
+      if (nameRegxp.test(layers[j].name) === true && layers[j].selected === true) {
         layers[j].selected = false;
         break;
       }
@@ -247,7 +248,8 @@ export async function cropToSize(width: number, height: number) {
 export async function selectLayerByName(
   selectName: string,
   onlyGroup: boolean = false,
-  makeVisible: boolean = false
+  makeVisible: boolean = false,
+  regexpMode: boolean = false
 ): Promise<void | undefined> {
   let select = async () => {
     await batchPlay(
@@ -268,19 +270,26 @@ export async function selectLayerByName(
   while (i > 0) {
     let l = layers[i];
 
+    let selectNameRegexp = new RegExp(selectName, "g");
+    let isName: boolean = regexpMode
+      ? l.name === selectName
+        ? true
+        : false
+      : selectNameRegexp.test(l.name) === true
+      ? true
+      : false;
+
     if (onlyGroup === true) {
-      if (l.isGroupLayer === true && l.name === selectName) {
+      if (l.isGroupLayer === true && isName) {
         l.selected = await true;
         select();
-        break;
-      } else if (l.name === selectName) {
+      } else if (isName) {
         select();
         l.name = await `${l.name} ${i}`;
         //await setLayerName(`${l.name} ${i}`, "");
       }
     } else {
       select();
-      break;
     }
     i--;
   }

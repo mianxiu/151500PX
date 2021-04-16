@@ -57,7 +57,7 @@ export async function mergeMainToSmartObject() {
   /**
    * save SIZE layer, if it has, drawRuler
    */
-  await layerComponent.deleteAllUnVisibleLayers([names.__SIZE__, `12345`]);
+  await layerComponent.deleteAllUnVisibleLayers([`^${names.__SIZE__}`]);
   await layerComponent.createBGLayer();
   await layerComponent.fillWhite();
 

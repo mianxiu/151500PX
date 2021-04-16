@@ -166,7 +166,7 @@ exports.deleteAllEmptyLayers = deleteAllEmptyLayers;
  */
 function deleteAllUnVisibleLayers(excludeLayer) {
     return __awaiter(this, void 0, void 0, function () {
-        var layers, i, name_1, j;
+        var layers, i, nameRegxp, j;
         var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -196,10 +196,10 @@ function deleteAllUnVisibleLayers(excludeLayer) {
                 case 1:
                     _a.sent();
                     for (i = 0; i < excludeLayer.length; i++) {
-                        name_1 = excludeLayer[i];
+                        nameRegxp = new RegExp(excludeLayer[i], "g");
                         j = 0;
                         while (j < layers.length) {
-                            if (layers[j].name === name_1 && layers[j].selected === true) {
+                            if (nameRegxp.test(layers[j].name) === true && layers[j].selected === true) {
                                 layers[j].selected = false;
                                 break;
                             }
@@ -361,11 +361,12 @@ exports.cropToSize = cropToSize;
  * @param selectName
  * @param onlyGroup
  */
-function selectLayerByName(selectName, onlyGroup, makeVisible) {
+function selectLayerByName(selectName, onlyGroup, makeVisible, regexpMode) {
     if (onlyGroup === void 0) { onlyGroup = false; }
     if (makeVisible === void 0) { makeVisible = false; }
+    if (regexpMode === void 0) { regexpMode = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var select, layers, i, l, _a, _b, r;
+        var select, layers, i, l, selectNameRegexp, isName, _a, _b, r;
         var _this = this;
         return __generator(this, function (_c) {
             switch (_c.label) {
@@ -394,16 +395,24 @@ function selectLayerByName(selectName, onlyGroup, makeVisible) {
                 case 2:
                     if (!(i > 0)) return [3 /*break*/, 9];
                     l = layers[i];
+                    selectNameRegexp = new RegExp(selectName, "g");
+                    isName = regexpMode
+                        ? l.name === selectName
+                            ? true
+                            : false
+                        : selectNameRegexp.test(l.name) === true
+                            ? true
+                            : false;
                     if (!(onlyGroup === true)) return [3 /*break*/, 7];
-                    if (!(l.isGroupLayer === true && l.name === selectName)) return [3 /*break*/, 4];
+                    if (!(l.isGroupLayer === true && isName)) return [3 /*break*/, 4];
                     _a = l;
                     return [4 /*yield*/, true];
                 case 3:
                     _a.selected = _c.sent();
                     select();
-                    return [3 /*break*/, 9];
+                    return [3 /*break*/, 6];
                 case 4:
-                    if (!(l.name === selectName)) return [3 /*break*/, 6];
+                    if (!isName) return [3 /*break*/, 6];
                     select();
                     _b = l;
                     return [4 /*yield*/, l.name + " " + i];
@@ -413,7 +422,7 @@ function selectLayerByName(selectName, onlyGroup, makeVisible) {
                 case 6: return [3 /*break*/, 8];
                 case 7:
                     select();
-                    return [3 /*break*/, 9];
+                    _c.label = 8;
                 case 8:
                     i--;
                     return [3 /*break*/, 2];
