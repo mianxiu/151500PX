@@ -67,12 +67,16 @@ export async function mergeMainToSmartObject() {
   await layerComponent.selectLayerByName(names.__DO_ACTION__);
   await layerComponent.rasterizeTargetLayer();
   await layerComponent.convertToSmartObject();
+  await drawRuler();
 }
 
 export async function drawRuler() {
   let acitveDocumet = layerComponent.activeDocument();
-  let s = layerComponent.selectLayerByName(names.__SIZE__);
-  await layerComponent.selectLayerByName(`--DO-ACTION-`, true);
+  layerComponent.selectLayerByName(`^${names.__SIZE__}.*`, false, false, true);
+  let layerName = acitveDocumet.activeLayers[0].name;
+  console.log();
+  //await layerComponent.selectLayerByName(`--DO-ACTION-`, true);
+
   await layerComponent.createSizeRuleer(1, 2, 3, `in`);
 }
 

@@ -166,6 +166,9 @@ function mergeMainToSmartObject() {
                     return [4 /*yield*/, layerComponent.convertToSmartObject()];
                 case 28:
                     _c.sent();
+                    return [4 /*yield*/, drawRuler()];
+                case 29:
+                    _c.sent();
                     return [2 /*return*/];
             }
         });
@@ -174,17 +177,18 @@ function mergeMainToSmartObject() {
 exports.mergeMainToSmartObject = mergeMainToSmartObject;
 function drawRuler() {
     return __awaiter(this, void 0, void 0, function () {
-        var acitveDocumet, s;
+        var acitveDocumet, layerName;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     acitveDocumet = layerComponent.activeDocument();
-                    s = layerComponent.selectLayerByName(names.__SIZE__);
-                    return [4 /*yield*/, layerComponent.selectLayerByName("--DO-ACTION-", true)];
-                case 1:
-                    _a.sent();
+                    layerComponent.selectLayerByName("^" + names.__SIZE__ + ".*", false, false, true);
+                    layerName = acitveDocumet.activeLayers[0].name;
+                    console.log();
+                    //await layerComponent.selectLayerByName(`--DO-ACTION-`, true);
                     return [4 /*yield*/, layerComponent.createSizeRuleer(1, 2, 3, "in")];
-                case 2:
+                case 1:
+                    //await layerComponent.selectLayerByName(`--DO-ACTION-`, true);
                     _a.sent();
                     return [2 /*return*/];
             }

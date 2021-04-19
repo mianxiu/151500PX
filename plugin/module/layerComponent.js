@@ -371,7 +371,7 @@ function selectLayerByName(selectName, onlyGroup, makeVisible, regexpMode) {
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    select = function () { return __awaiter(_this, void 0, void 0, function () {
+                    select = function (selectName) { return __awaiter(_this, void 0, void 0, function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0: return [4 /*yield*/, batchPlay([
@@ -396,7 +396,8 @@ function selectLayerByName(selectName, onlyGroup, makeVisible, regexpMode) {
                     if (!(i > 0)) return [3 /*break*/, 9];
                     l = layers[i];
                     selectNameRegexp = new RegExp(selectName, "g");
-                    isName = regexpMode
+                    console.log(selectNameRegexp);
+                    isName = regexpMode === false
                         ? l.name === selectName
                             ? true
                             : false
@@ -409,11 +410,11 @@ function selectLayerByName(selectName, onlyGroup, makeVisible, regexpMode) {
                     return [4 /*yield*/, true];
                 case 3:
                     _a.selected = _c.sent();
-                    select();
+                    select(l.name);
                     return [3 /*break*/, 6];
                 case 4:
                     if (!isName) return [3 /*break*/, 6];
-                    select();
+                    select(l.name);
                     _b = l;
                     return [4 /*yield*/, l.name + " " + i];
                 case 5:
@@ -421,7 +422,7 @@ function selectLayerByName(selectName, onlyGroup, makeVisible, regexpMode) {
                     _c.label = 6;
                 case 6: return [3 /*break*/, 8];
                 case 7:
-                    select();
+                    select(l.name);
                     _c.label = 8;
                 case 8:
                     i--;
