@@ -175,7 +175,7 @@ function mergeMainToSmartObject() {
 exports.mergeMainToSmartObject = mergeMainToSmartObject;
 function drawRuler() {
     return __awaiter(this, void 0, void 0, function () {
-        var acitveDocumet, layerName, size;
+        var acitveDocumet, layerName, size, layerBounds;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -190,6 +190,12 @@ function drawRuler() {
                     acitveDocumet = _a.sent();
                     return [4 /*yield*/, layerComponent.selectLayerByName(names.__DO_ACTION__)];
                 case 3:
+                    _a.sent();
+                    return [4 /*yield*/, layerComponent.activeDocument().activeLayers[0].bounds];
+                case 4:
+                    layerBounds = _a.sent();
+                    return [4 /*yield*/, layerComponent.createSizeRuler({ width: 116, height: 18 }, layerBounds, "#fff", 10)];
+                case 5:
                     _a.sent();
                     return [2 /*return*/];
             }

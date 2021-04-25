@@ -72,7 +72,9 @@ export async function mergeMainToSmartObject() {
 
 export async function drawRuler() {
   let acitveDocumet = layerComponent.activeDocument();
+
   layerComponent.selectLayerByName(`^${names.__SIZE__}.*`, false, false, true);
+
   let layerName = acitveDocumet.activeLayers[0].name;
   let size = await text.convertSizeString(layerName, `in`, ``);
 
@@ -80,8 +82,8 @@ export async function drawRuler() {
 
   await layerComponent.selectLayerByName(names.__DO_ACTION__);
 
-  //let layerBounds: layerComponent.IBounds = await layerComponent.activeDocument().activeLayers[0].bounds;
-  //await layerComponent.createSizeRuler({ width: 116, height: 18 }, layerBounds, `#fff`, 10);
+  let layerBounds: layerComponent.IBounds = await layerComponent.activeDocument().activeLayers[0].bounds;
+  await layerComponent.createSizeRuler({ width: 116, height: 18 }, layerBounds, `#fff`, 10);
 }
 
 /**

@@ -371,13 +371,13 @@ function selectLayerByName(selectName, onlyGroup, makeVisible, regexpMode) {
             switch (_b.label) {
                 case 0:
                     console.log("select: ", selectName);
-                    select = function (layername) { return __awaiter(_this, void 0, void 0, function () {
+                    select = function (select) { return __awaiter(_this, void 0, void 0, function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0: return [4 /*yield*/, batchPlay([
                                         {
                                             _obj: "select",
-                                            _target: [{ _ref: "layer", _name: layername }],
+                                            _target: [{ _ref: "layer", _name: select }],
                                             makeVisible: makeVisible,
                                         },
                                     ], batchPlayConfig.defaultOptions())];
@@ -392,36 +392,36 @@ function selectLayerByName(selectName, onlyGroup, makeVisible, regexpMode) {
                     layers = _b.sent();
                     i = layers.length - 1;
                     selectNameRegexp = new RegExp(selectName, "g");
-                    console.log(layers);
                     _b.label = 2;
                 case 2:
-                    if (!(i > 0)) return [3 /*break*/, 6];
+                    if (!(i >= 0)) return [3 /*break*/, 8];
                     l = layers[i];
-                    isName = regexpMode === false
-                        ? l.name === selectName
-                            ? true
-                            : false
-                        : selectNameRegexp.test(l.name) === true
-                            ? true
-                            : false;
-                    if (!(onlyGroup === true)) return [3 /*break*/, 3];
-                    if (l.isGroupLayer === true && isName === true) {
-                        //l.selected = await true;
-                        select(l.name);
-                    }
-                    return [3 /*break*/, 5];
+                    return [4 /*yield*/, selectNameRegexp.test(l.name)];
                 case 3:
-                    if (!(l.isGroupLayer === false && isName === true)) return [3 /*break*/, 5];
-                    select(l.name);
-                    _a = l;
-                    return [4 /*yield*/, l.name + " " + i];
+                    if (!((_b.sent()) === true)) return [3 /*break*/, 5];
+                    return [4 /*yield*/, true];
                 case 4:
-                    _a.name = _b.sent();
-                    _b.label = 5;
-                case 5:
+                    _a = _b.sent();
+                    return [3 /*break*/, 7];
+                case 5: return [4 /*yield*/, false];
+                case 6:
+                    _a = _b.sent();
+                    _b.label = 7;
+                case 7:
+                    isName = _a;
+                    if (onlyGroup === true) {
+                        if (l.isGroupLayer === true && isName === true) {
+                            select(l.name);
+                        }
+                    }
+                    else {
+                        if (l.isGroupLayer === undefined && isName === true) {
+                            select(l.name);
+                        }
+                    }
                     i--;
                     return [3 /*break*/, 2];
-                case 6:
+                case 8:
                     r = exports.activeDocument().activeLayers;
                     console.log(r);
                     if (r[0].name !== selectName || r.length > 0)

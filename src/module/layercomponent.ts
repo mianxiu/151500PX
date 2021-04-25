@@ -253,12 +253,12 @@ export async function selectLayerByName(
 ): Promise<void | undefined> {
   console.log(`select: `, selectName);
 
-  let select = async layername => {
+  let select = async select => {
     await batchPlay(
       [
         {
           _obj: "select",
-          _target: [{ _ref: "layer", _name: layername }],
+          _target: [{ _ref: "layer", _name: select }],
           makeVisible: makeVisible,
         },
       ],
@@ -270,33 +270,19 @@ export async function selectLayerByName(
   let i = layers.length - 1;
   let selectNameRegexp = new RegExp(selectName, "g");
 
-  console.log(layers);
-  while (i > 0) {
+  while (i >= 0) {
     let l = layers[i];
-    //console.log(selectNameRegexp);
-    let isName: boolean =
-      regexpMode === false
-        ? l.name === selectName
-          ? true
-          : false
-        : selectNameRegexp.test(l.name) === true
-        ? true
-        : false;
+    // must use await
+    let isName: boolean = (await selectNameRegexp.test(l.name)) === true ? await true : await false;
 
     if (onlyGroup === true) {
       if (l.isGroupLayer === true && isName === true) {
-        //l.selected = await true;
         select(l.name);
       }
     } else {
-      if (l.isGroupLayer === false && isName === true) {
+      if (l.isGroupLayer === undefined && isName === true) {
         select(l.name);
-        l.name = await `${l.name} ${i}`;
-        //await setLayerName(`${l.name} ${i}`, "");
       }
-      //console.log(selectName);
-      //console.log(l.name);
-      // select(l.name);
     }
     i--;
   }
