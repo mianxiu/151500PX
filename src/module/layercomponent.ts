@@ -251,12 +251,14 @@ export async function selectLayerByName(
   makeVisible: boolean = false,
   regexpMode: boolean = false
 ): Promise<void | undefined> {
-  let select = async selectName => {
+  console.log(`select: `, selectName);
+
+  let select = async layername => {
     await batchPlay(
       [
         {
           _obj: "select",
-          _target: [{ _ref: "layer", _name: selectName }],
+          _target: [{ _ref: "layer", _name: layername }],
           makeVisible: makeVisible,
         },
       ],
@@ -266,12 +268,12 @@ export async function selectLayerByName(
 
   let layers = await activeDocument().layers;
   let i = layers.length - 1;
+  let selectNameRegexp = new RegExp(selectName, "g");
 
+  console.log(layers);
   while (i > 0) {
     let l = layers[i];
-
-    let selectNameRegexp = new RegExp(selectName, "g");
-    console.log(selectNameRegexp);
+    //console.log(selectNameRegexp);
     let isName: boolean =
       regexpMode === false
         ? l.name === selectName
@@ -282,16 +284,19 @@ export async function selectLayerByName(
         : false;
 
     if (onlyGroup === true) {
-      if (l.isGroupLayer === true && isName) {
-        l.selected = await true;
+      if (l.isGroupLayer === true && isName === true) {
+        //l.selected = await true;
         select(l.name);
-      } else if (isName) {
+      }
+    } else {
+      if (l.isGroupLayer === false && isName === true) {
         select(l.name);
         l.name = await `${l.name} ${i}`;
         //await setLayerName(`${l.name} ${i}`, "");
       }
-    } else {
-      select(l.name);
+      //console.log(selectName);
+      //console.log(l.name);
+      // select(l.name);
     }
     i--;
   }
@@ -490,9 +495,6 @@ export async function createBGLayer() {
   let backgroundLayer = activeDocument().backgroundLayer;
   if (backgroundLayer === null) {
     await batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions());
-  } else {
-    backgroundLayer.selected = await true;
-    await selectLayerByName(backgroundLayer.name);
   }
 }
 
@@ -684,6 +686,178 @@ export async function transform(horizontal: number, vertical: number, width: num
   );
 }
 
+export async function createVectorNoOutline(bounds: IBounds, colorHex: string) {
+  await batchPlay(
+    [
+      {
+        _obj: "make",
+        _target: [
+          {
+            _ref: "contentLayer",
+          },
+        ],
+        using: {
+          _obj: "contentLayer",
+          type: {
+            _obj: "solidColorLayer",
+            color: {
+              _obj: "RGBColor",
+              red: 11.00372314453125,
+              grain: 87.0025634765625,
+              blue: 133.99795532226562,
+            },
+          },
+          shape: {
+            _obj: "rectangle",
+            unitValueQuadVersion: 1,
+            top: {
+              _unit: "pixelsUnit",
+              _value: bounds.top,
+            },
+            left: {
+              _unit: "pixelsUnit",
+              _value: bounds.left,
+            },
+            bottom: {
+              _unit: "pixelsUnit",
+              _value: bounds.bottom,
+            },
+            right: {
+              _unit: "pixelsUnit",
+              _value: bounds.right,
+            },
+            topRight: {
+              _unit: "pixelsUnit",
+              _value: 0,
+            },
+            topLeft: {
+              _unit: "pixelsUnit",
+              _value: 0,
+            },
+            bottomLeft: {
+              _unit: "pixelsUnit",
+              _value: 0,
+            },
+            bottomRight: {
+              _unit: "pixelsUnit",
+              _value: 0,
+            },
+          },
+          strokeStyle: {
+            _obj: "strokeStyle",
+            strokeStyleVersion: 2,
+            strokeEnabled: true,
+            fillEnabled: true,
+            strokeStyleLineWidth: {
+              _unit: "pixelsUnit",
+              _value: 1,
+            },
+            strokeStyleLineDashOffset: {
+              _unit: "pointsUnit",
+              _value: 0,
+            },
+            strokeStyleMiterLimit: 100,
+            strokeStyleLineCapType: {
+              _enum: "strokeStyleLineCapType",
+              _value: "strokeStyleButtCap",
+            },
+            strokeStyleLineJoinType: {
+              _enum: "strokeStyleLineJoinType",
+              _value: "strokeStyleMiterJoin",
+            },
+            strokeStyleLineAlignment: {
+              _enum: "strokeStyleLineAlignment",
+              _value: "strokeStyleAlignCenter",
+            },
+            strokeStyleScaleLock: false,
+            strokeStyleStrokeAdjust: false,
+            strokeStyleLineDashSet: [],
+            strokeStyleBlendMode: {
+              _enum: "blendMode",
+              _value: "normal",
+            },
+            strokeStyleOpacity: {
+              _unit: "percentUnit",
+              _value: 100,
+            },
+            strokeStyleContent: {
+              _obj: "solidColorLayer",
+              color: {
+                _obj: "RGBColor",
+                red: 0,
+                grain: 0,
+                blue: 0,
+              },
+            },
+            strokeStyleResolution: 300,
+          },
+        },
+        layerID: 281,
+        _isCommand: true,
+        _options: {
+          dialogOptions: "dontDisplay",
+        },
+      },
+    ],
+    {
+      synchronousExecution: false,
+      modalBehavior: "fail",
+    }
+  );
+}
+
+/**
+ * create selection
+ * @param bounds
+ */
+export async function createSelection(bounds: IBounds) {
+  await batchPlay(
+    [
+      {
+        _obj: "addTo",
+        _target: [
+          {
+            _ref: "channel",
+            _property: "selection",
+          },
+        ],
+        to: {
+          _obj: "rectangle",
+          top: {
+            _unit: "pixelsUnit",
+            _value: bounds.top,
+          },
+          left: {
+            _unit: "pixelsUnit",
+            _value: bounds.left,
+          },
+          bottom: {
+            _unit: "pixelsUnit",
+            _value: bounds.bottom,
+          },
+          right: {
+            _unit: "pixelsUnit",
+            _value: bounds.right,
+          },
+        },
+        _isCommand: true,
+        _options: {
+          dialogOptions: "dontDisplay",
+        },
+      },
+    ],
+    {
+      synchronousExecution: false,
+      modalBehavior: "fail",
+    }
+  );
+}
+
+interface ISize {
+  width: number;
+  height: number;
+}
+
 /**
  *
  * @param length
@@ -691,7 +865,37 @@ export async function transform(horizontal: number, vertical: number, width: num
  * @param height
  * @param unit in|cm|mm
  */
-export async function createSizeRuleer(length: number, width: number, height: number, unit: string) {
-  createLayer(`RULER`);
-  createText(`${length}in`, 32);
+export async function createSizeRuler(selectionSize: ISize, baseBounds: IBounds, colorHex: string, margin: number) {
+  let leftTopRulerBounds: IBounds = {
+    left: baseBounds.left - (selectionSize.width + margin),
+    right: baseBounds.left - margin,
+    top: baseBounds.top,
+    bottom: baseBounds.top + selectionSize.height,
+  };
+  let leftBottomRulerBounds: IBounds = {
+    left: baseBounds.left - (selectionSize.width + margin),
+    right: baseBounds.left - margin,
+    top: baseBounds.top,
+    bottom: baseBounds.top + selectionSize.height,
+  };
+
+  let bottomLeftRulerBounds: IBounds = {
+    left: baseBounds.left - (selectionSize.width + margin),
+    right: baseBounds.left - margin,
+    top: baseBounds.bottom - selectionSize.height,
+    bottom: baseBounds.bottom,
+  };
+  let bottomRightRulerBounds: IBounds = {
+    left: baseBounds.left - (selectionSize.width + margin),
+    right: baseBounds.left - margin,
+    top: baseBounds.top,
+    bottom: baseBounds.top + selectionSize.height,
+  };
+
+  await createVectorNoOutline(leftTopRulerBounds, ``);
+  await createSelection(leftTopRulerBounds);
+
+  //await createLayer(`RULER`);
+
+  //await createText(`${length}in`, 32);
 }

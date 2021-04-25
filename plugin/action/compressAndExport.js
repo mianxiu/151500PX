@@ -41,6 +41,7 @@ var layerComponent = require("../module/layercomponent");
 var names = require("../module/names");
 var folder = require("../module/floder");
 var save = require("../module/save");
+var text = require("../module/text");
 var app = require("photoshop").app;
 var fuckingExportSize = 1500;
 var fuckingMargin = 20;
@@ -163,11 +164,8 @@ function mergeMainToSmartObject() {
                     return [4 /*yield*/, layerComponent.rasterizeTargetLayer()];
                 case 27:
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.convertToSmartObject()];
-                case 28:
-                    _c.sent();
                     return [4 /*yield*/, drawRuler()];
-                case 29:
+                case 28:
                     _c.sent();
                     return [2 /*return*/];
             }
@@ -177,18 +175,21 @@ function mergeMainToSmartObject() {
 exports.mergeMainToSmartObject = mergeMainToSmartObject;
 function drawRuler() {
     return __awaiter(this, void 0, void 0, function () {
-        var acitveDocumet, layerName;
+        var acitveDocumet, layerName, size;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     acitveDocumet = layerComponent.activeDocument();
                     layerComponent.selectLayerByName("^" + names.__SIZE__ + ".*", false, false, true);
                     layerName = acitveDocumet.activeLayers[0].name;
-                    console.log();
-                    //await layerComponent.selectLayerByName(`--DO-ACTION-`, true);
-                    return [4 /*yield*/, layerComponent.createSizeRuleer(1, 2, 3, "in")];
+                    return [4 /*yield*/, text.convertSizeString(layerName, "in", "")];
                 case 1:
-                    //await layerComponent.selectLayerByName(`--DO-ACTION-`, true);
+                    size = _a.sent();
+                    return [4 /*yield*/, layerComponent.activeDocument()];
+                case 2:
+                    acitveDocumet = _a.sent();
+                    return [4 /*yield*/, layerComponent.selectLayerByName(names.__DO_ACTION__)];
+                case 3:
                     _a.sent();
                     return [2 /*return*/];
             }

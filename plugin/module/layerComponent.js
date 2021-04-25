@@ -40,10 +40,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createSizeRuleer = exports.transform = exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.copyToLayer = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
+exports.createSizeRuler = exports.createSelection = exports.createVectorNoOutline = exports.transform = exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.copyToLayer = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var names = require("./names");
-var text_1 = require("./text");
 var app = require("photoshop").app;
 var batchPlay = require("photoshop").action.batchPlay;
 /**
@@ -366,18 +365,19 @@ function selectLayerByName(selectName, onlyGroup, makeVisible, regexpMode) {
     if (makeVisible === void 0) { makeVisible = false; }
     if (regexpMode === void 0) { regexpMode = false; }
     return __awaiter(this, void 0, void 0, function () {
-        var select, layers, i, l, selectNameRegexp, isName, _a, _b, r;
+        var select, layers, i, selectNameRegexp, l, isName, _a, r;
         var _this = this;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    select = function (selectName) { return __awaiter(_this, void 0, void 0, function () {
+                    console.log("select: ", selectName);
+                    select = function (layername) { return __awaiter(_this, void 0, void 0, function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0: return [4 /*yield*/, batchPlay([
                                         {
                                             _obj: "select",
-                                            _target: [{ _ref: "layer", _name: selectName }],
+                                            _target: [{ _ref: "layer", _name: layername }],
                                             makeVisible: makeVisible,
                                         },
                                     ], batchPlayConfig.defaultOptions())];
@@ -389,14 +389,14 @@ function selectLayerByName(selectName, onlyGroup, makeVisible, regexpMode) {
                     }); };
                     return [4 /*yield*/, exports.activeDocument().layers];
                 case 1:
-                    layers = _c.sent();
+                    layers = _b.sent();
                     i = layers.length - 1;
-                    _c.label = 2;
-                case 2:
-                    if (!(i > 0)) return [3 /*break*/, 9];
-                    l = layers[i];
                     selectNameRegexp = new RegExp(selectName, "g");
-                    console.log(selectNameRegexp);
+                    console.log(layers);
+                    _b.label = 2;
+                case 2:
+                    if (!(i > 0)) return [3 /*break*/, 6];
+                    l = layers[i];
                     isName = regexpMode === false
                         ? l.name === selectName
                             ? true
@@ -404,30 +404,24 @@ function selectLayerByName(selectName, onlyGroup, makeVisible, regexpMode) {
                         : selectNameRegexp.test(l.name) === true
                             ? true
                             : false;
-                    if (!(onlyGroup === true)) return [3 /*break*/, 7];
-                    if (!(l.isGroupLayer === true && isName)) return [3 /*break*/, 4];
-                    _a = l;
-                    return [4 /*yield*/, true];
+                    if (!(onlyGroup === true)) return [3 /*break*/, 3];
+                    if (l.isGroupLayer === true && isName === true) {
+                        //l.selected = await true;
+                        select(l.name);
+                    }
+                    return [3 /*break*/, 5];
                 case 3:
-                    _a.selected = _c.sent();
+                    if (!(l.isGroupLayer === false && isName === true)) return [3 /*break*/, 5];
                     select(l.name);
-                    return [3 /*break*/, 6];
-                case 4:
-                    if (!isName) return [3 /*break*/, 6];
-                    select(l.name);
-                    _b = l;
+                    _a = l;
                     return [4 /*yield*/, l.name + " " + i];
+                case 4:
+                    _a.name = _b.sent();
+                    _b.label = 5;
                 case 5:
-                    _b.name = _c.sent();
-                    _c.label = 6;
-                case 6: return [3 /*break*/, 8];
-                case 7:
-                    select(l.name);
-                    _c.label = 8;
-                case 8:
                     i--;
                     return [3 /*break*/, 2];
-                case 9:
+                case 6:
                     r = exports.activeDocument().activeLayers;
                     console.log(r);
                     if (r[0].name !== selectName || r.length > 0)
@@ -720,26 +714,17 @@ exports.createLayer = createLayer;
  */
 function createBGLayer() {
     return __awaiter(this, void 0, void 0, function () {
-        var backgroundLayer, _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var backgroundLayer;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     backgroundLayer = exports.activeDocument().backgroundLayer;
                     if (!(backgroundLayer === null)) return [3 /*break*/, 2];
                     return [4 /*yield*/, batchPlay([{ _obj: "make", _target: [{ _ref: "backgroundLayer" }] }], batchPlayConfig.defaultOptions())];
                 case 1:
-                    _b.sent();
-                    return [3 /*break*/, 5];
-                case 2:
-                    _a = backgroundLayer;
-                    return [4 /*yield*/, true];
-                case 3:
-                    _a.selected = _b.sent();
-                    return [4 /*yield*/, selectLayerByName(backgroundLayer.name)];
-                case 4:
-                    _b.sent();
-                    _b.label = 5;
-                case 5: return [2 /*return*/];
+                    _a.sent();
+                    _a.label = 2;
+                case 2: return [2 /*return*/];
             }
         });
     });
@@ -987,6 +972,185 @@ function transform(horizontal, vertical, width, height, angle) {
     });
 }
 exports.transform = transform;
+function createVectorNoOutline(bounds, colorHex) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "make",
+                            _target: [
+                                {
+                                    _ref: "contentLayer",
+                                },
+                            ],
+                            using: {
+                                _obj: "contentLayer",
+                                type: {
+                                    _obj: "solidColorLayer",
+                                    color: {
+                                        _obj: "RGBColor",
+                                        red: 11.00372314453125,
+                                        grain: 87.0025634765625,
+                                        blue: 133.99795532226562,
+                                    },
+                                },
+                                shape: {
+                                    _obj: "rectangle",
+                                    unitValueQuadVersion: 1,
+                                    top: {
+                                        _unit: "pixelsUnit",
+                                        _value: bounds.top,
+                                    },
+                                    left: {
+                                        _unit: "pixelsUnit",
+                                        _value: bounds.left,
+                                    },
+                                    bottom: {
+                                        _unit: "pixelsUnit",
+                                        _value: bounds.bottom,
+                                    },
+                                    right: {
+                                        _unit: "pixelsUnit",
+                                        _value: bounds.right,
+                                    },
+                                    topRight: {
+                                        _unit: "pixelsUnit",
+                                        _value: 0,
+                                    },
+                                    topLeft: {
+                                        _unit: "pixelsUnit",
+                                        _value: 0,
+                                    },
+                                    bottomLeft: {
+                                        _unit: "pixelsUnit",
+                                        _value: 0,
+                                    },
+                                    bottomRight: {
+                                        _unit: "pixelsUnit",
+                                        _value: 0,
+                                    },
+                                },
+                                strokeStyle: {
+                                    _obj: "strokeStyle",
+                                    strokeStyleVersion: 2,
+                                    strokeEnabled: true,
+                                    fillEnabled: true,
+                                    strokeStyleLineWidth: {
+                                        _unit: "pixelsUnit",
+                                        _value: 1,
+                                    },
+                                    strokeStyleLineDashOffset: {
+                                        _unit: "pointsUnit",
+                                        _value: 0,
+                                    },
+                                    strokeStyleMiterLimit: 100,
+                                    strokeStyleLineCapType: {
+                                        _enum: "strokeStyleLineCapType",
+                                        _value: "strokeStyleButtCap",
+                                    },
+                                    strokeStyleLineJoinType: {
+                                        _enum: "strokeStyleLineJoinType",
+                                        _value: "strokeStyleMiterJoin",
+                                    },
+                                    strokeStyleLineAlignment: {
+                                        _enum: "strokeStyleLineAlignment",
+                                        _value: "strokeStyleAlignCenter",
+                                    },
+                                    strokeStyleScaleLock: false,
+                                    strokeStyleStrokeAdjust: false,
+                                    strokeStyleLineDashSet: [],
+                                    strokeStyleBlendMode: {
+                                        _enum: "blendMode",
+                                        _value: "normal",
+                                    },
+                                    strokeStyleOpacity: {
+                                        _unit: "percentUnit",
+                                        _value: 100,
+                                    },
+                                    strokeStyleContent: {
+                                        _obj: "solidColorLayer",
+                                        color: {
+                                            _obj: "RGBColor",
+                                            red: 0,
+                                            grain: 0,
+                                            blue: 0,
+                                        },
+                                    },
+                                    strokeStyleResolution: 300,
+                                },
+                            },
+                            layerID: 281,
+                            _isCommand: true,
+                            _options: {
+                                dialogOptions: "dontDisplay",
+                            },
+                        },
+                    ], {
+                        synchronousExecution: false,
+                        modalBehavior: "fail",
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.createVectorNoOutline = createVectorNoOutline;
+/**
+ * create selection
+ * @param bounds
+ */
+function createSelection(bounds) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            _obj: "addTo",
+                            _target: [
+                                {
+                                    _ref: "channel",
+                                    _property: "selection",
+                                },
+                            ],
+                            to: {
+                                _obj: "rectangle",
+                                top: {
+                                    _unit: "pixelsUnit",
+                                    _value: bounds.top,
+                                },
+                                left: {
+                                    _unit: "pixelsUnit",
+                                    _value: bounds.left,
+                                },
+                                bottom: {
+                                    _unit: "pixelsUnit",
+                                    _value: bounds.bottom,
+                                },
+                                right: {
+                                    _unit: "pixelsUnit",
+                                    _value: bounds.right,
+                                },
+                            },
+                            _isCommand: true,
+                            _options: {
+                                dialogOptions: "dontDisplay",
+                            },
+                        },
+                    ], {
+                        synchronousExecution: false,
+                        modalBehavior: "fail",
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.createSelection = createSelection;
 /**
  *
  * @param length
@@ -994,13 +1158,45 @@ exports.transform = transform;
  * @param height
  * @param unit in|cm|mm
  */
-function createSizeRuleer(length, width, height, unit) {
+function createSizeRuler(selectionSize, baseBounds, colorHex, margin) {
     return __awaiter(this, void 0, void 0, function () {
+        var leftTopRulerBounds, leftBottomRulerBounds, bottomLeftRulerBounds, bottomRightRulerBounds;
         return __generator(this, function (_a) {
-            createLayer("RULER");
-            text_1.createText(length + "in", 32);
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0:
+                    leftTopRulerBounds = {
+                        left: baseBounds.left - (selectionSize.width + margin),
+                        right: baseBounds.left - margin,
+                        top: baseBounds.top,
+                        bottom: baseBounds.top + selectionSize.height,
+                    };
+                    leftBottomRulerBounds = {
+                        left: baseBounds.left - (selectionSize.width + margin),
+                        right: baseBounds.left - margin,
+                        top: baseBounds.top,
+                        bottom: baseBounds.top + selectionSize.height,
+                    };
+                    bottomLeftRulerBounds = {
+                        left: baseBounds.left - (selectionSize.width + margin),
+                        right: baseBounds.left - margin,
+                        top: baseBounds.bottom - selectionSize.height,
+                        bottom: baseBounds.bottom,
+                    };
+                    bottomRightRulerBounds = {
+                        left: baseBounds.left - (selectionSize.width + margin),
+                        right: baseBounds.left - margin,
+                        top: baseBounds.top,
+                        bottom: baseBounds.top + selectionSize.height,
+                    };
+                    return [4 /*yield*/, createVectorNoOutline(leftTopRulerBounds, "")];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, createSelection(leftTopRulerBounds)];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
         });
     });
 }
-exports.createSizeRuleer = createSizeRuleer;
+exports.createSizeRuler = createSizeRuler;

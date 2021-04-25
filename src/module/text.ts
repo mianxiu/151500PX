@@ -1,7 +1,145 @@
+import { __SIZE__ } from "./names";
+
+interface ISizeUnit {
+  num: number;
+  unit: string;
+}
+
+/**
+ * convert length*width*height like --SIZE--100mm*20mm*4mm
+ * @param sizeString
+ * @param toLengthUnit
+ * @param toWeightUnit
+ */
+export async function convertSizeString(sizeString: string, toLengthUnit: string, toWeightUnit) {
+  //cm mm in m
+  let lengthWidthHeightWeight = new RegExp(
+    `${__SIZE__}\\d+(mm|cm|m|in)\\*\\d+(mm|cm|m|in)\\*\\d+(mm|cm|m|in)\\*\\d+(kg|g)`,
+    `gim`
+  );
+  let lengthWidthHeight = new RegExp(`${__SIZE__}\\d+(mm|cm|m|in)\\*\\d+(mm|cm|m|in)\\*\\d+(mm|cm|m|in)`, `gim`);
+
+  let lengthWidth = new RegExp(`${__SIZE__}\\d+(mm|cm|m|in)\\*\\d+(mm|cm|m|in)`, `gim`);
+
+  let splitString = sizeString.replace(`${__SIZE__}`, ``).split(`*`);
+
+  let convertUnit = (unitString: string[]) => {
+    /**
+     * 1cm = 0.394 inch
+     * cm/2.54 = in
+     */
+    let unitRegexp = {
+      mm: /(\d+)mm/gim,
+      cm: /(\d+)cm/gim,
+      m: /(\d+)m/gim,
+      inch: /(\d+)in/gim,
+      kg: /(\d+)kg/gim,
+      g: /(\d+)g/gim,
+    };
+
+    /**
+     * covert single string like `100mm` to cm
+     * @param sizeString
+     * @returns
+     */
+    let convertToCM = (sizeString: string) => {
+      let sizeNum = /\d+(mm|cm|m|in)/gi.test(sizeString)
+        ? Number(sizeString.replace(/\s+/gm, "").match(/\d+/)[0])
+        : null;
+      let sizeUnit = /\d+(mm|cm|m|in)/gi.test(sizeString) ? sizeString.replace(/\s+/gm, "").match(/\d+/)[1] : null;
+      switch (sizeUnit) {
+        case `mm`:
+          sizeNum /= 10;
+          break;
+        case `m`:
+          sizeNum *= 100;
+          break;
+        case `in`:
+          sizeNum *= 2.54;
+          break;
+        default:
+          // cm
+          break;
+      }
+
+      let returnSize: ISizeUnit = {
+        num: Number(sizeNum.toFixed(2)),
+        unit: `cm`,
+      };
+
+      return returnSize;
+    };
+
+    /**
+     * convert cm to other unit
+     * @param sizeCM
+     * @param toUnit
+     * @returns
+     */
+    let convert = (sizeCM: ISizeUnit, toUnit: string) => {
+      switch (toUnit) {
+        case `mm`:
+          sizeCM.num *= 10;
+          break;
+        case `in`:
+          sizeCM.num /= 2.54;
+          break;
+        case `m`:
+          sizeCM.num /= 10;
+          break;
+        default:
+          // inch
+          break;
+      }
+      let returnSize: ISizeUnit = {
+        num: Number(sizeCM.num.toFixed(2)),
+        unit: toUnit,
+      };
+      return returnSize;
+    };
+
+    /**
+     * loop all string array
+     */
+
+    let multiplySizes: ISizeUnit[] = [];
+    console.log(multiplySizes);
+
+    unitString.forEach(s => {
+      for (const key in unitRegexp) {
+        if (Object.prototype.hasOwnProperty.call(unitRegexp, key)) {
+          const r = unitRegexp[key];
+          if (r.test(s) === true) {
+            multiplySizes.push(convert(convertToCM(s), toLengthUnit));
+          }
+        }
+      }
+    });
+
+    return multiplySizes;
+  };
+
+  switch (true) {
+    case lengthWidthHeightWeight.test(sizeString):
+      console.log(1, `lengthWidthHeightWeight`);
+      return convertUnit(splitString);
+
+    case lengthWidthHeight.test(sizeString):
+      console.log(2, `lengthWidthHeight`);
+      return convertUnit(splitString);
+    case lengthWidth.test(sizeString):
+      console.log(3, `lengthWidth`);
+      return convertUnit(splitString);
+    default:
+      console.log(4);
+      break;
+  }
+}
+
 export async function createText(textString: string, fontSize = 12) {
   const batchPlay = require("photoshop").action.batchPlay;
 
-  const result = await batchPlay(
+  await batchPlay(
     [
       {
         _obj: "make",

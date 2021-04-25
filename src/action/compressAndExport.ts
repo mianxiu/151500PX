@@ -2,6 +2,7 @@ import * as layerComponent from "../module/layercomponent";
 import * as names from "../module/names";
 import * as folder from "../module/floder";
 import * as save from "../module/save";
+import * as text from "../module/text";
 
 const app = require("photoshop").app;
 
@@ -66,7 +67,6 @@ export async function mergeMainToSmartObject() {
    */
   await layerComponent.selectLayerByName(names.__DO_ACTION__);
   await layerComponent.rasterizeTargetLayer();
-  await layerComponent.convertToSmartObject();
   await drawRuler();
 }
 
@@ -74,10 +74,14 @@ export async function drawRuler() {
   let acitveDocumet = layerComponent.activeDocument();
   layerComponent.selectLayerByName(`^${names.__SIZE__}.*`, false, false, true);
   let layerName = acitveDocumet.activeLayers[0].name;
-  console.log();
-  //await layerComponent.selectLayerByName(`--DO-ACTION-`, true);
+  let size = await text.convertSizeString(layerName, `in`, ``);
 
-  await layerComponent.createSizeRuleer(1, 2, 3, `in`);
+  acitveDocumet = await layerComponent.activeDocument();
+
+  await layerComponent.selectLayerByName(names.__DO_ACTION__);
+
+  //let layerBounds: layerComponent.IBounds = await layerComponent.activeDocument().activeLayers[0].bounds;
+  //await layerComponent.createSizeRuler({ width: 116, height: 18 }, layerBounds, `#fff`, 10);
 }
 
 /**

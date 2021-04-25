@@ -36,11 +36,132 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createText = void 0;
+exports.createText = exports.convertSizeString = void 0;
+var names_1 = require("./names");
+/**
+ * convert length*width*height like --SIZE--100mm*20mm*4mm
+ * @param sizeString
+ * @param toLengthUnit
+ * @param toWeightUnit
+ */
+function convertSizeString(sizeString, toLengthUnit, toWeightUnit) {
+    return __awaiter(this, void 0, void 0, function () {
+        var lengthWidthHeightWeight, lengthWidthHeight, lengthWidth, splitString, convertUnit;
+        return __generator(this, function (_a) {
+            lengthWidthHeightWeight = new RegExp(names_1.__SIZE__ + "\\d+(mm|cm|m|in)\\*\\d+(mm|cm|m|in)\\*\\d+(mm|cm|m|in)\\*\\d+(kg|g)", "gim");
+            lengthWidthHeight = new RegExp(names_1.__SIZE__ + "\\d+(mm|cm|m|in)\\*\\d+(mm|cm|m|in)\\*\\d+(mm|cm|m|in)", "gim");
+            lengthWidth = new RegExp(names_1.__SIZE__ + "\\d+(mm|cm|m|in)\\*\\d+(mm|cm|m|in)", "gim");
+            splitString = sizeString.replace("" + names_1.__SIZE__, "").split("*");
+            convertUnit = function (unitString) {
+                /**
+                 * 1cm = 0.394 inch
+                 * cm/2.54 = in
+                 */
+                var unitRegexp = {
+                    mm: /(\d+)mm/gim,
+                    cm: /(\d+)cm/gim,
+                    m: /(\d+)m/gim,
+                    inch: /(\d+)in/gim,
+                    kg: /(\d+)kg/gim,
+                    g: /(\d+)g/gim,
+                };
+                /**
+                 * covert single string like `100mm` to cm
+                 * @param sizeString
+                 * @returns
+                 */
+                var convertToCM = function (sizeString) {
+                    var sizeNum = /\d+(mm|cm|m|in)/gi.test(sizeString)
+                        ? Number(sizeString.replace(/\s+/gm, "").match(/\d+/)[0])
+                        : null;
+                    var sizeUnit = /\d+(mm|cm|m|in)/gi.test(sizeString) ? sizeString.replace(/\s+/gm, "").match(/\d+/)[1] : null;
+                    switch (sizeUnit) {
+                        case "mm":
+                            sizeNum /= 10;
+                            break;
+                        case "m":
+                            sizeNum *= 100;
+                            break;
+                        case "in":
+                            sizeNum *= 2.54;
+                            break;
+                        default:
+                            // cm
+                            break;
+                    }
+                    var returnSize = {
+                        num: Number(sizeNum.toFixed(2)),
+                        unit: "cm",
+                    };
+                    return returnSize;
+                };
+                /**
+                 * convert cm to other unit
+                 * @param sizeCM
+                 * @param toUnit
+                 * @returns
+                 */
+                var convert = function (sizeCM, toUnit) {
+                    switch (toUnit) {
+                        case "mm":
+                            sizeCM.num *= 10;
+                            break;
+                        case "in":
+                            sizeCM.num /= 2.54;
+                            break;
+                        case "m":
+                            sizeCM.num /= 10;
+                            break;
+                        default:
+                            // inch
+                            break;
+                    }
+                    var returnSize = {
+                        num: Number(sizeCM.num.toFixed(2)),
+                        unit: toUnit,
+                    };
+                    return returnSize;
+                };
+                /**
+                 * loop all string array
+                 */
+                var multiplySizes = [];
+                console.log(multiplySizes);
+                unitString.forEach(function (s) {
+                    for (var key in unitRegexp) {
+                        if (Object.prototype.hasOwnProperty.call(unitRegexp, key)) {
+                            var r = unitRegexp[key];
+                            if (r.test(s) === true) {
+                                multiplySizes.push(convert(convertToCM(s), toLengthUnit));
+                            }
+                        }
+                    }
+                });
+                return multiplySizes;
+            };
+            switch (true) {
+                case lengthWidthHeightWeight.test(sizeString):
+                    console.log(1, "lengthWidthHeightWeight");
+                    return [2 /*return*/, convertUnit(splitString)];
+                case lengthWidthHeight.test(sizeString):
+                    console.log(2, "lengthWidthHeight");
+                    return [2 /*return*/, convertUnit(splitString)];
+                case lengthWidth.test(sizeString):
+                    console.log(3, "lengthWidth");
+                    return [2 /*return*/, convertUnit(splitString)];
+                default:
+                    console.log(4);
+                    break;
+            }
+            return [2 /*return*/];
+        });
+    });
+}
+exports.convertSizeString = convertSizeString;
 function createText(textString, fontSize) {
     if (fontSize === void 0) { fontSize = 12; }
     return __awaiter(this, void 0, void 0, function () {
-        var batchPlay, result;
+        var batchPlay;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -703,7 +824,7 @@ function createText(textString, fontSize) {
                             modalBehavior: "fail",
                         })];
                 case 1:
-                    result = _a.sent();
+                    _a.sent();
                     return [2 /*return*/];
             }
         });
