@@ -1173,26 +1173,35 @@ function createSizeRuler(selectionSize, baseBounds, colorHex, margin) {
                     leftBottomRulerBounds = {
                         left: baseBounds.left - (selectionSize.width + margin),
                         right: baseBounds.left - margin,
-                        top: baseBounds.top,
-                        bottom: baseBounds.top + selectionSize.height,
-                    };
-                    bottomLeftRulerBounds = {
-                        left: baseBounds.left - (selectionSize.width + margin),
-                        right: baseBounds.left - margin,
                         top: baseBounds.bottom - selectionSize.height,
                         bottom: baseBounds.bottom,
                     };
+                    bottomLeftRulerBounds = {
+                        left: baseBounds.left,
+                        right: baseBounds.left + selectionSize.height,
+                        top: baseBounds.bottom + margin,
+                        bottom: baseBounds.bottom + (selectionSize.width + margin),
+                    };
                     bottomRightRulerBounds = {
-                        left: baseBounds.left - (selectionSize.width + margin),
-                        right: baseBounds.left - margin,
-                        top: baseBounds.top,
-                        bottom: baseBounds.top + selectionSize.height,
+                        left: baseBounds.right - selectionSize.height,
+                        right: baseBounds.right,
+                        top: baseBounds.bottom + margin,
+                        bottom: baseBounds.bottom + (selectionSize.width + margin),
                     };
                     return [4 /*yield*/, createVectorNoOutline(leftTopRulerBounds, "")];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, createSelection(leftTopRulerBounds)];
+                    return [4 /*yield*/, createVectorNoOutline(leftBottomRulerBounds, "")];
                 case 2:
+                    _a.sent();
+                    return [4 /*yield*/, createVectorNoOutline(bottomLeftRulerBounds, "")];
+                case 3:
+                    _a.sent();
+                    return [4 /*yield*/, createVectorNoOutline(bottomRightRulerBounds, "")];
+                case 4:
+                    _a.sent();
+                    return [4 /*yield*/, createSelection(leftTopRulerBounds)];
+                case 5:
                     _a.sent();
                     return [2 /*return*/];
             }

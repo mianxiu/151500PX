@@ -272,7 +272,7 @@ export async function selectLayerByName(
 
   while (i >= 0) {
     let l = layers[i];
-    // must use await
+    // must be use await
     let isName: boolean = (await selectNameRegexp.test(l.name)) === true ? await true : await false;
 
     if (onlyGroup === true) {
@@ -861,24 +861,27 @@ export async function createSizeRuler(selectionSize: ISize, baseBounds: IBounds,
   let leftBottomRulerBounds: IBounds = {
     left: baseBounds.left - (selectionSize.width + margin),
     right: baseBounds.left - margin,
-    top: baseBounds.top,
-    bottom: baseBounds.top + selectionSize.height,
-  };
-
-  let bottomLeftRulerBounds: IBounds = {
-    left: baseBounds.left - (selectionSize.width + margin),
-    right: baseBounds.left - margin,
     top: baseBounds.bottom - selectionSize.height,
     bottom: baseBounds.bottom,
   };
+
+  let bottomLeftRulerBounds: IBounds = {
+    left: baseBounds.left,
+    right: baseBounds.left + selectionSize.height,
+    top: baseBounds.bottom + margin,
+    bottom: baseBounds.bottom + (selectionSize.width + margin),
+  };
   let bottomRightRulerBounds: IBounds = {
-    left: baseBounds.left - (selectionSize.width + margin),
-    right: baseBounds.left - margin,
-    top: baseBounds.top,
-    bottom: baseBounds.top + selectionSize.height,
+    left: baseBounds.right - selectionSize.height,
+    right: baseBounds.right,
+    top: baseBounds.bottom + margin,
+    bottom: baseBounds.bottom + (selectionSize.width + margin),
   };
 
   await createVectorNoOutline(leftTopRulerBounds, ``);
+  await createVectorNoOutline(leftBottomRulerBounds, ``);
+  await createVectorNoOutline(bottomLeftRulerBounds, ``);
+  await createVectorNoOutline(bottomRightRulerBounds, ``);
   await createSelection(leftTopRulerBounds);
 
   //await createLayer(`RULER`);
