@@ -180,7 +180,6 @@ async function upgradeMain() {
 
     //compressAndExport.fuck();
     compressAndExport.mergeMainToSmartObject();
-    compressAndExport.drawRuler();
   };
 
   let dupliceVectorId = `#duplice-vector`;

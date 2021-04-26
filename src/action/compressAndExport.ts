@@ -67,15 +67,16 @@ export async function mergeMainToSmartObject() {
    */
   await layerComponent.selectLayerByName(names.__DO_ACTION__);
   await layerComponent.rasterizeTargetLayer();
+  await layerComponent.convertToSmartObject();
   await drawRuler();
 }
 
 export async function drawRuler() {
-  let acitveDocumet = layerComponent.activeDocument();
+  let acitveDocumet = await layerComponent.activeDocument();
 
-  layerComponent.selectLayerByName(`^${names.__SIZE__}.*`, false, false, true);
+  await layerComponent.selectLayerByName(`^${names.__SIZE__}.*`, false, false, true);
 
-  let layerName = acitveDocumet.activeLayers[0].name;
+  let layerName = await acitveDocumet.activeLayers[0].name;
   let size = await text.convertSizeString(layerName, `in`, ``);
 
   acitveDocumet = await layerComponent.activeDocument();

@@ -164,8 +164,11 @@ function mergeMainToSmartObject() {
                     return [4 /*yield*/, layerComponent.rasterizeTargetLayer()];
                 case 27:
                     _c.sent();
-                    return [4 /*yield*/, drawRuler()];
+                    return [4 /*yield*/, layerComponent.convertToSmartObject()];
                 case 28:
+                    _c.sent();
+                    return [4 /*yield*/, drawRuler()];
+                case 29:
                     _c.sent();
                     return [2 /*return*/];
             }
@@ -178,24 +181,29 @@ function drawRuler() {
         var acitveDocumet, layerName, size, layerBounds;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    acitveDocumet = layerComponent.activeDocument();
-                    layerComponent.selectLayerByName("^" + names.__SIZE__ + ".*", false, false, true);
-                    layerName = acitveDocumet.activeLayers[0].name;
-                    return [4 /*yield*/, text.convertSizeString(layerName, "in", "")];
+                case 0: return [4 /*yield*/, layerComponent.activeDocument()];
                 case 1:
+                    acitveDocumet = _a.sent();
+                    return [4 /*yield*/, layerComponent.selectLayerByName("^" + names.__SIZE__ + ".*", false, false, true)];
+                case 2:
+                    _a.sent();
+                    return [4 /*yield*/, acitveDocumet.activeLayers[0].name];
+                case 3:
+                    layerName = _a.sent();
+                    return [4 /*yield*/, text.convertSizeString(layerName, "in", "")];
+                case 4:
                     size = _a.sent();
                     return [4 /*yield*/, layerComponent.activeDocument()];
-                case 2:
+                case 5:
                     acitveDocumet = _a.sent();
                     return [4 /*yield*/, layerComponent.selectLayerByName(names.__DO_ACTION__)];
-                case 3:
+                case 6:
                     _a.sent();
                     return [4 /*yield*/, layerComponent.activeDocument().activeLayers[0].bounds];
-                case 4:
+                case 7:
                     layerBounds = _a.sent();
                     return [4 /*yield*/, layerComponent.createSizeRuler({ width: 116, height: 18 }, layerBounds, "#fff", 10)];
-                case 5:
+                case 8:
                     _a.sent();
                     return [2 /*return*/];
             }
