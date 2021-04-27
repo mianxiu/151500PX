@@ -158,8 +158,16 @@ function convertSizeString(sizeString, toLengthUnit, toWeightUnit) {
     });
 }
 exports.convertSizeString = convertSizeString;
-function createText(textString, fontSize) {
+/**
+ *
+ * @param bounds
+ * @param textString
+ * @param fontSize
+ * @param orientation horizontal | horizontal
+ */
+function createText(bounds, textString, fontSize, orientation) {
     if (fontSize === void 0) { fontSize = 12; }
+    if (orientation === void 0) { orientation = "horizontal"; }
     return __awaiter(this, void 0, void 0, function () {
         var batchPlay;
         return __generator(this, function (_a) {
@@ -188,7 +196,7 @@ function createText(textString, fontSize) {
                                         warpPerspectiveOther: 0,
                                         warpRotate: {
                                             _enum: "orientation",
-                                            _value: "horizontal",
+                                            _value: orientation,
                                         },
                                     },
                                     textClickPoint: {
@@ -217,38 +225,38 @@ function createText(textString, fontSize) {
                                     bounds: {
                                         _obj: "bounds",
                                         left: {
-                                            _unit: "pointsUnit",
-                                            _value: 0,
+                                            _unit: "pixelsUnit",
+                                            _value: bounds.left,
                                         },
                                         top: {
-                                            _unit: "pointsUnit",
-                                            _value: -10.56005859375,
+                                            _unit: "pixelsUnit",
+                                            _value: bounds.top,
                                         },
                                         right: {
-                                            _unit: "pointsUnit",
-                                            _value: 20.23187255859375,
+                                            _unit: "pixelsUnit",
+                                            _value: bounds.right,
                                         },
                                         bottom: {
-                                            _unit: "pointsUnit",
-                                            _value: 3.39605712890625,
+                                            _unit: "pixelsUnit",
+                                            _value: bounds.bottom,
                                         },
                                     },
                                     boundingBox: {
                                         _obj: "boundingBox",
                                         left: {
-                                            _unit: "pointsUnit",
+                                            _unit: "pixelsUnit",
                                             _value: 0.74983154296875,
                                         },
                                         top: {
-                                            _unit: "pointsUnit",
+                                            _unit: "pixelsUnit",
                                             _value: -9.12,
                                         },
                                         right: {
-                                            _unit: "pointsUnit",
+                                            _unit: "pixelsUnit",
                                             _value: 19.70395751953125,
                                         },
                                         bottom: {
-                                            _unit: "pointsUnit",
+                                            _unit: "pixelsUnit",
                                             _value: 0.27600219726562497,
                                         },
                                     },

@@ -1160,7 +1160,7 @@ exports.createSelection = createSelection;
  */
 function createSizeRuler(selectionSize, baseBounds, colorHex, margin) {
     return __awaiter(this, void 0, void 0, function () {
-        var leftTopRulerBounds, leftBottomRulerBounds, bottomLeftRulerBounds, bottomRightRulerBounds;
+        var leftTopRulerBounds, leftBottomRulerBounds, bottomLeftRulerBounds, bottomRightRulerBounds, leftTopLineBounds, leftBottomLineBounds, bottomLeftLineBounds, bottomRightLineBounds;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -1200,8 +1200,44 @@ function createSizeRuler(selectionSize, baseBounds, colorHex, margin) {
                     return [4 /*yield*/, createVectorNoOutline(bottomRightRulerBounds, "")];
                 case 4:
                     _a.sent();
-                    return [4 /*yield*/, createSelection(leftTopRulerBounds)];
+                    leftTopLineBounds = {
+                        left: Math.ceil(baseBounds.left - (selectionSize.width / 2 + margin + selectionSize.height / 2)),
+                        right: baseBounds.left - (selectionSize.width / 2 + margin - selectionSize.height),
+                        top: baseBounds.top,
+                        bottom: baseBounds.top + selectionSize.height,
+                    };
+                    leftBottomLineBounds = {
+                        left: Math.ceil(baseBounds.left - (selectionSize.width / 2 + margin + selectionSize.height / 2)),
+                        right: baseBounds.left - (selectionSize.width / 2 + margin - selectionSize.height),
+                        top: Math.ceil(baseBounds.left - (selectionSize.width / 2 + margin + selectionSize.height / 2)),
+                        bottom: baseBounds.bottom,
+                    };
+                    bottomLeftLineBounds = {
+                        left: baseBounds.left,
+                        right: baseBounds.left + selectionSize.width,
+                        top: Math.ceil(baseBounds.bottom + (selectionSize.width / 2 + margin + selectionSize.height / 2)),
+                        bottom: baseBounds.bottom + (selectionSize.width / 2 + margin - selectionSize.height),
+                    };
+                    bottomRightLineBounds = {
+                        left: baseBounds.right - selectionSize.height,
+                        right: baseBounds.right - selectionSize.width,
+                        top: Math.ceil(baseBounds.bottom + (selectionSize.width / 2 + margin + selectionSize.height / 2)),
+                        bottom: baseBounds.bottom + (selectionSize.width / 2 + margin - selectionSize.height),
+                    };
+                    return [4 /*yield*/, createVectorNoOutline(leftTopLineBounds, "")];
                 case 5:
+                    _a.sent();
+                    return [4 /*yield*/, createVectorNoOutline(leftBottomLineBounds, "")];
+                case 6:
+                    _a.sent();
+                    return [4 /*yield*/, createVectorNoOutline(bottomLeftLineBounds, "")];
+                case 7:
+                    _a.sent();
+                    return [4 /*yield*/, createVectorNoOutline(bottomRightLineBounds, "")];
+                case 8:
+                    _a.sent();
+                    return [4 /*yield*/, createSelection(leftTopRulerBounds)];
+                case 9:
                     _a.sent();
                     return [2 /*return*/];
             }
