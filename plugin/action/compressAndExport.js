@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fuck = exports.drawRuler = exports.mergeMainToSmartObject = void 0;
+exports.fuck = exports.drawRuler = exports.mergeMainToSmartObjectUnCompress = exports.mergeMainToSmartObjectCompress = void 0;
 var layerComponent = require("../module/layercomponent");
 var names = require("../module/names");
 var folder = require("../module/floder");
@@ -54,7 +54,7 @@ var fuckingMargin = 20;
  * 不保留margin/直接缩放，通过判断大小
  *
  */
-function mergeMainToSmartObject() {
+function mergeMainToSmartObjectCompress() {
     return __awaiter(this, void 0, void 0, function () {
         var acitveDocumet, layerSize, _a, _b, layerBounds;
         return __generator(this, function (_c) {
@@ -167,15 +167,118 @@ function mergeMainToSmartObject() {
                     return [4 /*yield*/, layerComponent.convertToSmartObject()];
                 case 28:
                     _c.sent();
-                    return [4 /*yield*/, drawRuler()];
-                case 29:
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.mergeMainToSmartObjectCompress = mergeMainToSmartObjectCompress;
+function mergeMainToSmartObjectUnCompress() {
+    return __awaiter(this, void 0, void 0, function () {
+        var acitveDocumet, layerSize, _a, _b, layerBounds;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    acitveDocumet = layerComponent.activeDocument();
+                    // select layer by name has problem
+                    return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
+                case 1:
+                    // select layer by name has problem
+                    _c.sent();
+                    /**对于正常的mask会有锯齿 */
+                    //await layerComponent.levels();
+                    return [4 /*yield*/, layerComponent.deSelect()];
+                case 2:
+                    /**对于正常的mask会有锯齿 */
+                    //await layerComponent.levels();
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(true, true)];
+                case 3:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.hideLayers()];
+                case 4:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
+                case 5:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(false, false, true)];
+                case 6:
+                    _c.sent();
+                    //await layerComponent.mergeVisible();
+                    return [4 /*yield*/, layerComponent.convertToSmartObject()];
+                case 7:
+                    //await layerComponent.mergeVisible();
+                    _c.sent();
+                    //await layerComponent.rasterizeTargetLayer();
+                    //await layerComponent.mergeLayerNew();
+                    //await layerComponent.convertToSmartObject();
+                    return [4 /*yield*/, layerComponent.setLayerName(names.__DO_ACTION__)];
+                case 8:
+                    //await layerComponent.rasterizeTargetLayer();
+                    //await layerComponent.mergeLayerNew();
+                    //await layerComponent.convertToSmartObject();
+                    _c.sent();
+                    _b = (_a = layerComponent).getElementSize;
+                    return [4 /*yield*/, acitveDocumet.activeLayers[0]];
+                case 9: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
+                case 10:
+                    layerSize = _c.sent();
+                    layerBounds = layerComponent.activeDocument().activeLayers[0].bounds;
+                    if (!((layerBounds.bottom >= 0 || layerBounds.left >= 0 || layerBounds.right >= 0 || layerBounds.top >= 0) &&
+                        acitveDocumet.height === acitveDocumet.width)) return [3 /*break*/, 12];
+                    console.log(names.__MAIN_DETAIL__ + " MODE");
+                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
+                case 11:
+                    _c.sent();
+                    return [3 /*break*/, 17];
+                case 12:
+                    if (!(layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize)) return [3 /*break*/, 15];
+                    console.log(names.__MAIN__ + " SIZE > " + fuckingExportSize);
+                    return [4 /*yield*/, layerComponent.cropToSquare(fuckingMargin)];
+                case 13:
+                    _c.sent();
+                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
+                case 14:
+                    _c.sent();
+                    return [3 /*break*/, 17];
+                case 15:
+                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 17];
+                    console.log(names.__MAIN__ + " SIZE < " + fuckingExportSize);
+                    return [4 /*yield*/, layerComponent.cropToSize(fuckingExportSize, fuckingExportSize)];
+                case 16:
+                    _c.sent();
+                    _c.label = 17;
+                case 17: 
+                /**
+                 * save SIZE layer, if it has, drawRuler
+                 */
+                return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers(["^" + names.__SIZE__])];
+                case 18:
+                    /**
+                     * save SIZE layer, if it has, drawRuler
+                     */
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.createBGLayer()];
+                case 19:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.fillWhite()];
+                case 20:
+                    _c.sent();
+                    /**
+                     * re reasterize smart layer can zip file
+                     */
+                    return [4 /*yield*/, layerComponent.selectLayerByName(names.__DO_ACTION__)];
+                case 21:
+                    /**
+                     * re reasterize smart layer can zip file
+                     */
                     _c.sent();
                     return [2 /*return*/];
             }
         });
     });
 }
-exports.mergeMainToSmartObject = mergeMainToSmartObject;
+exports.mergeMainToSmartObjectUnCompress = mergeMainToSmartObjectUnCompress;
 function drawRuler() {
     return __awaiter(this, void 0, void 0, function () {
         var acitveDocumet, layerName, size, layerBounds;
@@ -215,7 +318,8 @@ exports.drawRuler = drawRuler;
  * todo
  * pick folder and compress to 1500x1500, export jpg and tif
  */
-function fuck() {
+function fuck(compress) {
+    if (compress === void 0) { compress = true; }
     return __awaiter(this, void 0, void 0, function () {
         var pickFolder, _a, _b, _c;
         var _this = this;
@@ -264,30 +368,30 @@ function fuck() {
                                     case 1:
                                         _a.sent();
                                         _a.label = 2;
-                                    case 2: 
-                                    /**
-                                     * do something
-                                     */
-                                    return [4 /*yield*/, mergeMainToSmartObject()];
+                                    case 2:
+                                        if (!(compress === false)) return [3 /*break*/, 4];
+                                        return [4 /*yield*/, mergeMainToSmartObjectUnCompress()];
                                     case 3:
-                                        /**
-                                         * do something
-                                         */
                                         _a.sent();
-                                        return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath)];
-                                    case 4:
-                                        jpegFolderSymbol = _a.sent();
-                                        return [4 /*yield*/, save.saveToJPEG(jpegFolderSymbol, entryPath.entrySymbol.name)];
+                                        return [3 /*break*/, 6];
+                                    case 4: return [4 /*yield*/, mergeMainToSmartObjectCompress()];
                                     case 5:
                                         _a.sent();
+                                        _a.label = 6;
+                                    case 6: return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath)];
+                                    case 7:
+                                        jpegFolderSymbol = _a.sent();
+                                        return [4 /*yield*/, save.saveToJPEG(jpegFolderSymbol, entryPath.entrySymbol.name)];
+                                    case 8:
+                                        _a.sent();
                                         return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath + entryPath.relateivePath.replace(/.*([\\|\/]).*/gm, "$1TIFF"))];
-                                    case 6:
+                                    case 9:
                                         tiffFolderSymbol = _a.sent();
                                         return [4 /*yield*/, save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name)];
-                                    case 7:
+                                    case 10:
                                         _a.sent();
                                         return [4 /*yield*/, app.activeDocument.close()];
-                                    case 8:
+                                    case 11:
                                         _a.sent();
                                         return [2 /*return*/];
                                 }

@@ -3,6 +3,7 @@ import * as names from "../module/names";
 import * as folder from "../module/floder";
 import * as save from "../module/save";
 import * as text from "../module/text";
+import { cpuUsage } from "process";
 
 const app = require("photoshop").app;
 
@@ -18,7 +19,7 @@ const fuckingMargin: number = 20;
  * 不保留margin/直接缩放，通过判断大小
  *
  */
-export async function mergeMainToSmartObject() {
+export async function mergeMainToSmartObjectCompress() {
   let acitveDocumet = layerComponent.activeDocument();
   // select layer by name has problem
   await layerComponent.selectLayerByName(`MAIN`, true);
@@ -68,7 +69,59 @@ export async function mergeMainToSmartObject() {
   await layerComponent.selectLayerByName(names.__DO_ACTION__);
   await layerComponent.rasterizeTargetLayer();
   await layerComponent.convertToSmartObject();
-  await drawRuler();
+  //await drawRuler();
+}
+
+export async function mergeMainToSmartObjectUnCompress() {
+  let acitveDocumet = layerComponent.activeDocument();
+  // select layer by name has problem
+  await layerComponent.selectLayerByName(`MAIN`, true);
+
+  /**对于正常的mask会有锯齿 */
+  //await layerComponent.levels();
+  await layerComponent.deSelect();
+  await layerComponent.selectAllLayersOnTarget(true, true);
+  await layerComponent.hideLayers();
+  await layerComponent.selectLayerByName(`MAIN`, true);
+  await layerComponent.selectAllLayersOnTarget(false, false, true);
+  //await layerComponent.mergeVisible();
+  await layerComponent.convertToSmartObject();
+  //await layerComponent.rasterizeTargetLayer();
+  //await layerComponent.mergeLayerNew();
+  //await layerComponent.convertToSmartObject();
+  await layerComponent.setLayerName(names.__DO_ACTION__);
+  let layerSize = await layerComponent.getElementSize(await acitveDocumet.activeLayers[0]);
+  let layerBounds: layerComponent.IBounds = layerComponent.activeDocument().activeLayers[0].bounds;
+  /**
+   * todo detatil is `MIAN-DETAIL--`
+   */
+  if (
+    (layerBounds.bottom >= 0 || layerBounds.left >= 0 || layerBounds.right >= 0 || layerBounds.top >= 0) &&
+    acitveDocumet.height === acitveDocumet.width
+  ) {
+    console.log(`${names.__MAIN_DETAIL__} MODE`);
+    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
+  } else if (layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize) {
+    console.log(`${names.__MAIN__} SIZE > ${fuckingExportSize}`);
+    await layerComponent.cropToSquare(fuckingMargin);
+    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
+  } else if (layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize) {
+    console.log(`${names.__MAIN__} SIZE < ${fuckingExportSize}`);
+    await layerComponent.cropToSize(fuckingExportSize, fuckingExportSize);
+  }
+  /**
+   * save SIZE layer, if it has, drawRuler
+   */
+  await layerComponent.deleteAllUnVisibleLayers([`^${names.__SIZE__}`]);
+  await layerComponent.createBGLayer();
+  await layerComponent.fillWhite();
+
+  /**
+   * re reasterize smart layer can zip file
+   */
+  await layerComponent.selectLayerByName(names.__DO_ACTION__);
+  //await layerComponent.rasterizeTargetLayer();
+  //await layerComponent.convertToSmartObject();
 }
 
 export async function drawRuler() {
@@ -91,7 +144,7 @@ export async function drawRuler() {
  * todo
  * pick folder and compress to 1500x1500, export jpg and tif
  */
-export async function fuck() {
+export async function fuck(compress = true) {
   app.documents.map(async d => await d.close());
   // 有文档的时候不会重复打开
   if (app.documents.length < 1)
@@ -115,7 +168,11 @@ export async function fuck() {
       /**
        * do something
        */
-      await mergeMainToSmartObject();
+      if (compress === false) {
+        await mergeMainToSmartObjectUnCompress();
+      } else {
+        await mergeMainToSmartObjectCompress();
+      }
 
       /**
        * export jpeg

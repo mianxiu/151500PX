@@ -186,15 +186,18 @@ function upgradeMain() {
                 console.log("initblackmetal");
             };
             initWhiteMetalId = "#init-white-metal";
-            initWhiteMetalFunc = function () { };
+            initWhiteMetalFunc = function () {
+                compressAndExport.fuck(false);
+                //compressAndExport.mergeMainToSmartObjectUnCompress();
+            };
             compressExportId = "#compress-export";
             compressExportFunc = function () {
                 document.querySelector("#nav").setAttribute("type", "back");
                 document.querySelector(uxpPanel).setAttribute("panel", panelMode.compressExport);
                 upgradeNav();
                 upGradePanel();
-                //compressAndExport.fuck();
-                compressAndExport.mergeMainToSmartObject();
+                compressAndExport.fuck();
+                //compressAndExport.mergeMainToSmartObjectCompress();
             };
             dupliceVectorId = "#duplice-vector";
             dupliceVectorFunc = function () {
