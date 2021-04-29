@@ -170,8 +170,8 @@ async function upgradeMain() {
 
   let initWhiteMetalId = `#init-white-metal`;
   let initWhiteMetalFunc = () => {
-    compressAndExport.fuck(false);
-    //compressAndExport.mergeMainToSmartObjectUnCompress();
+    //compressAndExport.fuck(false);
+    compressAndExport.mergeMainToSmartObjectUnCompress();
   };
 
   let compressExportId = `#compress-export`;
@@ -181,8 +181,8 @@ async function upgradeMain() {
     upgradeNav();
     upGradePanel();
 
-    compressAndExport.fuck();
-    //compressAndExport.mergeMainToSmartObjectCompress();
+    //compressAndExport.fuck();
+    compressAndExport.mergeMainToSmartObjectCompress();
   };
 
   let dupliceVectorId = `#duplice-vector`;

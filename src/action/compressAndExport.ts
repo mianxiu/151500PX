@@ -69,7 +69,7 @@ export async function mergeMainToSmartObjectCompress() {
   await layerComponent.selectLayerByName(names.__DO_ACTION__);
   await layerComponent.rasterizeTargetLayer();
   await layerComponent.convertToSmartObject();
-  //await drawRuler();
+  await drawRuler();
 }
 
 export async function mergeMainToSmartObjectUnCompress() {
@@ -84,17 +84,12 @@ export async function mergeMainToSmartObjectUnCompress() {
   await layerComponent.hideLayers();
   await layerComponent.selectLayerByName(`MAIN`, true);
   await layerComponent.selectAllLayersOnTarget(false, false, true);
-  //await layerComponent.mergeVisible();
   await layerComponent.convertToSmartObject();
-  //await layerComponent.rasterizeTargetLayer();
-  //await layerComponent.mergeLayerNew();
-  //await layerComponent.convertToSmartObject();
+
   await layerComponent.setLayerName(names.__DO_ACTION__);
   let layerSize = await layerComponent.getElementSize(await acitveDocumet.activeLayers[0]);
   let layerBounds: layerComponent.IBounds = layerComponent.activeDocument().activeLayers[0].bounds;
-  /**
-   * todo detatil is `MIAN-DETAIL--`
-   */
+
   if (
     (layerBounds.bottom >= 0 || layerBounds.left >= 0 || layerBounds.right >= 0 || layerBounds.top >= 0) &&
     acitveDocumet.height === acitveDocumet.width
@@ -109,19 +104,11 @@ export async function mergeMainToSmartObjectUnCompress() {
     console.log(`${names.__MAIN__} SIZE < ${fuckingExportSize}`);
     await layerComponent.cropToSize(fuckingExportSize, fuckingExportSize);
   }
-  /**
-   * save SIZE layer, if it has, drawRuler
-   */
   await layerComponent.deleteAllUnVisibleLayers([`^${names.__SIZE__}`]);
   await layerComponent.createBGLayer();
   await layerComponent.fillWhite();
 
-  /**
-   * re reasterize smart layer can zip file
-   */
   await layerComponent.selectLayerByName(names.__DO_ACTION__);
-  //await layerComponent.rasterizeTargetLayer();
-  //await layerComponent.convertToSmartObject();
 }
 
 export async function drawRuler() {

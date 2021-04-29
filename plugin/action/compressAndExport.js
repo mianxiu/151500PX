@@ -167,6 +167,9 @@ function mergeMainToSmartObjectCompress() {
                     return [4 /*yield*/, layerComponent.convertToSmartObject()];
                 case 28:
                     _c.sent();
+                    return [4 /*yield*/, drawRuler()];
+                case 29:
+                    _c.sent();
                     return [2 /*return*/];
             }
         });
@@ -204,19 +207,11 @@ function mergeMainToSmartObjectUnCompress() {
                     return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(false, false, true)];
                 case 6:
                     _c.sent();
-                    //await layerComponent.mergeVisible();
                     return [4 /*yield*/, layerComponent.convertToSmartObject()];
                 case 7:
-                    //await layerComponent.mergeVisible();
                     _c.sent();
-                    //await layerComponent.rasterizeTargetLayer();
-                    //await layerComponent.mergeLayerNew();
-                    //await layerComponent.convertToSmartObject();
                     return [4 /*yield*/, layerComponent.setLayerName(names.__DO_ACTION__)];
                 case 8:
-                    //await layerComponent.rasterizeTargetLayer();
-                    //await layerComponent.mergeLayerNew();
-                    //await layerComponent.convertToSmartObject();
                     _c.sent();
                     _b = (_a = layerComponent).getElementSize;
                     return [4 /*yield*/, acitveDocumet.activeLayers[0]];
@@ -248,15 +243,8 @@ function mergeMainToSmartObjectUnCompress() {
                 case 16:
                     _c.sent();
                     _c.label = 17;
-                case 17: 
-                /**
-                 * save SIZE layer, if it has, drawRuler
-                 */
-                return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers(["^" + names.__SIZE__])];
+                case 17: return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers(["^" + names.__SIZE__])];
                 case 18:
-                    /**
-                     * save SIZE layer, if it has, drawRuler
-                     */
                     _c.sent();
                     return [4 /*yield*/, layerComponent.createBGLayer()];
                 case 19:
@@ -264,14 +252,8 @@ function mergeMainToSmartObjectUnCompress() {
                     return [4 /*yield*/, layerComponent.fillWhite()];
                 case 20:
                     _c.sent();
-                    /**
-                     * re reasterize smart layer can zip file
-                     */
                     return [4 /*yield*/, layerComponent.selectLayerByName(names.__DO_ACTION__)];
                 case 21:
-                    /**
-                     * re reasterize smart layer can zip file
-                     */
                     _c.sent();
                     return [2 /*return*/];
             }

@@ -187,8 +187,8 @@ function upgradeMain() {
             };
             initWhiteMetalId = "#init-white-metal";
             initWhiteMetalFunc = function () {
-                compressAndExport.fuck(false);
-                //compressAndExport.mergeMainToSmartObjectUnCompress();
+                //compressAndExport.fuck(false);
+                compressAndExport.mergeMainToSmartObjectUnCompress();
             };
             compressExportId = "#compress-export";
             compressExportFunc = function () {
@@ -196,8 +196,8 @@ function upgradeMain() {
                 document.querySelector(uxpPanel).setAttribute("panel", panelMode.compressExport);
                 upgradeNav();
                 upGradePanel();
-                compressAndExport.fuck();
-                //compressAndExport.mergeMainToSmartObjectCompress();
+                //compressAndExport.fuck();
+                compressAndExport.mergeMainToSmartObjectCompress();
             };
             dupliceVectorId = "#duplice-vector";
             dupliceVectorFunc = function () {
