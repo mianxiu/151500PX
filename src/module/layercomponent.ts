@@ -5,7 +5,7 @@
 
 import * as batchPlayConfig from "./batchplayconfig";
 import * as names from "./names";
-import { createText } from "./text";
+import { createText, ISizeUnit } from "./text";
 const app = require("photoshop").app;
 const batchPlay = require("photoshop").action.batchPlay;
 
@@ -673,6 +673,8 @@ export async function transform(horizontal: number, vertical: number, width: num
 }
 
 export async function createVectorNoOutline(bounds: IBounds, colorHex: string) {
+  let rgb: RGBColor = await hex2rgb(colorHex);
+
   await batchPlay(
     [
       {
@@ -688,9 +690,9 @@ export async function createVectorNoOutline(bounds: IBounds, colorHex: string) {
             _obj: "solidColorLayer",
             color: {
               _obj: "RGBColor",
-              red: 11.00372314453125,
-              grain: 87.0025634765625,
-              blue: 133.99795532226562,
+              red: rgb.r,
+              grain: rgb.g,
+              blue: rgb.b,
             },
           },
           shape: {
@@ -736,10 +738,10 @@ export async function createVectorNoOutline(bounds: IBounds, colorHex: string) {
             fillEnabled: true,
             strokeStyleLineWidth: {
               _unit: "pixelsUnit",
-              _value: 1,
+              _value: 0,
             },
             strokeStyleLineDashOffset: {
-              _unit: "pointsUnit",
+              _unit: "pixelsUnit",
               _value: 0,
             },
             strokeStyleMiterLimit: 100,
@@ -770,9 +772,9 @@ export async function createVectorNoOutline(bounds: IBounds, colorHex: string) {
               _obj: "solidColorLayer",
               color: {
                 _obj: "RGBColor",
-                red: 0,
-                grain: 0,
-                blue: 0,
+                red: rgb.r,
+                grain: rgb.g,
+                blue: rgb.b,
               },
             },
             strokeStyleResolution: 300,
@@ -839,9 +841,37 @@ export async function createSelection(bounds: IBounds) {
   );
 }
 
+/**
+ *
+ */
 interface ISize {
   width: number;
   height: number;
+}
+
+interface RGBColor {
+  r: number;
+  g: number;
+  b: number;
+}
+
+export async function hex2rgb(hex: string): Promise<RGBColor> {
+  if (/[0-9a-f]{6}/gi.test(hex) === true) {
+    let rgbString = hex.replace(
+      /([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/gi,
+      function (match, p1, p2, p3, offset, string) {
+        // p1 is nondigits, p2 digits, and p3 non-alphanumerics
+        return [p1, p2, p3].join(" - ");
+      }
+    );
+    let h = rgbString.split(`-`);
+    console.log(h);
+    return {
+      r: parseInt(h[0], 16),
+      g: parseInt(h[1], 16),
+      b: parseInt(h[2], 16),
+    };
+  }
 }
 
 /**
@@ -851,7 +881,15 @@ interface ISize {
  * @param height
  * @param unit in|cm|mm
  */
-export async function createSizeRuler(selectionSize: ISize, baseBounds: IBounds, colorHex: string, margin: number) {
+export async function createSizeRuler(
+  sizeString: ISizeUnit[],
+  selectionSize: ISize,
+  baseBounds: IBounds,
+  colorHex: string,
+  margin: number,
+  canvasExportSize: number,
+  convasMargin: number
+) {
   let leftTopRulerBounds: IBounds = {
     left: baseBounds.left - (selectionSize.width + margin),
     right: baseBounds.left - margin,
@@ -878,10 +916,10 @@ export async function createSizeRuler(selectionSize: ISize, baseBounds: IBounds,
     bottom: baseBounds.bottom + (selectionSize.width + margin),
   };
 
-  await createVectorNoOutline(leftTopRulerBounds, ``);
-  await createVectorNoOutline(leftBottomRulerBounds, ``);
-  await createVectorNoOutline(bottomLeftRulerBounds, ``);
-  await createVectorNoOutline(bottomRightRulerBounds, ``);
+  await createVectorNoOutline(leftTopRulerBounds, `ff0000`);
+  await createVectorNoOutline(leftBottomRulerBounds, `ff0000`);
+  await createVectorNoOutline(bottomLeftRulerBounds, `ff0000`);
+  await createVectorNoOutline(bottomRightRulerBounds, `ff0000`);
 
   let leftTopLineBounds: IBounds = {
     left: Math.ceil(baseBounds.left - (selectionSize.width / 2 + margin + selectionSize.height / 2)),
@@ -911,14 +949,43 @@ export async function createSizeRuler(selectionSize: ISize, baseBounds: IBounds,
     bottom: baseBounds.bottom + (selectionSize.width / 2 + margin - selectionSize.height),
   };
 
-  await createVectorNoOutline(leftTopLineBounds, ``);
-  await createVectorNoOutline(leftBottomLineBounds, ``);
-  await createVectorNoOutline(bottomLeftLineBounds, ``);
-  await createVectorNoOutline(bottomRightLineBounds, ``);
+  await createVectorNoOutline(leftTopLineBounds, `ff0000`);
+  await createVectorNoOutline(leftBottomLineBounds, `ff0000`);
+  await createVectorNoOutline(bottomLeftLineBounds, `ff0000`);
+  await createVectorNoOutline(bottomRightLineBounds, `ff0000`);
 
-  await createSelection(leftTopRulerBounds);
+  //await createSelection(leftTopRulerBounds);
 
   //await createLayer(`RULER`);
 
-  //await createText(`${length}in`, 32);
+  await createText(
+    {
+      horizotal: (leftTopRulerBounds.left / canvasExportSize) * 100,
+      vertical: 50,
+    },
+    {
+      left: leftTopLineBounds.left,
+      right: leftTopLineBounds.right,
+      top: canvasExportSize / 2,
+      bottom: canvasExportSize / 2,
+    },
+    `123in`,
+    72,
+    `vertical`
+  );
+
+  await createText(
+    {
+      horizotal: 50,
+      vertical: (bottomRightLineBounds.top / canvasExportSize) * 100,
+    },
+    {
+      left: leftTopLineBounds.left,
+      right: leftTopLineBounds.right,
+      top: canvasExportSize / 2,
+      bottom: canvasExportSize / 2,
+    },
+    `${sizeString[1].num}${sizeString[1].unit}`,
+    72
+  );
 }

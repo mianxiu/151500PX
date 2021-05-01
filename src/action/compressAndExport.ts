@@ -124,7 +124,15 @@ export async function drawRuler() {
   await layerComponent.selectLayerByName(names.__DO_ACTION__);
 
   let layerBounds: layerComponent.IBounds = await layerComponent.activeDocument().activeLayers[0].bounds;
-  await layerComponent.createSizeRuler({ width: 116, height: 18 }, layerBounds, `#fff`, 10);
+  await layerComponent.createSizeRuler(
+    size,
+    { width: 116, height: 18 },
+    layerBounds,
+    `#fff`,
+    10,
+    fuckingExportSize,
+    fuckingMargin
+  );
 }
 
 /**

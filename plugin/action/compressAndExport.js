@@ -287,7 +287,7 @@ function drawRuler() {
                     return [4 /*yield*/, layerComponent.activeDocument().activeLayers[0].bounds];
                 case 7:
                     layerBounds = _a.sent();
-                    return [4 /*yield*/, layerComponent.createSizeRuler({ width: 116, height: 18 }, layerBounds, "#fff", 10)];
+                    return [4 /*yield*/, layerComponent.createSizeRuler(size, { width: 116, height: 18 }, layerBounds, "#fff", 10, fuckingExportSize, fuckingMargin)];
                 case 8:
                     _a.sent();
                     return [2 /*return*/];

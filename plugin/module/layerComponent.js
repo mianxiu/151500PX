@@ -40,9 +40,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createSizeRuler = exports.createSelection = exports.createVectorNoOutline = exports.transform = exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.copyToLayer = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
+exports.createSizeRuler = exports.hex2rgb = exports.createSelection = exports.createVectorNoOutline = exports.transform = exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.copyToLayer = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var names = require("./names");
+var text_1 = require("./text");
 var app = require("photoshop").app;
 var batchPlay = require("photoshop").action.batchPlay;
 /**
@@ -974,123 +975,127 @@ function transform(horizontal, vertical, width, height, angle) {
 exports.transform = transform;
 function createVectorNoOutline(bounds, colorHex) {
     return __awaiter(this, void 0, void 0, function () {
+        var rgb;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, batchPlay([
-                        {
-                            _obj: "make",
-                            _target: [
-                                {
-                                    _ref: "contentLayer",
-                                },
-                            ],
-                            using: {
-                                _obj: "contentLayer",
-                                type: {
-                                    _obj: "solidColorLayer",
-                                    color: {
-                                        _obj: "RGBColor",
-                                        red: 11.00372314453125,
-                                        grain: 87.0025634765625,
-                                        blue: 133.99795532226562,
+                case 0: return [4 /*yield*/, hex2rgb(colorHex)];
+                case 1:
+                    rgb = _a.sent();
+                    return [4 /*yield*/, batchPlay([
+                            {
+                                _obj: "make",
+                                _target: [
+                                    {
+                                        _ref: "contentLayer",
                                     },
-                                },
-                                shape: {
-                                    _obj: "rectangle",
-                                    unitValueQuadVersion: 1,
-                                    top: {
-                                        _unit: "pixelsUnit",
-                                        _value: bounds.top,
-                                    },
-                                    left: {
-                                        _unit: "pixelsUnit",
-                                        _value: bounds.left,
-                                    },
-                                    bottom: {
-                                        _unit: "pixelsUnit",
-                                        _value: bounds.bottom,
-                                    },
-                                    right: {
-                                        _unit: "pixelsUnit",
-                                        _value: bounds.right,
-                                    },
-                                    topRight: {
-                                        _unit: "pixelsUnit",
-                                        _value: 0,
-                                    },
-                                    topLeft: {
-                                        _unit: "pixelsUnit",
-                                        _value: 0,
-                                    },
-                                    bottomLeft: {
-                                        _unit: "pixelsUnit",
-                                        _value: 0,
-                                    },
-                                    bottomRight: {
-                                        _unit: "pixelsUnit",
-                                        _value: 0,
-                                    },
-                                },
-                                strokeStyle: {
-                                    _obj: "strokeStyle",
-                                    strokeStyleVersion: 2,
-                                    strokeEnabled: true,
-                                    fillEnabled: true,
-                                    strokeStyleLineWidth: {
-                                        _unit: "pixelsUnit",
-                                        _value: 1,
-                                    },
-                                    strokeStyleLineDashOffset: {
-                                        _unit: "pointsUnit",
-                                        _value: 0,
-                                    },
-                                    strokeStyleMiterLimit: 100,
-                                    strokeStyleLineCapType: {
-                                        _enum: "strokeStyleLineCapType",
-                                        _value: "strokeStyleButtCap",
-                                    },
-                                    strokeStyleLineJoinType: {
-                                        _enum: "strokeStyleLineJoinType",
-                                        _value: "strokeStyleMiterJoin",
-                                    },
-                                    strokeStyleLineAlignment: {
-                                        _enum: "strokeStyleLineAlignment",
-                                        _value: "strokeStyleAlignCenter",
-                                    },
-                                    strokeStyleScaleLock: false,
-                                    strokeStyleStrokeAdjust: false,
-                                    strokeStyleLineDashSet: [],
-                                    strokeStyleBlendMode: {
-                                        _enum: "blendMode",
-                                        _value: "normal",
-                                    },
-                                    strokeStyleOpacity: {
-                                        _unit: "percentUnit",
-                                        _value: 100,
-                                    },
-                                    strokeStyleContent: {
+                                ],
+                                using: {
+                                    _obj: "contentLayer",
+                                    type: {
                                         _obj: "solidColorLayer",
                                         color: {
                                             _obj: "RGBColor",
-                                            red: 0,
-                                            grain: 0,
-                                            blue: 0,
+                                            red: rgb.r,
+                                            grain: rgb.g,
+                                            blue: rgb.b,
                                         },
                                     },
-                                    strokeStyleResolution: 300,
+                                    shape: {
+                                        _obj: "rectangle",
+                                        unitValueQuadVersion: 1,
+                                        top: {
+                                            _unit: "pixelsUnit",
+                                            _value: bounds.top,
+                                        },
+                                        left: {
+                                            _unit: "pixelsUnit",
+                                            _value: bounds.left,
+                                        },
+                                        bottom: {
+                                            _unit: "pixelsUnit",
+                                            _value: bounds.bottom,
+                                        },
+                                        right: {
+                                            _unit: "pixelsUnit",
+                                            _value: bounds.right,
+                                        },
+                                        topRight: {
+                                            _unit: "pixelsUnit",
+                                            _value: 0,
+                                        },
+                                        topLeft: {
+                                            _unit: "pixelsUnit",
+                                            _value: 0,
+                                        },
+                                        bottomLeft: {
+                                            _unit: "pixelsUnit",
+                                            _value: 0,
+                                        },
+                                        bottomRight: {
+                                            _unit: "pixelsUnit",
+                                            _value: 0,
+                                        },
+                                    },
+                                    strokeStyle: {
+                                        _obj: "strokeStyle",
+                                        strokeStyleVersion: 2,
+                                        strokeEnabled: true,
+                                        fillEnabled: true,
+                                        strokeStyleLineWidth: {
+                                            _unit: "pixelsUnit",
+                                            _value: 0,
+                                        },
+                                        strokeStyleLineDashOffset: {
+                                            _unit: "pixelsUnit",
+                                            _value: 0,
+                                        },
+                                        strokeStyleMiterLimit: 100,
+                                        strokeStyleLineCapType: {
+                                            _enum: "strokeStyleLineCapType",
+                                            _value: "strokeStyleButtCap",
+                                        },
+                                        strokeStyleLineJoinType: {
+                                            _enum: "strokeStyleLineJoinType",
+                                            _value: "strokeStyleMiterJoin",
+                                        },
+                                        strokeStyleLineAlignment: {
+                                            _enum: "strokeStyleLineAlignment",
+                                            _value: "strokeStyleAlignCenter",
+                                        },
+                                        strokeStyleScaleLock: false,
+                                        strokeStyleStrokeAdjust: false,
+                                        strokeStyleLineDashSet: [],
+                                        strokeStyleBlendMode: {
+                                            _enum: "blendMode",
+                                            _value: "normal",
+                                        },
+                                        strokeStyleOpacity: {
+                                            _unit: "percentUnit",
+                                            _value: 100,
+                                        },
+                                        strokeStyleContent: {
+                                            _obj: "solidColorLayer",
+                                            color: {
+                                                _obj: "RGBColor",
+                                                red: rgb.r,
+                                                grain: rgb.g,
+                                                blue: rgb.b,
+                                            },
+                                        },
+                                        strokeStyleResolution: 300,
+                                    },
+                                },
+                                layerID: 281,
+                                _isCommand: true,
+                                _options: {
+                                    dialogOptions: "dontDisplay",
                                 },
                             },
-                            layerID: 281,
-                            _isCommand: true,
-                            _options: {
-                                dialogOptions: "dontDisplay",
-                            },
-                        },
-                    ], {
-                        synchronousExecution: false,
-                        modalBehavior: "fail",
-                    })];
-                case 1:
+                        ], {
+                            synchronousExecution: false,
+                            modalBehavior: "fail",
+                        })];
+                case 2:
                     _a.sent();
                     return [2 /*return*/];
             }
@@ -1151,6 +1156,28 @@ function createSelection(bounds) {
     });
 }
 exports.createSelection = createSelection;
+function hex2rgb(hex) {
+    return __awaiter(this, void 0, void 0, function () {
+        var rgbString, h;
+        return __generator(this, function (_a) {
+            if (/[0-9a-f]{6}/gi.test(hex) === true) {
+                rgbString = hex.replace(/([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/gi, function (match, p1, p2, p3, offset, string) {
+                    // p1 is nondigits, p2 digits, and p3 non-alphanumerics
+                    return [p1, p2, p3].join(" - ");
+                });
+                h = rgbString.split("-");
+                console.log(h);
+                return [2 /*return*/, {
+                        r: parseInt(h[0], 16),
+                        g: parseInt(h[1], 16),
+                        b: parseInt(h[2], 16),
+                    }];
+            }
+            return [2 /*return*/];
+        });
+    });
+}
+exports.hex2rgb = hex2rgb;
 /**
  *
  * @param length
@@ -1158,7 +1185,7 @@ exports.createSelection = createSelection;
  * @param height
  * @param unit in|cm|mm
  */
-function createSizeRuler(selectionSize, baseBounds, colorHex, margin) {
+function createSizeRuler(sizeString, selectionSize, baseBounds, colorHex, margin, canvasExportSize, convasMargin) {
     return __awaiter(this, void 0, void 0, function () {
         var leftTopRulerBounds, leftBottomRulerBounds, bottomLeftRulerBounds, bottomRightRulerBounds, leftTopLineBounds, leftBottomLineBounds, bottomLeftLineBounds, bottomRightLineBounds;
         return __generator(this, function (_a) {
@@ -1188,16 +1215,16 @@ function createSizeRuler(selectionSize, baseBounds, colorHex, margin) {
                         top: baseBounds.bottom + margin,
                         bottom: baseBounds.bottom + (selectionSize.width + margin),
                     };
-                    return [4 /*yield*/, createVectorNoOutline(leftTopRulerBounds, "")];
+                    return [4 /*yield*/, createVectorNoOutline(leftTopRulerBounds, "ff0000")];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(leftBottomRulerBounds, "")];
+                    return [4 /*yield*/, createVectorNoOutline(leftBottomRulerBounds, "ff0000")];
                 case 2:
                     _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(bottomLeftRulerBounds, "")];
+                    return [4 /*yield*/, createVectorNoOutline(bottomLeftRulerBounds, "ff0000")];
                 case 3:
                     _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(bottomRightRulerBounds, "")];
+                    return [4 /*yield*/, createVectorNoOutline(bottomRightRulerBounds, "ff0000")];
                 case 4:
                     _a.sent();
                     leftTopLineBounds = {
@@ -1224,20 +1251,43 @@ function createSizeRuler(selectionSize, baseBounds, colorHex, margin) {
                         top: Math.ceil(baseBounds.bottom + (selectionSize.width / 2 + margin + selectionSize.height / 2)),
                         bottom: baseBounds.bottom + (selectionSize.width / 2 + margin - selectionSize.height),
                     };
-                    return [4 /*yield*/, createVectorNoOutline(leftTopLineBounds, "")];
+                    return [4 /*yield*/, createVectorNoOutline(leftTopLineBounds, "ff0000")];
                 case 5:
                     _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(leftBottomLineBounds, "")];
+                    return [4 /*yield*/, createVectorNoOutline(leftBottomLineBounds, "ff0000")];
                 case 6:
                     _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(bottomLeftLineBounds, "")];
+                    return [4 /*yield*/, createVectorNoOutline(bottomLeftLineBounds, "ff0000")];
                 case 7:
                     _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(bottomRightLineBounds, "")];
+                    return [4 /*yield*/, createVectorNoOutline(bottomRightLineBounds, "ff0000")];
                 case 8:
                     _a.sent();
-                    return [4 /*yield*/, createSelection(leftTopRulerBounds)];
+                    //await createSelection(leftTopRulerBounds);
+                    //await createLayer(`RULER`);
+                    return [4 /*yield*/, text_1.createText({
+                            horizotal: (leftTopRulerBounds.left / canvasExportSize) * 100,
+                            vertical: 50,
+                        }, {
+                            left: leftTopLineBounds.left,
+                            right: leftTopLineBounds.right,
+                            top: canvasExportSize / 2,
+                            bottom: canvasExportSize / 2,
+                        }, "123in", 72, "vertical")];
                 case 9:
+                    //await createSelection(leftTopRulerBounds);
+                    //await createLayer(`RULER`);
+                    _a.sent();
+                    return [4 /*yield*/, text_1.createText({
+                            horizotal: 50,
+                            vertical: (bottomRightLineBounds.top / canvasExportSize) * 100,
+                        }, {
+                            left: leftTopLineBounds.left,
+                            right: leftTopLineBounds.right,
+                            top: canvasExportSize / 2,
+                            bottom: canvasExportSize / 2,
+                        }, "" + sizeString[1].num + sizeString[1].unit, 72)];
+                case 10:
                     _a.sent();
                     return [2 /*return*/];
             }

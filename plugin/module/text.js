@@ -163,9 +163,9 @@ exports.convertSizeString = convertSizeString;
  * @param bounds
  * @param textString
  * @param fontSize
- * @param orientation horizontal | horizontal
+ * @param orientation horizontal | vertical
  */
-function createText(bounds, textString, fontSize, orientation) {
+function createText(placePercent, bounds, textString, fontSize, orientation) {
     if (fontSize === void 0) { fontSize = 12; }
     if (orientation === void 0) { orientation = "horizontal"; }
     return __awaiter(this, void 0, void 0, function () {
@@ -203,11 +203,11 @@ function createText(bounds, textString, fontSize, orientation) {
                                         _obj: "paint",
                                         horizontal: {
                                             _unit: "percentUnit",
-                                            _value: 77.49721782932112,
+                                            _value: placePercent.horizotal,
                                         },
                                         vertical: {
                                             _unit: "percentUnit",
-                                            _value: 29.138981173864877,
+                                            _value: placePercent.vertical,
                                         },
                                     },
                                     textGridding: {
@@ -216,49 +216,11 @@ function createText(bounds, textString, fontSize, orientation) {
                                     },
                                     orientation: {
                                         _enum: "orientation",
-                                        _value: "horizontal",
+                                        _value: orientation,
                                     },
                                     antiAlias: {
                                         _enum: "antiAliasType",
                                         _value: "antiAliasSharp",
-                                    },
-                                    bounds: {
-                                        _obj: "bounds",
-                                        left: {
-                                            _unit: "pixelsUnit",
-                                            _value: bounds.left,
-                                        },
-                                        top: {
-                                            _unit: "pixelsUnit",
-                                            _value: bounds.top,
-                                        },
-                                        right: {
-                                            _unit: "pixelsUnit",
-                                            _value: bounds.right,
-                                        },
-                                        bottom: {
-                                            _unit: "pixelsUnit",
-                                            _value: bounds.bottom,
-                                        },
-                                    },
-                                    boundingBox: {
-                                        _obj: "boundingBox",
-                                        left: {
-                                            _unit: "pixelsUnit",
-                                            _value: 0.74983154296875,
-                                        },
-                                        top: {
-                                            _unit: "pixelsUnit",
-                                            _value: -9.12,
-                                        },
-                                        right: {
-                                            _unit: "pixelsUnit",
-                                            _value: 19.70395751953125,
-                                        },
-                                        bottom: {
-                                            _unit: "pixelsUnit",
-                                            _value: 0.27600219726562497,
-                                        },
                                     },
                                     textShape: [
                                         {
@@ -284,15 +246,15 @@ function createText(bounds, textString, fontSize, orientation) {
                                             columnCount: 1,
                                             rowMajorOrder: true,
                                             rowGutter: {
-                                                _unit: "pointsUnit",
+                                                _unit: "pixelsUnit",
                                                 _value: 0,
                                             },
                                             columnGutter: {
-                                                _unit: "pointsUnit",
+                                                _unit: "pixelsUnit",
                                                 _value: 0,
                                             },
                                             spacing: {
-                                                _unit: "pointsUnit",
+                                                _unit: "pixelsUnit",
                                                 _value: 0,
                                             },
                                             frameBaselineAlignment: {
@@ -300,7 +262,7 @@ function createText(bounds, textString, fontSize, orientation) {
                                                 _value: "alignByAscent",
                                             },
                                             firstBaselineMinimum: {
-                                                _unit: "pointsUnit",
+                                                _unit: "pixelsUnit",
                                                 _value: 0,
                                             },
                                             base: {
@@ -325,11 +287,11 @@ function createText(bounds, textString, fontSize, orientation) {
                                                 fontTechnology: 2,
                                                 fontAvailable: true,
                                                 size: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: fontSize,
                                                 },
                                                 impliedFontSize: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: fontSize,
                                                 },
                                                 horizontalScale: 100,
@@ -339,11 +301,11 @@ function createText(bounds, textString, fontSize, orientation) {
                                                 autoLeading: true,
                                                 tracking: 0,
                                                 baselineShift: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 impliedBaselineShift: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 fontCaps: {
@@ -359,15 +321,15 @@ function createText(bounds, textString, fontSize, orientation) {
                                                     _value: "kashidaDefault",
                                                 },
                                                 diacXOffset: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 diacYOffset: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 markYDistFromBaseline: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 baseline: {
@@ -444,11 +406,11 @@ function createText(bounds, textString, fontSize, orientation) {
                                                     fontTechnology: 2,
                                                     fontAvailable: true,
                                                     size: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 12,
                                                     },
                                                     impliedFontSize: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 12,
                                                     },
                                                     horizontalScale: 100,
@@ -458,11 +420,11 @@ function createText(bounds, textString, fontSize, orientation) {
                                                     autoLeading: true,
                                                     tracking: 0,
                                                     baselineShift: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 0,
                                                     },
                                                     impliedBaselineShift: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 0,
                                                     },
                                                     characterRotation: 0,
@@ -491,15 +453,15 @@ function createText(bounds, textString, fontSize, orientation) {
                                                         _value: "diacVPosOpenType",
                                                     },
                                                     diacXOffset: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 0,
                                                     },
                                                     diacYOffset: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 0,
                                                     },
                                                     markYDistFromBaseline: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 100,
                                                     },
                                                     baseline: {
@@ -519,7 +481,7 @@ function createText(bounds, textString, fontSize, orientation) {
                                                         _value: "underlineOff",
                                                     },
                                                     underlineOffset: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 0,
                                                     },
                                                     ligature: true,
@@ -603,11 +565,11 @@ function createText(bounds, textString, fontSize, orientation) {
                                                         _value: "miterJoin",
                                                     },
                                                     lineWidth: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 1,
                                                     },
                                                     miterLimit: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 4,
                                                     },
                                                     lineDashoffset: 0,
@@ -628,43 +590,43 @@ function createText(bounds, textString, fontSize, orientation) {
                                                     _value: "left",
                                                 },
                                                 firstLineIndent: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 impliedFirstLineIndent: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 startIndent: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 impliedStartIndent: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 endIndent: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 impliedEndIndent: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 spaceBefore: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 impliedSpaceBefore: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 spaceAfter: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 impliedSpaceAfter: {
-                                                    _unit: "pointsUnit",
+                                                    _unit: "pixelsUnit",
                                                     _value: 0,
                                                 },
                                                 dropCapMultiplier: 1,
@@ -729,8 +691,8 @@ function createText(bounds, textString, fontSize, orientation) {
                                                     fontTechnology: 0,
                                                     fontAvailable: true,
                                                     size: {
-                                                        _unit: "pointsUnit",
-                                                        _value: 12,
+                                                        _unit: "pixelsUnit",
+                                                        _value: fontSize,
                                                     },
                                                     horizontalScale: 100,
                                                     verticalScale: 100,
@@ -739,7 +701,7 @@ function createText(bounds, textString, fontSize, orientation) {
                                                     autoLeading: true,
                                                     tracking: 0,
                                                     baselineShift: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 0,
                                                     },
                                                     characterRotation: 0,
@@ -764,15 +726,15 @@ function createText(bounds, textString, fontSize, orientation) {
                                                         _value: "diacVPosOpenType",
                                                     },
                                                     diacXOffset: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 0,
                                                     },
                                                     diacYOffset: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 0,
                                                     },
                                                     markYDistFromBaseline: {
-                                                        _unit: "pointsUnit",
+                                                        _unit: "pixelsUnit",
                                                         _value: 0,
                                                     },
                                                     baseline: {
