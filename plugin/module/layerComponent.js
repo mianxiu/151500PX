@@ -1242,8 +1242,8 @@ function createSizeRuler(sizeString, selectionSize, baseBounds, colorHex, margin
                     bottomLeftLineBounds = {
                         left: baseBounds.left,
                         right: baseBounds.left + selectionSize.width,
-                        top: Math.ceil(baseBounds.bottom + (selectionSize.width / 2 + margin + selectionSize.height / 2)),
-                        bottom: baseBounds.bottom + (selectionSize.width / 2 + margin - selectionSize.height),
+                        top: Math.ceil(baseBounds.bottom + (selectionSize.width / 2 + margin + selectionSize.height)),
+                        bottom: baseBounds.bottom + (selectionSize.width / 2 + margin + selectionSize.height * 2),
                     };
                     bottomRightLineBounds = {
                         left: baseBounds.right - selectionSize.height,
