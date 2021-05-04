@@ -222,6 +222,44 @@ function createText(placePercent, bounds, textString, fontSize, orientation) {
                                         _enum: "antiAliasType",
                                         _value: "antiAliasSharp",
                                     },
+                                    bounds: {
+                                        _obj: "bounds",
+                                        left: {
+                                            _unit: "pixelsUnit",
+                                            _value: 0,
+                                        },
+                                        top: {
+                                            _unit: "pixelsUnit",
+                                            _value: -126.720703125,
+                                        },
+                                        right: {
+                                            _unit: "pixelsUnit",
+                                            _value: 543.1640625,
+                                        },
+                                        bottom: {
+                                            _unit: "pixelsUnit",
+                                            _value: 40.752685546875,
+                                        },
+                                    },
+                                    boundingBox: {
+                                        _obj: "boundingBox",
+                                        left: {
+                                            _unit: "pixelsUnit",
+                                            _value: 10.148162841796875,
+                                        },
+                                        top: {
+                                            _unit: "pixelsUnit",
+                                            _value: -110.71771240234375,
+                                        },
+                                        right: {
+                                            _unit: "pixelsUnit",
+                                            _value: 538.08837890625,
+                                        },
+                                        bottom: {
+                                            _unit: "pixelsUnit",
+                                            _value: 32.41304016113281,
+                                        },
+                                    },
                                     textShape: [
                                         {
                                             _obj: "textShape",
@@ -231,7 +269,7 @@ function createText(placePercent, bounds, textString, fontSize, orientation) {
                                             },
                                             orientation: {
                                                 _enum: "orientation",
-                                                _value: "horizontal",
+                                                _value: orientation,
                                             },
                                             transform: {
                                                 _obj: "transform",
@@ -276,7 +314,7 @@ function createText(placePercent, bounds, textString, fontSize, orientation) {
                                         {
                                             _obj: "textStyleRange",
                                             from: 0,
-                                            to: 4,
+                                            to: 8,
                                             textStyle: {
                                                 _obj: "textStyle",
                                                 styleSheetHasParent: true,
@@ -387,9 +425,9 @@ function createText(placePercent, bounds, textString, fontSize, orientation) {
                                                 noBreak: false,
                                                 color: {
                                                     _obj: "RGBColor",
-                                                    red: 0,
-                                                    grain: 0,
-                                                    blue: 0,
+                                                    red: 22.45525225996971,
+                                                    grain: 22.980545572936535,
+                                                    blue: 23.000000528991222,
                                                 },
                                                 strokeColor: {
                                                     _obj: "RGBColor",
@@ -407,11 +445,11 @@ function createText(placePercent, bounds, textString, fontSize, orientation) {
                                                     fontAvailable: true,
                                                     size: {
                                                         _unit: "pixelsUnit",
-                                                        _value: 12,
+                                                        _value: fontSize,
                                                     },
                                                     impliedFontSize: {
                                                         _unit: "pixelsUnit",
-                                                        _value: 12,
+                                                        _value: fontSize,
                                                     },
                                                     horizontalScale: 100,
                                                     verticalScale: 100,
@@ -581,7 +619,7 @@ function createText(placePercent, bounds, textString, fontSize, orientation) {
                                         {
                                             _obj: "paragraphStyleRange",
                                             from: 0,
-                                            to: 4,
+                                            to: 8,
                                             paragraphStyle: {
                                                 _obj: "paragraphStyle",
                                                 styleSheetHasParent: true,
@@ -692,7 +730,7 @@ function createText(placePercent, bounds, textString, fontSize, orientation) {
                                                     fontAvailable: true,
                                                     size: {
                                                         _unit: "pixelsUnit",
-                                                        _value: fontSize,
+                                                        _value: 12,
                                                     },
                                                     horizontalScale: 100,
                                                     verticalScale: 100,
@@ -788,6 +826,8 @@ function createText(placePercent, bounds, textString, fontSize, orientation) {
                                     ],
                                     kerningRange: [],
                                 },
+                                layerID: 972,
+                                _isCommand: true,
                             },
                         ], {
                             synchronousExecution: false,

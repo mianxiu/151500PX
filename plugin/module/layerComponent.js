@@ -1228,28 +1228,28 @@ function createSizeRuler(sizeString, selectionSize, baseBounds, colorHex, margin
                 case 4:
                     _a.sent();
                     leftTopLineBounds = {
-                        left: Math.ceil(baseBounds.left - (selectionSize.width / 2 + margin + selectionSize.height / 2)),
-                        right: baseBounds.left - (selectionSize.width / 2 + margin - selectionSize.height),
+                        left: baseBounds.left - selectionSize.width / 2,
+                        right: baseBounds.left - (selectionSize.height + selectionSize.width / 2),
                         top: baseBounds.top,
-                        bottom: baseBounds.top + selectionSize.height,
+                        bottom: baseBounds.top + selectionSize.width,
                     };
                     leftBottomLineBounds = {
-                        left: Math.ceil(baseBounds.left - (selectionSize.width / 2 + margin + selectionSize.height / 2)),
-                        right: baseBounds.left - (selectionSize.width / 2 + margin - selectionSize.height),
-                        top: Math.ceil(baseBounds.left - (selectionSize.width / 2 + margin + selectionSize.height / 2)),
+                        left: baseBounds.left - selectionSize.width / 2,
+                        right: baseBounds.left - (selectionSize.height + selectionSize.width / 2),
+                        top: baseBounds.bottom - selectionSize.width,
                         bottom: baseBounds.bottom,
                     };
                     bottomLeftLineBounds = {
                         left: baseBounds.left,
                         right: baseBounds.left + selectionSize.width,
-                        top: Math.ceil(baseBounds.bottom + (selectionSize.width / 2 + margin + selectionSize.height)),
-                        bottom: baseBounds.bottom + (selectionSize.width / 2 + margin + selectionSize.height * 2),
+                        top: baseBounds.bottom + selectionSize.width / 2,
+                        bottom: baseBounds.bottom + selectionSize.height + selectionSize.width / 2,
                     };
                     bottomRightLineBounds = {
                         left: baseBounds.right - selectionSize.height,
                         right: baseBounds.right - selectionSize.width,
-                        top: Math.ceil(baseBounds.bottom + (selectionSize.width / 2 + margin + selectionSize.height / 2)),
-                        bottom: baseBounds.bottom + (selectionSize.width / 2 + margin - selectionSize.height),
+                        top: baseBounds.bottom + selectionSize.width / 2,
+                        bottom: baseBounds.bottom + selectionSize.height + selectionSize.width / 2,
                     };
                     return [4 /*yield*/, createVectorNoOutline(leftTopLineBounds, "ff0000")];
                 case 5:
@@ -1266,27 +1266,27 @@ function createSizeRuler(sizeString, selectionSize, baseBounds, colorHex, margin
                     //await createSelection(leftTopRulerBounds);
                     //await createLayer(`RULER`);
                     return [4 /*yield*/, text_1.createText({
-                            horizotal: (leftTopRulerBounds.left / canvasExportSize) * 100,
+                            horizotal: ((leftTopRulerBounds.left + selectionSize.width / 4) / canvasExportSize) * 100,
                             vertical: 50,
                         }, {
                             left: leftTopLineBounds.left,
                             right: leftTopLineBounds.right,
                             top: canvasExportSize / 2,
                             bottom: canvasExportSize / 2,
-                        }, "123in", 72, "vertical")];
+                        }, sizeString[0].num + " " + sizeString[0].unit, 72, "vertical")];
                 case 9:
                     //await createSelection(leftTopRulerBounds);
                     //await createLayer(`RULER`);
                     _a.sent();
                     return [4 /*yield*/, text_1.createText({
                             horizotal: 50,
-                            vertical: (bottomRightLineBounds.top / canvasExportSize) * 100,
+                            vertical: ((bottomRightLineBounds.top + selectionSize.width / 4) / canvasExportSize) * 100,
                         }, {
                             left: leftTopLineBounds.left,
                             right: leftTopLineBounds.right,
-                            top: canvasExportSize / 2,
+                            top: canvasExportSize / 2 + selectionSize.width / 2,
                             bottom: canvasExportSize / 2,
-                        }, "" + sizeString[1].num + sizeString[1].unit, 72)];
+                        }, sizeString[1].num + " " + sizeString[1].unit, 72)];
                 case 10:
                     _a.sent();
                     return [2 /*return*/];
