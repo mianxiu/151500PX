@@ -165,7 +165,7 @@ exports.convertSizeString = convertSizeString;
  * @param fontSize
  * @param orientation horizontal | vertical
  */
-function createText(placePercent, bounds, textString, fontSize, orientation) {
+function createText(placePercent, textString, fontSize, orientation) {
     if (fontSize === void 0) { fontSize = 12; }
     if (orientation === void 0) { orientation = "horizontal"; }
     return __awaiter(this, void 0, void 0, function () {

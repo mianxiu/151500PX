@@ -151,7 +151,6 @@ interface IPlacePercent {
  */
 export async function createText(
   placePercent: IPlacePercent,
-  bounds: IBounds,
   textString: string,
   fontSize = 12,
   orientation = `horizontal`

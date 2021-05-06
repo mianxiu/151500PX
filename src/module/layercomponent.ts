@@ -916,6 +916,17 @@ export async function createSizeRuler(
     bottom: baseBounds.bottom + (selectionSize.width + margin),
   };
 
+  await createText(
+    {
+      horizotal: ((leftTopRulerBounds.left + selectionSize.width / 4) / canvasExportSize) * 100,
+      vertical: 50,
+    },
+
+    `${sizeString[0].num} ${sizeString[0].unit}`,
+    72,
+    `vertical`
+  );
+
   await createVectorNoOutline(leftTopRulerBounds, `ff0000`);
   await createVectorNoOutline(leftBottomRulerBounds, `ff0000`);
   await createVectorNoOutline(bottomLeftRulerBounds, `ff0000`);
@@ -936,15 +947,15 @@ export async function createSizeRuler(
   };
 
   let bottomLeftLineBounds: IBounds = {
-    left: baseBounds.left,
-    right: baseBounds.left + selectionSize.width,
+    left: baseBounds.left + selectionSize.height,
+    right: baseBounds.left + selectionSize.width * 4,
     top: baseBounds.bottom + selectionSize.width / 2,
     bottom: baseBounds.bottom + selectionSize.height + selectionSize.width / 2,
   };
 
   let bottomRightLineBounds: IBounds = {
     left: baseBounds.right - selectionSize.height,
-    right: baseBounds.right - selectionSize.width,
+    right: baseBounds.right - selectionSize.width * 4,
     top: baseBounds.bottom + selectionSize.width / 2,
     bottom: baseBounds.bottom + selectionSize.height + selectionSize.width / 2,
   };
@@ -960,31 +971,10 @@ export async function createSizeRuler(
 
   await createText(
     {
-      horizotal: ((leftTopRulerBounds.left + selectionSize.width / 4) / canvasExportSize) * 100,
-      vertical: 50,
-    },
-    {
-      left: leftTopLineBounds.left,
-      right: leftTopLineBounds.right,
-      top: canvasExportSize / 2,
-      bottom: canvasExportSize / 2,
-    },
-    `${sizeString[0].num} ${sizeString[0].unit}`,
-    72,
-    `vertical`
-  );
-
-  await createText(
-    {
       horizotal: 50,
       vertical: ((bottomRightLineBounds.top + selectionSize.width / 4) / canvasExportSize) * 100,
     },
-    {
-      left: leftTopLineBounds.left,
-      right: leftTopLineBounds.right,
-      top: canvasExportSize / 2 + selectionSize.width / 2,
-      bottom: canvasExportSize / 2,
-    },
+
     `${sizeString[1].num} ${sizeString[1].unit}`,
     72
   );
