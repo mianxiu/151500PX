@@ -625,7 +625,7 @@ function createText(placePercent, bounds, textString, fontSize, orientation) {
                                                 styleSheetHasParent: true,
                                                 align: {
                                                     _enum: "alignmentType",
-                                                    _value: "left",
+                                                    _value: "center",
                                                 },
                                                 firstLineIndent: {
                                                     _unit: "pixelsUnit",

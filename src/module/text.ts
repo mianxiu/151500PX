@@ -610,7 +610,7 @@ export async function createText(
                 styleSheetHasParent: true,
                 align: {
                   _enum: "alignmentType",
-                  _value: "left",
+                  _value: "center",
                 },
                 firstLineIndent: {
                   _unit: "pixelsUnit",

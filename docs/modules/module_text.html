@@ -70,8 +70,15 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/module_text.isizeunit.html" class="tsd-kind-icon">ISize<wbr>Unit</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="module_text.html#convertsizestring" class="tsd-kind-icon">convert<wbr>Size<wbr>String</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="module_text.html#createtext" class="tsd-kind-icon">create<wbr>Text</a></li>
 							</ul>
 						</section>
@@ -81,25 +88,73 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="createtext" class="tsd-anchor"></a>
-					<h3>create<wbr>Text</h3>
+					<a name="convertsizestring" class="tsd-anchor"></a>
+					<h3>convert<wbr>Size<wbr>String</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Text<span class="tsd-signature-symbol">(</span>textString<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fontSize<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">convert<wbr>Size<wbr>String<span class="tsd-signature-symbol">(</span>sizeString<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, toLengthUnit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, toWeightUnit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/module_text.isizeunit.html" class="tsd-signature-type" data-tsd-kind="Interface">ISizeUnit</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/mianxiu/151500PX/blob/91522e0/src/module/text.ts#L1">module/text.ts:1</a></li>
+									<li>Defined in <a href="https://github.com/mianxiu/151500PX/blob/2ecb9fd/src/module/text.ts#L15">module/text.ts:15</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>convert length<em>width</em>height like --SIZE--100mm<em>20mm</em>4mm</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>sizeString: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>toLengthUnit: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>toWeightUnit: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/module_text.isizeunit.html" class="tsd-signature-type" data-tsd-kind="Interface">ISizeUnit</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="createtext" class="tsd-anchor"></a>
+					<h3>create<wbr>Text</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Text<span class="tsd-signature-symbol">(</span>placePercent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IPlacePercent</span>, bounds<span class="tsd-signature-symbol">: </span><a href="../interfaces/module_layercomponent.ibounds.html" class="tsd-signature-type" data-tsd-kind="Interface">IBounds</a>, textString<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fontSize<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, orientation<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/mianxiu/151500PX/blob/2ecb9fd/src/module/text.ts#L152">module/text.ts:152</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
+									<h5>placePercent: <span class="tsd-signature-type">IPlacePercent</span></h5>
+								</li>
+								<li>
+									<h5>bounds: <a href="../interfaces/module_layercomponent.ibounds.html" class="tsd-signature-type" data-tsd-kind="Interface">IBounds</a></h5>
+								</li>
+								<li>
 									<h5>textString: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
 									<h5>fontSize: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 12</span></h5>
+								</li>
+								<li>
+									<h5>orientation: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = ...</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>horizontal | vertical</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -154,6 +209,12 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/module_text.isizeunit.html" class="tsd-kind-icon">ISize<wbr>Unit</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="module_text.html#convertsizestring" class="tsd-kind-icon">convert<wbr>Size<wbr>String</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="module_text.html#createtext" class="tsd-kind-icon">create<wbr>Text</a>
 					</li>
