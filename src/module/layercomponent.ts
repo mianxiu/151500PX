@@ -936,26 +936,26 @@ export async function createSizeRuler(
     left: baseBounds.left - selectionSize.width / 2,
     right: baseBounds.left - (selectionSize.height + selectionSize.width / 2),
     top: baseBounds.top,
-    bottom: baseBounds.top + selectionSize.width,
+    bottom: baseBounds.top + (baseBounds.bottom - baseBounds.top) / 4,
   };
 
   let leftBottomLineBounds: IBounds = {
     left: baseBounds.left - selectionSize.width / 2,
     right: baseBounds.left - (selectionSize.height + selectionSize.width / 2),
-    top: baseBounds.bottom - selectionSize.width,
+    top: baseBounds.bottom - (baseBounds.bottom - baseBounds.top) / 4,
     bottom: baseBounds.bottom,
   };
 
   let bottomLeftLineBounds: IBounds = {
     left: baseBounds.left + selectionSize.height,
-    right: baseBounds.left + selectionSize.width * 4,
+    right: baseBounds.left + (baseBounds.right - baseBounds.left) / 4,
     top: baseBounds.bottom + selectionSize.width / 2,
     bottom: baseBounds.bottom + selectionSize.height + selectionSize.width / 2,
   };
 
   let bottomRightLineBounds: IBounds = {
     left: baseBounds.right - selectionSize.height,
-    right: baseBounds.right - selectionSize.width * 4,
+    right: baseBounds.right - (baseBounds.right - baseBounds.left) / 4,
     top: baseBounds.bottom + selectionSize.width / 2,
     bottom: baseBounds.bottom + selectionSize.height + selectionSize.width / 2,
   };
