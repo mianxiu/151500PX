@@ -251,8 +251,6 @@ export async function selectLayerByName(
   makeVisible: boolean = false,
   regexpMode: boolean = false
 ): Promise<void | undefined> {
-  console.log(`select: `, selectName);
-
   let select = async select => {
     await batchPlay(
       [
@@ -278,10 +276,12 @@ export async function selectLayerByName(
     if (onlyGroup === true) {
       if (l.isGroupLayer === true && isName === true) {
         select(l.name);
+        console.log(`selectLayerByName: `, l.name);
       }
     } else {
       if (l.isGroupLayer === undefined && isName === true) {
         select(l.name);
+        console.log(`selectLayerByName: `, l.name);
       }
     }
     i--;
@@ -289,7 +289,6 @@ export async function selectLayerByName(
 
   let r = activeDocument().activeLayers;
 
-  console.log(r);
   if (r[0].name !== selectName || r.length > 0) return undefined;
 }
 

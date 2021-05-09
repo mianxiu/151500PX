@@ -275,15 +275,16 @@ function drawRuler() {
                     return [4 /*yield*/, layerComponent.selectLayerByName("^" + names.__SIZE__ + ".*", false, false, true)];
                 case 2:
                     sizeSelect = _a.sent();
-                    if (sizeSelect === undefined) {
-                        //return;
-                    }
                     return [4 /*yield*/, acitveDocumet.activeLayers[0].name];
                 case 3:
                     layerName = _a.sent();
                     return [4 /*yield*/, text.convertSizeString(layerName, "in", "")];
                 case 4:
                     size = _a.sent();
+                    console.log(size);
+                    if (size === undefined) {
+                        return [2 /*return*/];
+                    }
                     return [4 /*yield*/, layerComponent.activeDocument()];
                 case 5:
                     acitveDocumet = _a.sent();
@@ -293,7 +294,7 @@ function drawRuler() {
                     return [4 /*yield*/, layerComponent.activeDocument().activeLayers[0].bounds];
                 case 7:
                     layerBounds = _a.sent();
-                    return [4 /*yield*/, layerComponent.createSizeRuler(size, { width: 116, height: 18 }, layerBounds, "#fff", 10, { width: acitveDocumet.width, height: acitveDocumet.height }, fuckingMargin)];
+                    return [4 /*yield*/, layerComponent.createSizeRuler(size, { width: 116, height: 18 }, layerBounds, "000000", 10, { width: acitveDocumet.width, height: acitveDocumet.height }, fuckingMargin)];
                 case 8:
                     _a.sent();
                     return [2 /*return*/];

@@ -371,7 +371,6 @@ function selectLayerByName(selectName, onlyGroup, makeVisible, regexpMode) {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    console.log("select: ", selectName);
                     select = function (select) { return __awaiter(_this, void 0, void 0, function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
@@ -413,18 +412,19 @@ function selectLayerByName(selectName, onlyGroup, makeVisible, regexpMode) {
                     if (onlyGroup === true) {
                         if (l.isGroupLayer === true && isName === true) {
                             select(l.name);
+                            console.log("selectLayerByName: ", l.name);
                         }
                     }
                     else {
                         if (l.isGroupLayer === undefined && isName === true) {
                             select(l.name);
+                            console.log("selectLayerByName: ", l.name);
                         }
                     }
                     i--;
                     return [3 /*break*/, 2];
                 case 8:
                     r = exports.activeDocument().activeLayers;
-                    console.log(r);
                     if (r[0].name !== selectName || r.length > 0)
                         return [2 /*return*/, undefined];
                     return [2 /*return*/];

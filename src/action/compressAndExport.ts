@@ -118,12 +118,12 @@ export async function drawRuler() {
 
   let sizeSelect = await layerComponent.selectLayerByName(`^${names.__SIZE__}.*`, false, false, true);
 
-  if (sizeSelect === undefined) {
-    //return;
-  }
-
   let layerName = await acitveDocumet.activeLayers[0].name;
   let size = await text.convertSizeString(layerName, `in`, ``);
+  console.log(size);
+  if (size === undefined) {
+    return;
+  }
 
   acitveDocumet = await layerComponent.activeDocument();
 
@@ -134,7 +134,7 @@ export async function drawRuler() {
     size,
     { width: 116, height: 18 },
     layerBounds,
-    `#fff`,
+    `000000`,
     10,
     { width: acitveDocumet.width, height: acitveDocumet.height },
     fuckingMargin
