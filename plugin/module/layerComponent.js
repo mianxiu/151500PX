@@ -1187,97 +1187,109 @@ exports.hex2rgb = hex2rgb;
  */
 function createSizeRuler(sizeString, selectionSize, baseBounds, colorHex, margin, canvasExportSize, convasMargin) {
     return __awaiter(this, void 0, void 0, function () {
-        var leftTopRulerBounds, leftBottomRulerBounds, bottomLeftRulerBounds, bottomRightRulerBounds, leftTopLineBounds, leftBottomLineBounds, bottomLeftLineBounds, bottomRightLineBounds;
+        var vTopRulerBounds, vBottomRulerBounds, hLeftRulerBounds, hRightRulerBounds, vLineBounds, vBottomLineBounds, hLeftLineBounds, hRightLineBounds;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    leftTopRulerBounds = {
-                        left: baseBounds.left - (selectionSize.width + margin),
-                        right: baseBounds.left - margin,
+                    vTopRulerBounds = {
+                        left: baseBounds.right + margin,
+                        right: baseBounds.right + (selectionSize.width + margin),
                         top: baseBounds.top,
                         bottom: baseBounds.top + selectionSize.height,
                     };
-                    leftBottomRulerBounds = {
-                        left: baseBounds.left - (selectionSize.width + margin),
-                        right: baseBounds.left - margin,
+                    vBottomRulerBounds = {
+                        left: baseBounds.right + margin,
+                        right: baseBounds.right + (selectionSize.width + margin),
                         top: baseBounds.bottom - selectionSize.height,
                         bottom: baseBounds.bottom,
                     };
-                    bottomLeftRulerBounds = {
+                    hLeftRulerBounds = {
                         left: baseBounds.left,
                         right: baseBounds.left + selectionSize.height,
                         top: baseBounds.bottom + margin,
                         bottom: baseBounds.bottom + (selectionSize.width + margin),
                     };
-                    bottomRightRulerBounds = {
+                    hRightRulerBounds = {
                         left: baseBounds.right - selectionSize.height,
                         right: baseBounds.right,
                         top: baseBounds.bottom + margin,
                         bottom: baseBounds.bottom + (selectionSize.width + margin),
                     };
-                    return [4 /*yield*/, text_1.createText({
-                            horizotal: ((leftTopRulerBounds.left + selectionSize.width / 4) / canvasExportSize) * 100,
-                            vertical: 50,
-                        }, sizeString[0].num + " " + sizeString[0].unit, 72, "vertical")];
-                case 1:
-                    _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(leftTopRulerBounds, "ff0000")];
-                case 2:
-                    _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(leftBottomRulerBounds, "ff0000")];
-                case 3:
-                    _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(bottomLeftRulerBounds, "ff0000")];
-                case 4:
-                    _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(bottomRightRulerBounds, "ff0000")];
-                case 5:
-                    _a.sent();
-                    leftTopLineBounds = {
-                        left: baseBounds.left - selectionSize.width / 2,
-                        right: baseBounds.left - (selectionSize.height + selectionSize.width / 2),
+                    vLineBounds = {
+                        left: baseBounds.right + selectionSize.width / 2,
+                        right: baseBounds.right + (selectionSize.height + selectionSize.width / 2),
                         top: baseBounds.top,
                         bottom: baseBounds.top + (baseBounds.bottom - baseBounds.top) / 4,
                     };
-                    leftBottomLineBounds = {
-                        left: baseBounds.left - selectionSize.width / 2,
-                        right: baseBounds.left - (selectionSize.height + selectionSize.width / 2),
+                    vBottomLineBounds = {
+                        left: baseBounds.right + selectionSize.width / 2,
+                        right: baseBounds.right + (selectionSize.height + selectionSize.width / 2),
                         top: baseBounds.bottom - (baseBounds.bottom - baseBounds.top) / 4,
                         bottom: baseBounds.bottom,
                     };
-                    bottomLeftLineBounds = {
+                    hLeftLineBounds = {
                         left: baseBounds.left + selectionSize.height,
                         right: baseBounds.left + (baseBounds.right - baseBounds.left) / 4,
                         top: baseBounds.bottom + selectionSize.width / 2,
                         bottom: baseBounds.bottom + selectionSize.height + selectionSize.width / 2,
                     };
-                    bottomRightLineBounds = {
+                    hRightLineBounds = {
                         left: baseBounds.right - selectionSize.height,
                         right: baseBounds.right - (baseBounds.right - baseBounds.left) / 4,
                         top: baseBounds.bottom + selectionSize.width / 2,
                         bottom: baseBounds.bottom + selectionSize.height + selectionSize.width / 2,
                     };
-                    return [4 /*yield*/, createVectorNoOutline(leftTopLineBounds, "ff0000")];
+                    /**
+                     * create left
+                     */
+                    return [4 /*yield*/, createVectorNoOutline(vTopRulerBounds, "ff0000")];
+                case 1:
+                    /**
+                     * create left
+                     */
+                    _a.sent();
+                    return [4 /*yield*/, createVectorNoOutline(vBottomRulerBounds, "ff0000")];
+                case 2:
+                    _a.sent();
+                    return [4 /*yield*/, createVectorNoOutline(hLeftRulerBounds, "ff0000")];
+                case 3:
+                    _a.sent();
+                    return [4 /*yield*/, createVectorNoOutline(hRightRulerBounds, "ff0000")];
+                case 4:
+                    _a.sent();
+                    /**
+                     * create line
+                     */
+                    return [4 /*yield*/, createVectorNoOutline(vLineBounds, "ff0000")];
+                case 5:
+                    /**
+                     * create line
+                     */
+                    _a.sent();
+                    return [4 /*yield*/, createVectorNoOutline(vBottomLineBounds, "ff0000")];
                 case 6:
                     _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(leftBottomLineBounds, "ff0000")];
+                    return [4 /*yield*/, createVectorNoOutline(hLeftLineBounds, "ff0000")];
                 case 7:
                     _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(bottomLeftLineBounds, "ff0000")];
+                    return [4 /*yield*/, createVectorNoOutline(hRightLineBounds, "ff0000")];
                 case 8:
-                    _a.sent();
-                    return [4 /*yield*/, createVectorNoOutline(bottomRightLineBounds, "ff0000")];
-                case 9:
                     _a.sent();
                     //await createSelection(leftTopRulerBounds);
                     //await createLayer(`RULER`);
                     return [4 /*yield*/, text_1.createText({
-                            horizotal: 50,
-                            vertical: ((bottomRightLineBounds.top + selectionSize.width / 4) / canvasExportSize) * 100,
-                        }, sizeString[1].num + " " + sizeString[1].unit, 72)];
-                case 10:
+                            horizotal: (vLineBounds.left / canvasExportSize.width) * 100,
+                            vertical: 50,
+                        }, "" + sizeString[0].num + sizeString[0].unit, 72, "horizontal", "left")];
+                case 9:
                     //await createSelection(leftTopRulerBounds);
                     //await createLayer(`RULER`);
+                    _a.sent();
+                    return [4 /*yield*/, text_1.createText({
+                            horizotal: 50,
+                            vertical: ((hRightLineBounds.top + selectionSize.width / 4) / canvasExportSize.height) * 100,
+                        }, "" + sizeString[1].num + sizeString[1].unit, 72)];
+                case 10:
                     _a.sent();
                     return [2 /*return*/];
             }

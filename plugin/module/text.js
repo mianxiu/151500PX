@@ -164,10 +164,12 @@ exports.convertSizeString = convertSizeString;
  * @param textString
  * @param fontSize
  * @param orientation horizontal | vertical
+ * @param align center left right
  */
-function createText(placePercent, textString, fontSize, orientation) {
+function createText(placePercent, textString, fontSize, orientation, align) {
     if (fontSize === void 0) { fontSize = 12; }
     if (orientation === void 0) { orientation = "horizontal"; }
+    if (align === void 0) { align = "center"; }
     return __awaiter(this, void 0, void 0, function () {
         var batchPlay;
         return __generator(this, function (_a) {
@@ -625,7 +627,7 @@ function createText(placePercent, textString, fontSize, orientation) {
                                                 styleSheetHasParent: true,
                                                 align: {
                                                     _enum: "alignmentType",
-                                                    _value: "center",
+                                                    _value: align,
                                                 },
                                                 firstLineIndent: {
                                                     _unit: "pixelsUnit",

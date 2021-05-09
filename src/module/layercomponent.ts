@@ -887,95 +887,106 @@ export async function createSizeRuler(
   baseBounds: IBounds,
   colorHex: string,
   margin: number,
-  canvasExportSize: number,
+  canvasExportSize: ISize,
   convasMargin: number
 ) {
-  let leftTopRulerBounds: IBounds = {
-    left: baseBounds.left - (selectionSize.width + margin),
-    right: baseBounds.left - margin,
+  let vTopRulerBounds: IBounds = {
+    left: baseBounds.right + margin,
+    right: baseBounds.right + (selectionSize.width + margin),
     top: baseBounds.top,
     bottom: baseBounds.top + selectionSize.height,
   };
-  let leftBottomRulerBounds: IBounds = {
-    left: baseBounds.left - (selectionSize.width + margin),
-    right: baseBounds.left - margin,
+  let vBottomRulerBounds: IBounds = {
+    left: baseBounds.right + margin,
+    right: baseBounds.right + (selectionSize.width + margin),
     top: baseBounds.bottom - selectionSize.height,
     bottom: baseBounds.bottom,
   };
 
-  let bottomLeftRulerBounds: IBounds = {
+  let hLeftRulerBounds: IBounds = {
     left: baseBounds.left,
     right: baseBounds.left + selectionSize.height,
     top: baseBounds.bottom + margin,
     bottom: baseBounds.bottom + (selectionSize.width + margin),
   };
-  let bottomRightRulerBounds: IBounds = {
+  let hRightRulerBounds: IBounds = {
     left: baseBounds.right - selectionSize.height,
     right: baseBounds.right,
     top: baseBounds.bottom + margin,
     bottom: baseBounds.bottom + (selectionSize.width + margin),
   };
 
-  await createText(
-    {
-      horizotal: ((leftTopRulerBounds.left + selectionSize.width / 4) / canvasExportSize) * 100,
-      vertical: 50,
-    },
-
-    `${sizeString[0].num} ${sizeString[0].unit}`,
-    72,
-    `vertical`
-  );
-
-  await createVectorNoOutline(leftTopRulerBounds, `ff0000`);
-  await createVectorNoOutline(leftBottomRulerBounds, `ff0000`);
-  await createVectorNoOutline(bottomLeftRulerBounds, `ff0000`);
-  await createVectorNoOutline(bottomRightRulerBounds, `ff0000`);
-
-  let leftTopLineBounds: IBounds = {
-    left: baseBounds.left - selectionSize.width / 2,
-    right: baseBounds.left - (selectionSize.height + selectionSize.width / 2),
+  /**
+   * line
+   */
+  let vLineBounds: IBounds = {
+    left: baseBounds.right + selectionSize.width / 2,
+    right: baseBounds.right + (selectionSize.height + selectionSize.width / 2),
     top: baseBounds.top,
     bottom: baseBounds.top + (baseBounds.bottom - baseBounds.top) / 4,
   };
 
-  let leftBottomLineBounds: IBounds = {
-    left: baseBounds.left - selectionSize.width / 2,
-    right: baseBounds.left - (selectionSize.height + selectionSize.width / 2),
+  let vBottomLineBounds: IBounds = {
+    left: baseBounds.right + selectionSize.width / 2,
+    right: baseBounds.right + (selectionSize.height + selectionSize.width / 2),
     top: baseBounds.bottom - (baseBounds.bottom - baseBounds.top) / 4,
     bottom: baseBounds.bottom,
   };
 
-  let bottomLeftLineBounds: IBounds = {
+  let hLeftLineBounds: IBounds = {
     left: baseBounds.left + selectionSize.height,
     right: baseBounds.left + (baseBounds.right - baseBounds.left) / 4,
     top: baseBounds.bottom + selectionSize.width / 2,
     bottom: baseBounds.bottom + selectionSize.height + selectionSize.width / 2,
   };
 
-  let bottomRightLineBounds: IBounds = {
+  let hRightLineBounds: IBounds = {
     left: baseBounds.right - selectionSize.height,
     right: baseBounds.right - (baseBounds.right - baseBounds.left) / 4,
     top: baseBounds.bottom + selectionSize.width / 2,
     bottom: baseBounds.bottom + selectionSize.height + selectionSize.width / 2,
   };
 
-  await createVectorNoOutline(leftTopLineBounds, `ff0000`);
-  await createVectorNoOutline(leftBottomLineBounds, `ff0000`);
-  await createVectorNoOutline(bottomLeftLineBounds, `ff0000`);
-  await createVectorNoOutline(bottomRightLineBounds, `ff0000`);
+  /**
+   * create left
+   */
+
+  await createVectorNoOutline(vTopRulerBounds, `ff0000`);
+  await createVectorNoOutline(vBottomRulerBounds, `ff0000`);
+  await createVectorNoOutline(hLeftRulerBounds, `ff0000`);
+  await createVectorNoOutline(hRightRulerBounds, `ff0000`);
+
+  /**
+   * create line
+   */
+
+  await createVectorNoOutline(vLineBounds, `ff0000`);
+  await createVectorNoOutline(vBottomLineBounds, `ff0000`);
+  await createVectorNoOutline(hLeftLineBounds, `ff0000`);
+  await createVectorNoOutline(hRightLineBounds, `ff0000`);
 
   //await createSelection(leftTopRulerBounds);
 
   //await createLayer(`RULER`);
+  await createText(
+    {
+      horizotal: (vLineBounds.left / canvasExportSize.width) * 100,
+      vertical: 50,
+    },
+
+    `${sizeString[0].num}${sizeString[0].unit}`,
+    72,
+    `horizontal`,
+    `left`
+  );
 
   await createText(
     {
       horizotal: 50,
-      vertical: ((bottomRightLineBounds.top + selectionSize.width / 4) / canvasExportSize) * 100,
+      vertical: ((hRightLineBounds.top + selectionSize.width / 4) / canvasExportSize.height) * 100,
     },
 
-    `${sizeString[1].num} ${sizeString[1].unit}`,
+    `${sizeString[1].num}${sizeString[1].unit}`,
     72
   );
 }

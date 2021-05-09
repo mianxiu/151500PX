@@ -148,12 +148,14 @@ interface IPlacePercent {
  * @param textString
  * @param fontSize
  * @param orientation horizontal | vertical
+ * @param align center left right
  */
 export async function createText(
   placePercent: IPlacePercent,
   textString: string,
   fontSize = 12,
-  orientation = `horizontal`
+  orientation = `horizontal`,
+  align = `center`
 ) {
   const batchPlay = require("photoshop").action.batchPlay;
 
@@ -609,7 +611,7 @@ export async function createText(
                 styleSheetHasParent: true,
                 align: {
                   _enum: "alignmentType",
-                  _value: "center",
+                  _value: align,
                 },
                 firstLineIndent: {
                   _unit: "pixelsUnit",

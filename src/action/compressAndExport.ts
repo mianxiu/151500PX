@@ -23,6 +23,8 @@ export async function mergeMainToSmartObjectCompress() {
   let acitveDocumet = layerComponent.activeDocument();
   // select layer by name has problem
   await layerComponent.selectLayerByName(`MAIN`, true);
+  await drawRuler();
+  await layerComponent.selectLayerByName(`MAIN`, true);
   await layerComponent.selectChannel();
   /**对于正常的mask会有锯齿 */
   //await layerComponent.levels();
@@ -36,6 +38,7 @@ export async function mergeMainToSmartObjectCompress() {
   await layerComponent.rasterizeTargetLayer();
   await layerComponent.mergeLayerNew();
   await layerComponent.convertToSmartObject();
+
   await layerComponent.setLayerName(names.__DO_ACTION__);
   let layerSize = await layerComponent.getElementSize(await acitveDocumet.activeLayers[0]);
   let layerBounds: layerComponent.IBounds = layerComponent.activeDocument().activeLayers[0].bounds;
@@ -44,7 +47,7 @@ export async function mergeMainToSmartObjectCompress() {
    */
   if (
     (layerBounds.bottom >= 0 || layerBounds.left >= 0 || layerBounds.right >= 0 || layerBounds.top >= 0) &&
-    acitveDocumet.height === acitveDocumet.width
+    Math.abs(acitveDocumet.height - acitveDocumet.width) <= 1
   ) {
     console.log(`${names.__MAIN_DETAIL__} MODE`);
     await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
@@ -69,7 +72,6 @@ export async function mergeMainToSmartObjectCompress() {
   await layerComponent.selectLayerByName(names.__DO_ACTION__);
   await layerComponent.rasterizeTargetLayer();
   await layerComponent.convertToSmartObject();
-  await drawRuler();
 }
 
 export async function mergeMainToSmartObjectUnCompress() {
@@ -114,7 +116,11 @@ export async function mergeMainToSmartObjectUnCompress() {
 export async function drawRuler() {
   let acitveDocumet = await layerComponent.activeDocument();
 
-  await layerComponent.selectLayerByName(`^${names.__SIZE__}.*`, false, false, true);
+  let sizeSelect = await layerComponent.selectLayerByName(`^${names.__SIZE__}.*`, false, false, true);
+
+  if (sizeSelect === undefined) {
+    //return;
+  }
 
   let layerName = await acitveDocumet.activeLayers[0].name;
   let size = await text.convertSizeString(layerName, `in`, ``);
@@ -130,7 +136,7 @@ export async function drawRuler() {
     layerBounds,
     `#fff`,
     10,
-    fuckingExportSize,
+    { width: acitveDocumet.width, height: acitveDocumet.height },
     fuckingMargin
   );
 }
