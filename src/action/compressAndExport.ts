@@ -148,15 +148,17 @@ export async function drawRuler() {
 export async function fuck(compress = true) {
   app.documents.map(async d => await d.close());
   // 有文档的时候不会重复打开
-  if (app.documents.length < 1)
+  if (app.documents.length < 1) {
+    let pickTips = compress === true ? "please pick folder" : "pick folder (un compress mode)";
     await app.createDocument({
-      name: "please pick folder",
+      name: pickTips,
       width: 1,
       height: 1,
       resolution: 1,
       mode: "RGBColorMode",
       fill: "transparent",
     });
+  }
 
   let pickFolder = app.documents.length === 1 ? await folder.pickFolder() : null;
 

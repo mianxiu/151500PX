@@ -310,7 +310,7 @@ exports.drawRuler = drawRuler;
 function fuck(compress) {
     if (compress === void 0) { compress = true; }
     return __awaiter(this, void 0, void 0, function () {
-        var pickFolder, _a, _b, _c;
+        var pickTips, pickFolder, _a, _b, _c;
         var _this = this;
         return __generator(this, function (_d) {
             switch (_d.label) {
@@ -322,8 +322,9 @@ function fuck(compress) {
                         }
                     }); }); });
                     if (!(app.documents.length < 1)) return [3 /*break*/, 2];
+                    pickTips = compress === true ? "please pick folder" : "pick folder (un compress mode)";
                     return [4 /*yield*/, app.createDocument({
-                            name: "please pick folder",
+                            name: pickTips,
                             width: 1,
                             height: 1,
                             resolution: 1,
