@@ -170,7 +170,7 @@ async function upgradeMain() {
 
   let initWhiteMetalId = `#init-white-metal`;
   let initWhiteMetalFunc = () => {
-    compressAndExport.fuck(false);
+    compressAndExport.exportFuckingWork(false);
     //compressAndExport.mergeMainToSmartObjectUnCompress();
   };
 
@@ -181,7 +181,7 @@ async function upgradeMain() {
     upgradeNav();
     upGradePanel();
 
-    compressAndExport.fuck();
+    compressAndExport.exportFuckingWork();
     //compressAndExport.mergeMainToSmartObjectCompress();
   };
 

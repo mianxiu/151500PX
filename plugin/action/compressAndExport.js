@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fuck = exports.drawRuler = exports.mergeMainToSmartObjectUnCompress = exports.mergeMainToSmartObjectCompress = void 0;
+exports.exportFuckingWork = exports.drawRuler = exports.mergeMainToSmartObjectUnCompress = exports.mergeMainToSmartObjectCompress = void 0;
 var layerComponent = require("../module/layercomponent");
 var names = require("../module/names");
 var folder = require("../module/floder");
@@ -126,7 +126,7 @@ function mergeMainToSmartObjectCompress() {
                     _c.sent();
                     return [3 /*break*/, 24];
                 case 19:
-                    if (!(layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize)) return [3 /*break*/, 22];
+                    if (!(layerSize.height >= fuckingExportSize || layerSize.width >= fuckingExportSize)) return [3 /*break*/, 22];
                     console.log(names.__MAIN__ + " SIZE > " + fuckingExportSize);
                     return [4 /*yield*/, layerComponent.cropToSquare(fuckingMargin)];
                 case 20:
@@ -307,7 +307,7 @@ exports.drawRuler = drawRuler;
  * todo
  * pick folder and compress to 1500x1500, export jpg and tif
  */
-function fuck(compress) {
+function exportFuckingWork(compress) {
     if (compress === void 0) { compress = true; }
     return __awaiter(this, void 0, void 0, function () {
         var pickTips, pickFolder, _a, _b, _c;
@@ -402,4 +402,4 @@ function fuck(compress) {
         });
     });
 }
-exports.fuck = fuck;
+exports.exportFuckingWork = exportFuckingWork;

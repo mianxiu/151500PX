@@ -51,7 +51,7 @@ export async function mergeMainToSmartObjectCompress() {
   ) {
     console.log(`${names.__MAIN_DETAIL__} MODE`);
     await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
-  } else if (layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize) {
+  } else if (layerSize.height >= fuckingExportSize || layerSize.width >= fuckingExportSize) {
     console.log(`${names.__MAIN__} SIZE > ${fuckingExportSize}`);
     await layerComponent.cropToSquare(fuckingMargin);
     await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize);
@@ -145,7 +145,7 @@ export async function drawRuler() {
  * todo
  * pick folder and compress to 1500x1500, export jpg and tif
  */
-export async function fuck(compress = true) {
+export async function exportFuckingWork(compress = true) {
   app.documents.map(async d => await d.close());
   // 有文档的时候不会重复打开
   if (app.documents.length < 1) {
