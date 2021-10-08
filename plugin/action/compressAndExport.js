@@ -152,26 +152,29 @@ function mergeMainToSmartObjectCompress() {
                      * save SIZE layer, if it has, drawRuler
                      */
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.createBGLayer()];
+                    return [4 /*yield*/, layerComponent.convertToSrgbProfile()];
                 case 26:
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.fillWhite()];
+                    return [4 /*yield*/, layerComponent.createBGLayer()];
                 case 27:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.fillWhite()];
+                case 28:
                     _c.sent();
                     /**
                      * re reasterize smart layer can zip file
                      */
                     return [4 /*yield*/, layerComponent.selectLayerByName(names.__DO_ACTION__)];
-                case 28:
+                case 29:
                     /**
                      * re reasterize smart layer can zip file
                      */
                     _c.sent();
                     return [4 /*yield*/, layerComponent.rasterizeTargetLayer()];
-                case 29:
+                case 30:
                     _c.sent();
                     return [4 /*yield*/, layerComponent.convertToSmartObject()];
-                case 30:
+                case 31:
                     _c.sent();
                     return [2 /*return*/];
             }
@@ -210,53 +213,56 @@ function mergeMainToSmartObjectUnCompress() {
                     return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(false, false, true)];
                 case 6:
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.convertToSmartObject()];
+                    return [4 /*yield*/, layerComponent.convertToSrgbProfile()];
                 case 7:
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.setLayerName(names.__DO_ACTION__)];
+                    return [4 /*yield*/, layerComponent.convertToSmartObject()];
                 case 8:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.setLayerName(names.__DO_ACTION__)];
+                case 9:
                     _c.sent();
                     _b = (_a = layerComponent).getElementSize;
                     return [4 /*yield*/, acitveDocumet.activeLayers[0]];
-                case 9: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
-                case 10:
+                case 10: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
+                case 11:
                     layerSize = _c.sent();
                     layerBounds = layerComponent.activeDocument().activeLayers[0].bounds;
                     if (!((layerBounds.bottom >= 0 || layerBounds.left >= 0 || layerBounds.right >= 0 || layerBounds.top >= 0) &&
-                        acitveDocumet.height === acitveDocumet.width)) return [3 /*break*/, 12];
+                        acitveDocumet.height === acitveDocumet.width)) return [3 /*break*/, 13];
                     console.log(names.__MAIN_DETAIL__ + " MODE");
                     return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
-                case 11:
-                    _c.sent();
-                    return [3 /*break*/, 17];
                 case 12:
-                    if (!(layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize)) return [3 /*break*/, 15];
+                    _c.sent();
+                    return [3 /*break*/, 18];
+                case 13:
+                    if (!(layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize)) return [3 /*break*/, 16];
                     console.log(names.__MAIN__ + " SIZE > " + fuckingExportSize);
                     return [4 /*yield*/, layerComponent.cropToSquare(fuckingMargin)];
-                case 13:
-                    _c.sent();
-                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
                 case 14:
                     _c.sent();
-                    return [3 /*break*/, 17];
+                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
                 case 15:
-                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 17];
+                    _c.sent();
+                    return [3 /*break*/, 18];
+                case 16:
+                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 18];
                     console.log(names.__MAIN__ + " SIZE < " + fuckingExportSize);
                     return [4 /*yield*/, layerComponent.cropToSize(fuckingExportSize, fuckingExportSize)];
-                case 16:
+                case 17:
                     _c.sent();
-                    _c.label = 17;
-                case 17: return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers(["^" + names.__SIZE__])];
-                case 18:
-                    _c.sent();
-                    return [4 /*yield*/, layerComponent.createBGLayer()];
+                    _c.label = 18;
+                case 18: return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers(["^" + names.__SIZE__])];
                 case 19:
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.fillWhite()];
+                    return [4 /*yield*/, layerComponent.createBGLayer()];
                 case 20:
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.selectLayerByName(names.__DO_ACTION__)];
+                    return [4 /*yield*/, layerComponent.fillWhite()];
                 case 21:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.selectLayerByName(names.__DO_ACTION__)];
+                case 22:
                     _c.sent();
                     return [2 /*return*/];
             }

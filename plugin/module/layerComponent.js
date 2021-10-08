@@ -40,7 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createSizeRuler = exports.hex2rgb = exports.createSelection = exports.createVectorNoOutline = exports.transform = exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.copyToLayer = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
+exports.convertToSrgbProfile = exports.createSizeRuler = exports.hex2rgb = exports.createSelection = exports.createVectorNoOutline = exports.transform = exports.levels = exports.selectChannel = exports.getChannalSelection = exports.deSelect = exports.inverse = exports.hideLayers = exports.fillWhite = exports.createBGLayer = exports.createLayer = exports.setLayerName = exports.rasterizeTargetLayer = exports.mergeVisible = exports.mergeLayerNew = exports.mergeLayers = exports.convertToSmartObject = exports.moveLayerToParentTop = exports.moveLayerToDocTop = exports.selectAllLayersOnTarget = exports.selectLayerByName = exports.cropToSize = exports.cropToSquare = exports.cropToMargin = exports.copyToLayer = exports.deleteAllLayersExcludeTarget = exports.deleteAllUnVisibleLayers = exports.deleteAllEmptyLayers = exports.deleteTarget = exports.isVertical = exports.getElementSize = exports.isEmptyLayer = exports.activeDocument = void 0;
 var batchPlayConfig = require("./batchplayconfig");
 var names = require("./names");
 var text_1 = require("./text");
@@ -1297,3 +1297,43 @@ function createSizeRuler(sizeString, selectionSize, baseBounds, colorHex, margin
     });
 }
 exports.createSizeRuler = createSizeRuler;
+function convertToSrgbProfile() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, batchPlay([
+                        {
+                            "_obj": "convertToProfile",
+                            "_target": [
+                                {
+                                    "_ref": "document",
+                                    "_enum": "ordinal",
+                                    "_value": "targetEnum"
+                                }
+                            ],
+                            "to": "sRGB IEC61966-2.1",
+                            "intent": {
+                                "_enum": "intent",
+                                "_value": "image"
+                            },
+                            "mapBlack": true,
+                            "dither": true,
+                            "flatten": true,
+                            "shadowMode": -1,
+                            "_isCommand": true,
+                            "_options": {
+                                "dialogOptions": "dontDisplay"
+                            }
+                        }
+                    ], {
+                        "synchronousExecution": false,
+                        "modalBehavior": "fail"
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.convertToSrgbProfile = convertToSrgbProfile;

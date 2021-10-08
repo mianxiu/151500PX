@@ -989,3 +989,37 @@ export async function createSizeRuler(
     72
   );
 }
+
+
+export async function convertToSrgbProfile(){
+  await batchPlay(
+    [
+       {
+          "_obj": "convertToProfile",
+          "_target": [
+             {
+                "_ref": "document",
+                "_enum": "ordinal",
+                "_value": "targetEnum"
+             }
+          ],
+          "to": "sRGB IEC61966-2.1",
+          "intent": {
+             "_enum": "intent",
+             "_value": "image"
+          },
+          "mapBlack": true,
+          "dither": true,
+          "flatten": true,
+          "shadowMode": -1,
+          "_isCommand": true,
+          "_options": {
+             "dialogOptions": "dontDisplay"
+          }
+       }
+    ],{
+       "synchronousExecution": false,
+       "modalBehavior": "fail"
+    });
+    
+}
