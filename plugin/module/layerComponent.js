@@ -1297,7 +1297,7 @@ function createSizeRuler(sizeString, selectionSize, baseBounds, colorHex, margin
     });
 }
 exports.createSizeRuler = createSizeRuler;
-function convertToSrgbProfile() {
+function convertToSrgbProfile(flatten) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -1318,7 +1318,7 @@ function convertToSrgbProfile() {
                             },
                             "mapBlack": true,
                             "dither": true,
-                            "flatten": true,
+                            "flatten": flatten,
                             "shadowMode": -1,
                             "_isCommand": true,
                             "_options": {

@@ -991,7 +991,7 @@ export async function createSizeRuler(
 }
 
 
-export async function convertToSrgbProfile(){
+export async function convertToSrgbProfile(flatten:boolean){
   await batchPlay(
     [
        {
@@ -1010,7 +1010,7 @@ export async function convertToSrgbProfile(){
           },
           "mapBlack": true,
           "dither": true,
-          "flatten": true,
+          "flatten": flatten,
           "shadowMode": -1,
           "_isCommand": true,
           "_options": {

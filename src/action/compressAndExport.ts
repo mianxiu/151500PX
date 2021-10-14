@@ -63,7 +63,7 @@ export async function mergeMainToSmartObjectCompress() {
    * save SIZE layer, if it has, drawRuler
    */
   await layerComponent.deleteAllUnVisibleLayers([`^${names.__SIZE__}`]);
-  await layerComponent.convertToSrgbProfile();
+  await layerComponent.convertToSrgbProfile(true);
   await layerComponent.createBGLayer();
   await layerComponent.fillWhite();
 
@@ -87,7 +87,7 @@ export async function mergeMainToSmartObjectUnCompress() {
   await layerComponent.hideLayers();
   await layerComponent.selectLayerByName(`MAIN`, true);
   await layerComponent.selectAllLayersOnTarget(false, false, true);
-  await layerComponent.convertToSrgbProfile();
+  await layerComponent.convertToSrgbProfile(false);
   await layerComponent.convertToSmartObject();
 
   await layerComponent.setLayerName(names.__DO_ACTION__);

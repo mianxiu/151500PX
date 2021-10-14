@@ -152,7 +152,7 @@ function mergeMainToSmartObjectCompress() {
                      * save SIZE layer, if it has, drawRuler
                      */
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.convertToSrgbProfile()];
+                    return [4 /*yield*/, layerComponent.convertToSrgbProfile(true)];
                 case 26:
                     _c.sent();
                     return [4 /*yield*/, layerComponent.createBGLayer()];
@@ -213,7 +213,7 @@ function mergeMainToSmartObjectUnCompress() {
                     return [4 /*yield*/, layerComponent.selectAllLayersOnTarget(false, false, true)];
                 case 6:
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.convertToSrgbProfile()];
+                    return [4 /*yield*/, layerComponent.convertToSrgbProfile(false)];
                 case 7:
                     _c.sent();
                     return [4 /*yield*/, layerComponent.convertToSmartObject()];
