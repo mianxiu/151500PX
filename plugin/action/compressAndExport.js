@@ -42,7 +42,7 @@ var names = require("../module/names");
 var folder = require("../module/floder");
 var save = require("../module/save");
 var text = require("../module/text");
-var app = require("photoshop").app;
+var app = require('photoshop').app;
 var fuckingExportSize = 1500;
 var fuckingMargin = 20;
 // 2021/1/18 解决，是app.activeDocument 获取错误
@@ -72,7 +72,10 @@ function mergeMainToSmartObjectCompress() {
                     return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
                 case 3:
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.selectChannel()];
+                    return [4 /*yield*/, layerComponent.selectChannel()
+                        /**对于正常的mask会有锯齿 */
+                        //await layerComponent.levels();
+                    ];
                 case 4:
                     _c.sent();
                     /**对于正常的mask会有锯齿 */
@@ -117,64 +120,90 @@ function mergeMainToSmartObjectCompress() {
                 case 16: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
                 case 17:
                     layerSize = _c.sent();
-                    layerBounds = layerComponent.activeDocument().activeLayers[0].bounds;
-                    if (!((layerBounds.bottom >= 0 || layerBounds.left >= 0 || layerBounds.right >= 0 || layerBounds.top >= 0) &&
+                    layerBounds = layerComponent.activeDocument()
+                        .activeLayers[0].bounds;
+                    if (!((layerBounds.bottom >= 0 ||
+                        layerBounds.left >= 0 ||
+                        layerBounds.right >= 0 ||
+                        layerBounds.top >= 0) &&
                         Math.abs(acitveDocumet.height - acitveDocumet.width) <= 1)) return [3 /*break*/, 19];
                     console.log(names.__MAIN_DETAIL__ + " MODE");
                     return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
                 case 18:
                     _c.sent();
-                    return [3 /*break*/, 24];
+                    return [3 /*break*/, 29];
                 case 19:
-                    if (!(layerSize.height >= fuckingExportSize || layerSize.width >= fuckingExportSize)) return [3 /*break*/, 22];
-                    console.log(names.__MAIN__ + " SIZE > " + fuckingExportSize);
-                    return [4 /*yield*/, layerComponent.cropToSquare(fuckingMargin)];
+                    if (!((layerBounds.bottom >= 0 ||
+                        layerBounds.left >= 0 ||
+                        layerBounds.right >= 0 ||
+                        layerBounds.top >= 0) &&
+                        Math.abs(acitveDocumet.height - acitveDocumet.width) > 1)) return [3 /*break*/, 24];
+                    if (!(acitveDocumet.height > acitveDocumet.width)) return [3 /*break*/, 21];
+                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, acitveDocumet.height * (fuckingExportSize / acitveDocumet.width))];
                 case 20:
                     _c.sent();
-                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
-                case 21:
-                    _c.sent();
-                    return [3 /*break*/, 24];
+                    return [3 /*break*/, 23];
+                case 21: return [4 /*yield*/, acitveDocumet.resizeImage(acitveDocumet.width * (fuckingExportSize / acitveDocumet.height), fuckingExportSize)];
                 case 22:
-                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 24];
+                    _c.sent();
+                    _c.label = 23;
+                case 23: return [3 /*break*/, 29];
+                case 24:
+                    if (!(layerSize.height >= fuckingExportSize ||
+                        layerSize.width >= fuckingExportSize)) return [3 /*break*/, 27];
+                    console.log(names.__MAIN__ + " SIZE > " + fuckingExportSize);
+                    return [4 /*yield*/, layerComponent.cropToSquare(fuckingMargin)];
+                case 25:
+                    _c.sent();
+                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
+                case 26:
+                    _c.sent();
+                    return [3 /*break*/, 29];
+                case 27:
+                    if (!(layerSize.height < fuckingExportSize &&
+                        layerSize.width < fuckingExportSize)) return [3 /*break*/, 29];
                     console.log(names.__MAIN__ + " SIZE < " + fuckingExportSize);
                     return [4 /*yield*/, layerComponent.cropToSize(fuckingExportSize, fuckingExportSize)];
-                case 23:
+                case 28:
                     _c.sent();
-                    _c.label = 24;
-                case 24: 
+                    _c.label = 29;
+                case 29: 
                 /**
                  * save SIZE layer, if it has, drawRuler
                  */
                 return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers(["^" + names.__SIZE__])];
-                case 25:
+                case 30:
                     /**
                      * save SIZE layer, if it has, drawRuler
                      */
                     _c.sent();
                     return [4 /*yield*/, layerComponent.convertToSrgbProfile(true)];
-                case 26:
+                case 31:
                     _c.sent();
                     return [4 /*yield*/, layerComponent.createBGLayer()];
-                case 27:
+                case 32:
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.fillWhite()];
-                case 28:
+                    return [4 /*yield*/, layerComponent.fillWhite()
+                        /**
+                         * re reasterize smart layer can zip file
+                         */
+                    ];
+                case 33:
                     _c.sent();
                     /**
                      * re reasterize smart layer can zip file
                      */
                     return [4 /*yield*/, layerComponent.selectLayerByName(names.__DO_ACTION__)];
-                case 29:
+                case 34:
                     /**
                      * re reasterize smart layer can zip file
                      */
                     _c.sent();
                     return [4 /*yield*/, layerComponent.rasterizeTargetLayer()];
-                case 30:
+                case 35:
                     _c.sent();
                     return [4 /*yield*/, layerComponent.convertToSmartObject()];
-                case 31:
+                case 36:
                     _c.sent();
                     return [2 /*return*/];
             }
@@ -190,7 +219,10 @@ function mergeMainToSmartObjectUnCompress() {
                 case 0:
                     acitveDocumet = layerComponent.activeDocument();
                     // select layer by name has problem
-                    return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
+                    return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)
+                        /**对于正常的mask会有锯齿 */
+                        //await layerComponent.levels();
+                    ];
                 case 1:
                     // select layer by name has problem
                     _c.sent();
@@ -227,42 +259,64 @@ function mergeMainToSmartObjectUnCompress() {
                 case 10: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
                 case 11:
                     layerSize = _c.sent();
-                    layerBounds = layerComponent.activeDocument().activeLayers[0].bounds;
-                    if (!((layerBounds.bottom >= 0 || layerBounds.left >= 0 || layerBounds.right >= 0 || layerBounds.top >= 0) &&
+                    layerBounds = layerComponent.activeDocument()
+                        .activeLayers[0].bounds;
+                    if (!((layerBounds.bottom >= 0 ||
+                        layerBounds.left >= 0 ||
+                        layerBounds.right >= 0 ||
+                        layerBounds.top >= 0) &&
                         acitveDocumet.height === acitveDocumet.width)) return [3 /*break*/, 13];
                     console.log(names.__MAIN_DETAIL__ + " MODE");
                     return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
                 case 12:
                     _c.sent();
-                    return [3 /*break*/, 18];
+                    return [3 /*break*/, 23];
                 case 13:
-                    if (!(layerSize.height > fuckingExportSize || layerSize.width > fuckingExportSize)) return [3 /*break*/, 16];
-                    console.log(names.__MAIN__ + " SIZE > " + fuckingExportSize);
-                    return [4 /*yield*/, layerComponent.cropToSquare(fuckingMargin)];
+                    if (!((layerBounds.bottom >= 0 ||
+                        layerBounds.left >= 0 ||
+                        layerBounds.right >= 0 ||
+                        layerBounds.top >= 0) &&
+                        Math.abs(acitveDocumet.height - acitveDocumet.width) > 1)) return [3 /*break*/, 18];
+                    if (!(acitveDocumet.height > acitveDocumet.width)) return [3 /*break*/, 15];
+                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, acitveDocumet.height * (fuckingExportSize / acitveDocumet.width))];
                 case 14:
                     _c.sent();
-                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
-                case 15:
-                    _c.sent();
-                    return [3 /*break*/, 18];
+                    return [3 /*break*/, 17];
+                case 15: return [4 /*yield*/, acitveDocumet.resizeImage(acitveDocumet.width * (fuckingExportSize / acitveDocumet.height), fuckingExportSize)];
                 case 16:
-                    if (!(layerSize.height < fuckingExportSize && layerSize.width < fuckingExportSize)) return [3 /*break*/, 18];
-                    console.log(names.__MAIN__ + " SIZE < " + fuckingExportSize);
-                    return [4 /*yield*/, layerComponent.cropToSize(fuckingExportSize, fuckingExportSize)];
-                case 17:
                     _c.sent();
-                    _c.label = 18;
-                case 18: return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers(["^" + names.__SIZE__])];
+                    _c.label = 17;
+                case 17: return [3 /*break*/, 23];
+                case 18:
+                    if (!(layerSize.height > fuckingExportSize ||
+                        layerSize.width > fuckingExportSize)) return [3 /*break*/, 21];
+                    console.log(names.__MAIN__ + " SIZE > " + fuckingExportSize);
+                    return [4 /*yield*/, layerComponent.cropToSquare(fuckingMargin)];
                 case 19:
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.createBGLayer()];
+                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
                 case 20:
                     _c.sent();
-                    return [4 /*yield*/, layerComponent.fillWhite()];
+                    return [3 /*break*/, 23];
                 case 21:
+                    if (!(layerSize.height < fuckingExportSize &&
+                        layerSize.width < fuckingExportSize)) return [3 /*break*/, 23];
+                    console.log(names.__MAIN__ + " SIZE < " + fuckingExportSize);
+                    return [4 /*yield*/, layerComponent.cropToSize(fuckingExportSize, fuckingExportSize)];
+                case 22:
+                    _c.sent();
+                    _c.label = 23;
+                case 23: return [4 /*yield*/, layerComponent.deleteAllUnVisibleLayers(["^" + names.__SIZE__])];
+                case 24:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.createBGLayer()];
+                case 25:
+                    _c.sent();
+                    return [4 /*yield*/, layerComponent.fillWhite()];
+                case 26:
                     _c.sent();
                     return [4 /*yield*/, layerComponent.selectLayerByName(names.__DO_ACTION__)];
-                case 22:
+                case 27:
                     _c.sent();
                     return [2 /*return*/];
             }
@@ -297,7 +351,8 @@ function drawRuler() {
                     return [4 /*yield*/, layerComponent.selectLayerByName(names.__DO_ACTION__)];
                 case 6:
                     _a.sent();
-                    return [4 /*yield*/, layerComponent.activeDocument().activeLayers[0].bounds];
+                    return [4 /*yield*/, layerComponent.activeDocument()
+                            .activeLayers[0].bounds];
                 case 7:
                     layerBounds = _a.sent();
                     return [4 /*yield*/, layerComponent.createSizeRuler(size, { width: 116, height: 18 }, layerBounds, "000000", 10, { width: acitveDocumet.width, height: acitveDocumet.height }, fuckingMargin)];
@@ -328,14 +383,16 @@ function exportFuckingWork(compress) {
                         }
                     }); }); });
                     if (!(app.documents.length < 1)) return [3 /*break*/, 2];
-                    pickTips = compress === true ? "please pick folder" : "pick folder (un compress mode)";
+                    pickTips = compress === true
+                        ? 'please pick folder'
+                        : 'pick folder (un compress mode)';
                     return [4 /*yield*/, app.createDocument({
                             name: pickTips,
                             width: 1,
                             height: 1,
                             resolution: 1,
-                            mode: "RGBColorMode",
-                            fill: "transparent",
+                            mode: 'RGBColorMode',
+                            fill: 'transparent',
                         })];
                 case 1:
                     _d.sent();
@@ -360,7 +417,11 @@ function exportFuckingWork(compress) {
                                 switch (_a.label) {
                                     case 0:
                                         if (!(app.documents.length < 2)) return [3 /*break*/, 2];
-                                        return [4 /*yield*/, app.open(entryPath.entrySymbol)];
+                                        return [4 /*yield*/, app.open(entryPath.entrySymbol)
+                                            /**
+                                             * do something
+                                             */
+                                        ];
                                     case 1:
                                         _a.sent();
                                         _a.label = 2;
@@ -377,10 +438,14 @@ function exportFuckingWork(compress) {
                                     case 6: return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath)];
                                     case 7:
                                         jpegFolderSymbol = _a.sent();
-                                        return [4 /*yield*/, save.saveToJPEG(jpegFolderSymbol, entryPath.entrySymbol.name)];
+                                        return [4 /*yield*/, save.saveToJPEG(jpegFolderSymbol, entryPath.entrySymbol.name)
+                                            /**
+                                             * export tif
+                                             */
+                                        ];
                                     case 8:
                                         _a.sent();
-                                        return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath + entryPath.relateivePath.replace(/.*([\\|\/]).*/gm, "$1TIFF"))];
+                                        return [4 /*yield*/, folder.createSubPathFolder(pickFolder, "" + entryPath.exportRoot + entryPath.relateivePath + entryPath.relateivePath.replace(/.*([\\|\/]).*/gm, '$1TIFF'))];
                                     case 9:
                                         tiffFolderSymbol = _a.sent();
                                         return [4 /*yield*/, save.saveToTiff(tiffFolderSymbol, entryPath.entrySymbol.name)];
