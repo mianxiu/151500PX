@@ -56,11 +56,11 @@ var fuckingMargin = 20;
  */
 function mergeMainToSmartObjectCompress() {
     return __awaiter(this, void 0, void 0, function () {
-        var acitveDocumet, layerSize, _a, _b, layerBounds;
+        var activeDocument, layerSize, _a, _b, layerBounds;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    acitveDocumet = layerComponent.activeDocument();
+                    activeDocument = layerComponent.activeDocument();
                     // select layer by name has problem
                     return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)];
                 case 1:
@@ -116,34 +116,38 @@ function mergeMainToSmartObjectCompress() {
                 case 15:
                     _c.sent();
                     _b = (_a = layerComponent).getElementSize;
-                    return [4 /*yield*/, acitveDocumet.activeLayers[0]];
+                    return [4 /*yield*/, activeDocument.activeLayers[0]];
                 case 16: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
                 case 17:
                     layerSize = _c.sent();
                     layerBounds = layerComponent.activeDocument()
                         .activeLayers[0].bounds;
-                    if (!((layerBounds.bottom >= 0 ||
-                        layerBounds.left >= 0 ||
-                        layerBounds.right >= 0 ||
-                        layerBounds.top >= 0) &&
-                        Math.abs(acitveDocumet.height - acitveDocumet.width) <= 1)) return [3 /*break*/, 19];
+                    if (!((layerBounds.bottom >= activeDocument.height ||
+                        layerBounds.left <= 0 ||
+                        layerBounds.right >= activeDocument.width ||
+                        layerBounds.top <= 0) &&
+                        Math.abs(activeDocument.height - activeDocument.width) <= 1)) return [3 /*break*/, 19];
+                    console.log(layerBounds);
                     console.log(names.__MAIN_DETAIL__ + " MODE");
-                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
+                    return [4 /*yield*/, activeDocument.resizeImage(fuckingExportSize, fuckingExportSize)];
                 case 18:
                     _c.sent();
                     return [3 /*break*/, 29];
                 case 19:
-                    if (!((layerBounds.bottom >= 0 ||
-                        layerBounds.left >= 0 ||
-                        layerBounds.right >= 0 ||
-                        layerBounds.top >= 0) &&
-                        Math.abs(acitveDocumet.height - acitveDocumet.width) > 1)) return [3 /*break*/, 24];
-                    if (!(acitveDocumet.height > acitveDocumet.width)) return [3 /*break*/, 21];
-                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, acitveDocumet.height * (fuckingExportSize / acitveDocumet.width))];
+                    if (!(layerBounds.bottom >= activeDocument.height ||
+                        layerBounds.left <= 0 ||
+                        layerBounds.right >= activeDocument.width ||
+                        layerBounds.top <= 0)) return [3 /*break*/, 24];
+                    console.log("fix resize rectangle detail image");
+                    console.log(layerBounds);
+                    console.log(layerSize);
+                    console.log(activeDocument.width + "-" + activeDocument.height);
+                    if (!(activeDocument.height > activeDocument.width)) return [3 /*break*/, 21];
+                    return [4 /*yield*/, activeDocument.resizeImage(fuckingExportSize, activeDocument.height * (fuckingExportSize / activeDocument.width))];
                 case 20:
                     _c.sent();
                     return [3 /*break*/, 23];
-                case 21: return [4 /*yield*/, acitveDocumet.resizeImage(acitveDocumet.width * (fuckingExportSize / acitveDocumet.height), fuckingExportSize)];
+                case 21: return [4 /*yield*/, activeDocument.resizeImage(activeDocument.width * (fuckingExportSize / activeDocument.height), fuckingExportSize)];
                 case 22:
                     _c.sent();
                     _c.label = 23;
@@ -151,17 +155,23 @@ function mergeMainToSmartObjectCompress() {
                 case 24:
                     if (!(layerSize.height >= fuckingExportSize ||
                         layerSize.width >= fuckingExportSize)) return [3 /*break*/, 27];
+                    // console.log(layerBounds)
+                    // console.log(layerSize)
+                    // console.log(`${activeDocument.width}-${activeDocument.height}`)
                     console.log(names.__MAIN__ + " SIZE > " + fuckingExportSize);
                     return [4 /*yield*/, layerComponent.cropToSquare(fuckingMargin)];
                 case 25:
                     _c.sent();
-                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
+                    return [4 /*yield*/, activeDocument.resizeImage(fuckingExportSize, fuckingExportSize)];
                 case 26:
                     _c.sent();
                     return [3 /*break*/, 29];
                 case 27:
                     if (!(layerSize.height < fuckingExportSize &&
                         layerSize.width < fuckingExportSize)) return [3 /*break*/, 29];
+                    // console.log(layerBounds)
+                    // console.log(layerSize)
+                    // console.log(`${activeDocument.width}-${activeDocument.height}`)
                     console.log(names.__MAIN__ + " SIZE < " + fuckingExportSize);
                     return [4 /*yield*/, layerComponent.cropToSize(fuckingExportSize, fuckingExportSize)];
                 case 28:
@@ -213,11 +223,11 @@ function mergeMainToSmartObjectCompress() {
 exports.mergeMainToSmartObjectCompress = mergeMainToSmartObjectCompress;
 function mergeMainToSmartObjectUnCompress() {
     return __awaiter(this, void 0, void 0, function () {
-        var acitveDocumet, layerSize, _a, _b, layerBounds;
+        var activeDocument, layerSize, _a, _b, layerBounds;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    acitveDocumet = layerComponent.activeDocument();
+                    activeDocument = layerComponent.activeDocument();
                     // select layer by name has problem
                     return [4 /*yield*/, layerComponent.selectLayerByName("MAIN", true)
                         /**对于正常的mask会有锯齿 */
@@ -255,34 +265,33 @@ function mergeMainToSmartObjectUnCompress() {
                 case 9:
                     _c.sent();
                     _b = (_a = layerComponent).getElementSize;
-                    return [4 /*yield*/, acitveDocumet.activeLayers[0]];
+                    return [4 /*yield*/, activeDocument.activeLayers[0]];
                 case 10: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
                 case 11:
                     layerSize = _c.sent();
                     layerBounds = layerComponent.activeDocument()
                         .activeLayers[0].bounds;
-                    if (!((layerBounds.bottom >= 0 ||
-                        layerBounds.left >= 0 ||
-                        layerBounds.right >= 0 ||
-                        layerBounds.top >= 0) &&
-                        acitveDocumet.height === acitveDocumet.width)) return [3 /*break*/, 13];
+                    if (!((layerBounds.bottom >= activeDocument.height ||
+                        layerBounds.left <= 0 ||
+                        layerBounds.right >= activeDocument.width ||
+                        layerBounds.top <= 0) &&
+                        Math.abs(activeDocument.height - activeDocument.width) <= 1)) return [3 /*break*/, 13];
                     console.log(names.__MAIN_DETAIL__ + " MODE");
-                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
+                    return [4 /*yield*/, activeDocument.resizeImage(fuckingExportSize, fuckingExportSize)];
                 case 12:
                     _c.sent();
                     return [3 /*break*/, 23];
                 case 13:
-                    if (!((layerBounds.bottom >= 0 ||
-                        layerBounds.left >= 0 ||
-                        layerBounds.right >= 0 ||
-                        layerBounds.top >= 0) &&
-                        Math.abs(acitveDocumet.height - acitveDocumet.width) > 1)) return [3 /*break*/, 18];
-                    if (!(acitveDocumet.height > acitveDocumet.width)) return [3 /*break*/, 15];
-                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, acitveDocumet.height * (fuckingExportSize / acitveDocumet.width))];
+                    if (!(layerBounds.bottom >= activeDocument.height ||
+                        layerBounds.left <= 0 ||
+                        layerBounds.right >= activeDocument.width ||
+                        layerBounds.top <= 0)) return [3 /*break*/, 18];
+                    if (!(activeDocument.height > activeDocument.width)) return [3 /*break*/, 15];
+                    return [4 /*yield*/, activeDocument.resizeImage(fuckingExportSize, activeDocument.height * (fuckingExportSize / activeDocument.width))];
                 case 14:
                     _c.sent();
                     return [3 /*break*/, 17];
-                case 15: return [4 /*yield*/, acitveDocumet.resizeImage(acitveDocumet.width * (fuckingExportSize / acitveDocumet.height), fuckingExportSize)];
+                case 15: return [4 /*yield*/, activeDocument.resizeImage(activeDocument.width * (fuckingExportSize / activeDocument.height), fuckingExportSize)];
                 case 16:
                     _c.sent();
                     _c.label = 17;
@@ -294,7 +303,7 @@ function mergeMainToSmartObjectUnCompress() {
                     return [4 /*yield*/, layerComponent.cropToSquare(fuckingMargin)];
                 case 19:
                     _c.sent();
-                    return [4 /*yield*/, acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)];
+                    return [4 /*yield*/, activeDocument.resizeImage(fuckingExportSize, fuckingExportSize)];
                 case 20:
                     _c.sent();
                     return [3 /*break*/, 23];

@@ -3,7 +3,6 @@ import * as names from '../module/names'
 import * as folder from '../module/floder'
 import * as save from '../module/save'
 import * as text from '../module/text'
-import { cpuUsage } from 'process'
 
 const app = require('photoshop').app
 
@@ -20,7 +19,7 @@ const fuckingMargin: number = 20
  *
  */
 export async function mergeMainToSmartObjectCompress() {
-  let acitveDocumet = layerComponent.activeDocument()
+  let activeDocument = layerComponent.activeDocument()
   // select layer by name has problem
   await layerComponent.selectLayerByName(`MAIN`, true)
   await drawRuler()
@@ -41,7 +40,7 @@ export async function mergeMainToSmartObjectCompress() {
 
   await layerComponent.setLayerName(names.__DO_ACTION__)
   let layerSize = await layerComponent.getElementSize(
-    await acitveDocumet.activeLayers[0],
+    await activeDocument.activeLayers[0],
   )
   let layerBounds: layerComponent.IBounds = layerComponent.activeDocument()
     .activeLayers[0].bounds
@@ -49,30 +48,34 @@ export async function mergeMainToSmartObjectCompress() {
    * todo detatil is `MIAN-DETAIL--`
    */
   if (
-    (layerBounds.bottom >= 0 ||
-      layerBounds.left >= 0 ||
-      layerBounds.right >= 0 ||
-      layerBounds.top >= 0) &&
-    Math.abs(acitveDocumet.height - acitveDocumet.width) <= 1
+    (layerBounds.bottom >= activeDocument.height ||
+      layerBounds.left <= 0 ||
+      layerBounds.right >= activeDocument.width ||
+      layerBounds.top <= 0) &&
+    Math.abs(activeDocument.height - activeDocument.width) <= 1
   ) {
+    console.log(layerBounds)
     console.log(`${names.__MAIN_DETAIL__} MODE`)
-    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)
+    await activeDocument.resizeImage(fuckingExportSize, fuckingExportSize)
   } else if (
-    (layerBounds.bottom >= 0 ||
-      layerBounds.left >= 0 ||
-      layerBounds.right >= 0 ||
-      layerBounds.top >= 0) &&
-    Math.abs(acitveDocumet.height - acitveDocumet.width) > 1
+    layerBounds.bottom >= activeDocument.height ||
+    layerBounds.left <= 0 ||
+    layerBounds.right >= activeDocument.width ||
+    layerBounds.top <= 0
   ) {
+    console.log(`fix resize rectangle detail image`)
+    console.log(layerBounds)
+    console.log(layerSize)
+    console.log(`${activeDocument.width}-${activeDocument.height}`)
     // fix resize rectangle detail image
-    if (acitveDocumet.height > acitveDocumet.width) {
-      await acitveDocumet.resizeImage(
+    if (activeDocument.height > activeDocument.width) {
+      await activeDocument.resizeImage(
         fuckingExportSize,
-        acitveDocumet.height * (fuckingExportSize / acitveDocumet.width),
+        activeDocument.height * (fuckingExportSize / activeDocument.width),
       )
     } else {
-      await acitveDocumet.resizeImage(
-        acitveDocumet.width * (fuckingExportSize / acitveDocumet.height),
+      await activeDocument.resizeImage(
+        activeDocument.width * (fuckingExportSize / activeDocument.height),
         fuckingExportSize,
       )
     }
@@ -80,13 +83,19 @@ export async function mergeMainToSmartObjectCompress() {
     layerSize.height >= fuckingExportSize ||
     layerSize.width >= fuckingExportSize
   ) {
+    // console.log(layerBounds)
+    // console.log(layerSize)
+    // console.log(`${activeDocument.width}-${activeDocument.height}`)
     console.log(`${names.__MAIN__} SIZE > ${fuckingExportSize}`)
     await layerComponent.cropToSquare(fuckingMargin)
-    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)
+    await activeDocument.resizeImage(fuckingExportSize, fuckingExportSize)
   } else if (
     layerSize.height < fuckingExportSize &&
     layerSize.width < fuckingExportSize
   ) {
+    // console.log(layerBounds)
+    // console.log(layerSize)
+    // console.log(`${activeDocument.width}-${activeDocument.height}`)
     console.log(`${names.__MAIN__} SIZE < ${fuckingExportSize}`)
     await layerComponent.cropToSize(fuckingExportSize, fuckingExportSize)
   }
@@ -107,7 +116,7 @@ export async function mergeMainToSmartObjectCompress() {
 }
 
 export async function mergeMainToSmartObjectUnCompress() {
-  let acitveDocumet = layerComponent.activeDocument()
+  let activeDocument = layerComponent.activeDocument()
   // select layer by name has problem
   await layerComponent.selectLayerByName(`MAIN`, true)
 
@@ -123,36 +132,35 @@ export async function mergeMainToSmartObjectUnCompress() {
 
   await layerComponent.setLayerName(names.__DO_ACTION__)
   let layerSize = await layerComponent.getElementSize(
-    await acitveDocumet.activeLayers[0],
+    await activeDocument.activeLayers[0],
   )
   let layerBounds: layerComponent.IBounds = layerComponent.activeDocument()
     .activeLayers[0].bounds
 
   if (
-    (layerBounds.bottom >= 0 ||
-      layerBounds.left >= 0 ||
-      layerBounds.right >= 0 ||
-      layerBounds.top >= 0) &&
-    acitveDocumet.height === acitveDocumet.width
+    (layerBounds.bottom >= activeDocument.height ||
+      layerBounds.left <= 0 ||
+      layerBounds.right >= activeDocument.width ||
+      layerBounds.top <= 0) &&
+    Math.abs(activeDocument.height - activeDocument.width) <= 1
   ) {
     console.log(`${names.__MAIN_DETAIL__} MODE`)
-    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)
+    await activeDocument.resizeImage(fuckingExportSize, fuckingExportSize)
   } else if (
-    (layerBounds.bottom >= 0 ||
-      layerBounds.left >= 0 ||
-      layerBounds.right >= 0 ||
-      layerBounds.top >= 0) &&
-    Math.abs(acitveDocumet.height - acitveDocumet.width) > 1
+    layerBounds.bottom >= activeDocument.height ||
+    layerBounds.left <= 0 ||
+    layerBounds.right >= activeDocument.width ||
+    layerBounds.top <= 0
   ) {
     // fix resize rectangle detail image
-    if (acitveDocumet.height > acitveDocumet.width) {
-      await acitveDocumet.resizeImage(
+    if (activeDocument.height > activeDocument.width) {
+      await activeDocument.resizeImage(
         fuckingExportSize,
-        acitveDocumet.height * (fuckingExportSize / acitveDocumet.width),
+        activeDocument.height * (fuckingExportSize / activeDocument.width),
       )
     } else {
-      await acitveDocumet.resizeImage(
-        acitveDocumet.width * (fuckingExportSize / acitveDocumet.height),
+      await activeDocument.resizeImage(
+        activeDocument.width * (fuckingExportSize / activeDocument.height),
         fuckingExportSize,
       )
     }
@@ -162,7 +170,7 @@ export async function mergeMainToSmartObjectUnCompress() {
   ) {
     console.log(`${names.__MAIN__} SIZE > ${fuckingExportSize}`)
     await layerComponent.cropToSquare(fuckingMargin)
-    await acitveDocumet.resizeImage(fuckingExportSize, fuckingExportSize)
+    await activeDocument.resizeImage(fuckingExportSize, fuckingExportSize)
   } else if (
     layerSize.height < fuckingExportSize &&
     layerSize.width < fuckingExportSize

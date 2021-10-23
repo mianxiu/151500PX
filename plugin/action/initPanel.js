@@ -40,7 +40,7 @@ exports.Ttest = exports.shortcutsListener = exports.initPanel = void 0;
 var compressAndExport = require("./compressAndExport");
 var dupliceVector = require("./dupliceVector");
 var mainPanel = require("./mainpanel");
-var app = require("photoshop").app;
+var app = require('photoshop').app;
 var uxpPanel = "#uxp-panel";
 var panelMode = {
     main: "main",
@@ -68,14 +68,16 @@ exports.shortcutsListener = shortcutsListener;
 function initClikcListeners(initEventListener) {
     var listener = [].concat(initEventListener);
     var intervalEvent = setInterval(function () {
-        if (document.querySelector("#uxp-panel").innerHTML !== "") {
+        if (document.querySelector("#uxp-panel").innerHTML !== '') {
             for (var i = 0; i < listener.length; i++) {
                 var el = listener[i];
                 var node = document.querySelector(el.selector);
                 var initAttr = node !== null ? node.getAttribute("initEvent") : null;
                 if (initAttr === "false") {
                     console.log(el.selector, "initEventListener", true);
-                    document.querySelector(el.selector).addEventListener("click", el.listener);
+                    document
+                        .querySelector(el.selector)
+                        .addEventListener("click", el.listener);
                     node.setAttribute("initEvent", "true");
                 }
             }
@@ -179,7 +181,7 @@ function upgradeMain() {
     return __awaiter(this, void 0, void 0, function () {
         var initBlackMetalId, initBlackMetalFunc, initWhiteMetalId, initWhiteMetalFunc, compressExportId, compressExportFunc, dupliceVectorId, dupliceVectorFunc;
         return __generator(this, function (_a) {
-            insertHtmlFromPath("./panel/main.html");
+            insertHtmlFromPath('./panel/main.html');
             initBlackMetalId = "#init-black-metal";
             initBlackMetalFunc = function () {
                 mainPanel.fff();
@@ -193,16 +195,20 @@ function upgradeMain() {
             compressExportId = "#compress-export";
             compressExportFunc = function () {
                 document.querySelector("#nav").setAttribute("type", "back");
-                document.querySelector(uxpPanel).setAttribute("panel", panelMode.compressExport);
+                document
+                    .querySelector(uxpPanel)
+                    .setAttribute("panel", panelMode.compressExport);
                 upgradeNav();
                 upGradePanel();
                 compressAndExport.exportFuckingWork();
-                //compressAndExport.mergeMainToSmartObjectCompress();
+                //compressAndExport.mergeMainToSmartObjectCompress()
             };
             dupliceVectorId = "#duplice-vector";
             dupliceVectorFunc = function () {
                 document.querySelector("#nav").setAttribute("type", "back");
-                document.querySelector(uxpPanel).setAttribute("panel", panelMode.dupliceVector);
+                document
+                    .querySelector(uxpPanel)
+                    .setAttribute("panel", panelMode.dupliceVector);
                 upgradeNav();
                 upGradePanel();
                 dupliceVector.dupliceBaseSpacing(0, 0, 10);
@@ -227,7 +233,7 @@ function upgradeCompressExport() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             upgradeNav();
-            insertHtmlFromPath("./panel/compressAndexport.html");
+            insertHtmlFromPath('./panel/compressAndexport.html');
             return [2 /*return*/];
         });
     });
@@ -236,7 +242,7 @@ function upgradeDupliceVector() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             upgradeNav();
-            insertHtmlFromPath("./panel/dupliceVector.html");
+            insertHtmlFromPath('./panel/dupliceVector.html');
             return [2 /*return*/];
         });
     });
