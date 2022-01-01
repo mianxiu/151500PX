@@ -157,7 +157,7 @@ async function upgradePanel() {
       break
 
     case panelMode.miniExport:
-      upgradeDupliceVector()
+      upgradeMiniExport()
       break
     default:
       break
