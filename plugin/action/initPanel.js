@@ -46,13 +46,14 @@ var panelMode = {
     main: "main",
     compressExport: "compress-export",
     dupliceVector: "duplice-vector",
+    miniExport: "mini-export",
 };
 /**
  * inin when plugin load
  */
 function initPanel() {
     upgradeNav();
-    upGradePanel();
+    upgradePanel();
 }
 exports.initPanel = initPanel;
 function shortcutsListener() {
@@ -152,7 +153,7 @@ function insertHtmlFromPath(path) {
 /**
  * init panel and addEventListener
  */
-function upGradePanel() {
+function upgradePanel() {
     return __awaiter(this, void 0, void 0, function () {
         var panel;
         return __generator(this, function (_a) {
@@ -167,6 +168,9 @@ function upGradePanel() {
                 case panelMode.dupliceVector:
                     upgradeDupliceVector();
                     break;
+                case panelMode.miniExport:
+                    upgradeDupliceVector();
+                    break;
                 default:
                     break;
             }
@@ -179,7 +183,7 @@ function upGradePanel() {
  */
 function upgradeMain() {
     return __awaiter(this, void 0, void 0, function () {
-        var initBlackMetalId, initBlackMetalFunc, initWhiteMetalId, initWhiteMetalFunc, compressExportId, compressExportFunc, dupliceVectorId, dupliceVectorFunc;
+        var initBlackMetalId, initBlackMetalFunc, initWhiteMetalId, initWhiteMetalFunc, compressExportId, compressExportFunc, dupliceVectorId, dupliceVectorFunc, miniExportId, miniExportFunc;
         return __generator(this, function (_a) {
             insertHtmlFromPath('./panel/main.html');
             initBlackMetalId = "#init-black-metal";
@@ -199,7 +203,7 @@ function upgradeMain() {
                     .querySelector(uxpPanel)
                     .setAttribute("panel", panelMode.compressExport);
                 upgradeNav();
-                upGradePanel();
+                upgradePanel();
                 compressAndExport.exportFuckingWork();
                 //compressAndExport.mergeMainToSmartObjectCompress()
             };
@@ -210,8 +214,15 @@ function upgradeMain() {
                     .querySelector(uxpPanel)
                     .setAttribute("panel", panelMode.dupliceVector);
                 upgradeNav();
-                upGradePanel();
+                upgradePanel();
                 dupliceVector.dupliceBaseSpacing(0, 0, 10);
+            };
+            miniExportId = "#mini-export";
+            miniExportFunc = function () {
+                document.querySelector("#nav").setAttribute("type", "back");
+                document.querySelector(uxpPanel).setAttribute("panel", panelMode.miniExport);
+                upgradeNav();
+                upgradePanel();
             };
             /**
              *
@@ -221,6 +232,7 @@ function upgradeMain() {
                 { selector: initWhiteMetalId, listener: initWhiteMetalFunc },
                 { selector: compressExportId, listener: compressExportFunc },
                 { selector: dupliceVectorId, listener: dupliceVectorFunc },
+                { selector: miniExportId, listener: miniExportFunc },
             ]);
             return [2 /*return*/];
         });
@@ -243,6 +255,15 @@ function upgradeDupliceVector() {
         return __generator(this, function (_a) {
             upgradeNav();
             insertHtmlFromPath('./panel/dupliceVector.html');
+            return [2 /*return*/];
+        });
+    });
+}
+function upgradeMiniExport() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            upgradeNav();
+            insertHtmlFromPath('./panel/miniExport.html');
             return [2 /*return*/];
         });
     });

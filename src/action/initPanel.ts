@@ -1,6 +1,7 @@
 import * as compressAndExport from './compressAndExport'
 import * as dupliceVector from './dupliceVector'
 import * as mainPanel from './mainpanel'
+import * as miniExport from './miniExport'
 
 const app = require('photoshop').app
 
@@ -9,6 +10,7 @@ const panelMode = {
   main: `main`,
   compressExport: `compress-export`,
   dupliceVector: `duplice-vector`,
+  miniExport: `mini-export`,
 }
 
 /**
@@ -16,7 +18,7 @@ const panelMode = {
  */
 export function initPanel() {
   upgradeNav()
-  upGradePanel()
+  upgradePanel()
 }
 
 export function shortcutsListener() {
@@ -138,7 +140,7 @@ async function insertHtmlFromPath(path: string) {
 /**
  * init panel and addEventListener
  */
-async function upGradePanel() {
+async function upgradePanel() {
   let panel: string = document.querySelector(uxpPanel).getAttribute(`panel`)
 
   switch (panel) {
@@ -151,6 +153,10 @@ async function upGradePanel() {
       break
 
     case panelMode.dupliceVector:
+      upgradeDupliceVector()
+      break
+
+    case panelMode.miniExport:
       upgradeDupliceVector()
       break
     default:
@@ -187,7 +193,7 @@ async function upgradeMain() {
       .querySelector(uxpPanel)
       .setAttribute(`panel`, panelMode.compressExport)
     upgradeNav()
-    upGradePanel()
+    upgradePanel()
 
     compressAndExport.exportFuckingWork()
     //compressAndExport.mergeMainToSmartObjectCompress()
@@ -200,8 +206,16 @@ async function upgradeMain() {
       .querySelector(uxpPanel)
       .setAttribute(`panel`, panelMode.dupliceVector)
     upgradeNav()
-    upGradePanel()
+    upgradePanel()
     dupliceVector.dupliceBaseSpacing(0, 0, 10)
+  }
+
+  let miniExportId = `#mini-export`
+  let miniExportFunc = () => {
+    document.querySelector(`#nav`).setAttribute(`type`, `back`)
+    document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.miniExport)
+    upgradeNav()
+    upgradePanel()
   }
   /**
    *
@@ -212,6 +226,7 @@ async function upgradeMain() {
     { selector: initWhiteMetalId, listener: initWhiteMetalFunc },
     { selector: compressExportId, listener: compressExportFunc },
     { selector: dupliceVectorId, listener: dupliceVectorFunc },
+    { selector: miniExportId, listener: miniExportFunc },
   ])
 }
 
@@ -226,6 +241,11 @@ async function upgradeCompressExport() {
 async function upgradeDupliceVector() {
   upgradeNav()
   insertHtmlFromPath('./panel/dupliceVector.html')
+}
+
+async function upgradeMiniExport() {
+  upgradeNav()
+  insertHtmlFromPath('./panel/miniExport.html')
 }
 
 export let Ttest = () => {
