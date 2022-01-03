@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listen = void 0;
 var initPanel = require("./initPanel");
+var compressAndExport = require("./compressAndExport");
 function listen() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -46,12 +47,14 @@ function listen() {
                     selector: "#compress-export",
                     listener: function () {
                         console.log("i'm compress");
+                        compressAndExport.exportFuckingWork();
                     },
                 },
                 {
                     selector: "#uncompress-export",
                     listener: function () {
                         console.log("i'm uncompress");
+                        compressAndExport.exportFuckingWork(false);
                     },
                 },
             ]);

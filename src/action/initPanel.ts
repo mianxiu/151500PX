@@ -250,6 +250,7 @@ async function upgradeDupliceVector() {
 async function upgradeMiniExport() {
   upgradeNav()
   insertHtmlFromPath('./panel/miniExport.html')
+  miniExport.listen()
 }
 
 export let Ttest = () => {

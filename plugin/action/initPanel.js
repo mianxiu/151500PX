@@ -283,6 +283,7 @@ function upgradeMiniExport() {
         return __generator(this, function (_a) {
             upgradeNav();
             insertHtmlFromPath('./panel/miniExport.html');
+            miniExport.listen();
             return [2 /*return*/];
         });
     });
