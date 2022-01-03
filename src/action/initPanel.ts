@@ -48,7 +48,7 @@ interface InitEventListener {
  *
  * @param initEventListener
  */
-function initClikcListeners(
+export function initClikcListeners(
   initEventListener: InitEventListener | InitEventListener[],
 ) {
   let listener = [].concat(initEventListener)
@@ -211,11 +211,15 @@ async function upgradeMain() {
   }
 
   let miniExportId = `#mini-export`
-  let miniExportFunc = () => {
-    document.querySelector(`#nav`).setAttribute(`type`, `back`)
-    document.querySelector(uxpPanel).setAttribute(`panel`, panelMode.miniExport)
-    upgradeNav()
-    upgradePanel()
+  let miniExportFunc = async () => {
+    await document.querySelector(`#nav`).setAttribute(`type`, `back`)
+    await document
+      .querySelector(uxpPanel)
+      .setAttribute(`panel`, panelMode.miniExport)
+    await upgradeNav()
+    await upgradePanel()
+
+    miniExport.listen()
   }
   /**
    *

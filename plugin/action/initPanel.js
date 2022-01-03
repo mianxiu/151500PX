@@ -36,10 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Ttest = exports.shortcutsListener = exports.initPanel = void 0;
+exports.Ttest = exports.initClikcListeners = exports.shortcutsListener = exports.initPanel = void 0;
 var compressAndExport = require("./compressAndExport");
 var dupliceVector = require("./dupliceVector");
 var mainPanel = require("./mainpanel");
+var miniExport = require("./miniExport");
 var app = require('photoshop').app;
 var uxpPanel = "#uxp-panel";
 var panelMode = {
@@ -86,6 +87,7 @@ function initClikcListeners(initEventListener) {
         }
     }, 1);
 }
+exports.initClikcListeners = initClikcListeners;
 /**
  * init tab menu
  */
@@ -184,6 +186,7 @@ function upgradePanel() {
 function upgradeMain() {
     return __awaiter(this, void 0, void 0, function () {
         var initBlackMetalId, initBlackMetalFunc, initWhiteMetalId, initWhiteMetalFunc, compressExportId, compressExportFunc, dupliceVectorId, dupliceVectorFunc, miniExportId, miniExportFunc;
+        var _this = this;
         return __generator(this, function (_a) {
             insertHtmlFromPath('./panel/main.html');
             initBlackMetalId = "#init-black-metal";
@@ -218,12 +221,28 @@ function upgradeMain() {
                 dupliceVector.dupliceBaseSpacing(0, 0, 10);
             };
             miniExportId = "#mini-export";
-            miniExportFunc = function () {
-                document.querySelector("#nav").setAttribute("type", "back");
-                document.querySelector(uxpPanel).setAttribute("panel", panelMode.miniExport);
-                upgradeNav();
-                upgradePanel();
-            };
+            miniExportFunc = function () { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, document.querySelector("#nav").setAttribute("type", "back")];
+                        case 1:
+                            _a.sent();
+                            return [4 /*yield*/, document
+                                    .querySelector(uxpPanel)
+                                    .setAttribute("panel", panelMode.miniExport)];
+                        case 2:
+                            _a.sent();
+                            return [4 /*yield*/, upgradeNav()];
+                        case 3:
+                            _a.sent();
+                            return [4 /*yield*/, upgradePanel()];
+                        case 4:
+                            _a.sent();
+                            miniExport.listen();
+                            return [2 /*return*/];
+                    }
+                });
+            }); };
             /**
              *
              */
